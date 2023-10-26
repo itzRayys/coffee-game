@@ -5,18 +5,21 @@
 [ext_resource type="Script" path="res://Assets/Scripts/areaSwitchButton.gd" id="3_sibuf"]
 
 [node name="title" type="Node2D"]
+process_mode = 1
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 
 [node name="BG" type="TextureRect" parent="GUI"]
 self_modulate = Color(0.760784, 0.560784, 0.635294, 1)
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 texture = ExtResource("1_skaxr")
 
 [node name="areaSwitches" type="Control" parent="GUI"]
@@ -28,6 +31,7 @@ anchor_bottom = 1.0
 offset_top = -300.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="frontBtn" type="Button" parent="GUI/areaSwitches"]
 layout_mode = 1
@@ -63,7 +67,7 @@ grow_vertical = 2
 theme = ExtResource("2_op50u")
 text = "drinkStation"
 script = ExtResource("3_sibuf")
-sceneName = "drinkStationr"
+sceneName = "drinkStation"
 
 [node name="areaBtn" type="Button" parent="GUI/areaSwitches"]
 layout_mode = 1

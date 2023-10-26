@@ -1,3 +1,43 @@
-[gd_scene format=3 uid="uid://cbdqig4y8k08r"]
+[gd_scene load_steps=3 format=3 uid="uid://cbdqig4y8k08r"]
+
+[ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/stripe.png" id="1_dcby5"]
+[ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="2_5ejwk"]
 
 [node name="drinkStation" type="Node2D"]
+process_mode = 1
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="BG" type="TextureRect" parent="GUI"]
+self_modulate = Color(0.501961, 0.380392, 0.32549, 1)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_dcby5")
+
+[node name="moduleSwitch" type="Control" parent="GUI/BG"]
+anchors_preset = 0
+offset_left = 1420.0
+offset_top = 72.0
+offset_right = 1820.0
+offset_bottom = 322.0
+
+[node name="counter" type="TextureRect" parent="GUI/BG"]
+self_modulate = Color(0.788235, 0.705882, 0.537255, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -270.0
+offset_right = 960.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_5ejwk")
+expand_mode = 1

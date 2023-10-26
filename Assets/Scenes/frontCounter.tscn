@@ -3,9 +3,16 @@
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="1_xmir6"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="2_4jfe5"]
 [ext_resource type="Script" path="res://Assets/Scripts/testScriptButton.gd" id="3_tp402"]
-[ext_resource type="Texture2D" uid="uid://oiay3wf3vkpr" path="res://icon.svg" id="3_wu6wx"]
+
+[sub_resource type="GDScript" id="GDScript_61ufe"]
+script/source = "extends Node2D
+
+@export var testinggg = \"This is a test\"
+"
 
 [node name="frontCounter" type="Node2D"]
+process_mode = 1
+script = SubResource("GDScript_61ufe")
 
 [node name="BG" type="Sprite2D" parent="."]
 self_modulate = Color(0.85098, 0.576471, 0.658824, 1)
@@ -14,8 +21,8 @@ centered = false
 
 [node name="counter" type="Sprite2D" parent="BG"]
 self_modulate = Color(0.34902, 0.176471, 0.164706, 1)
-position = Vector2(0, 784)
-scale = Vector2(1, 0.274074)
+position = Vector2(0, 767)
+scale = Vector2(1, 0.289815)
 texture = ExtResource("1_xmir6")
 centered = false
 
@@ -24,108 +31,21 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 
 [node name="buttonToAreaSwitch" type="Button" parent="BG/GUI"]
 self_modulate = Color(1, 1, 1, 0.235294)
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -475.0
-offset_top = -115.0
-offset_right = 475.0
-offset_bottom = -40.0
-grow_horizontal = 2
+offset_left = 25.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = -25.0
 grow_vertical = 0
 theme = ExtResource("2_4jfe5")
 text = "V"
 script = ExtResource("3_tp402")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="BG/GUI"]
-visible = false
-layout_mode = 1
-offset_right = 396.0
-offset_bottom = 239.0
-alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="BG/GUI/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="Sprite2D" type="Sprite2D" parent="BG/GUI/VBoxContainer/HBoxContainer"]
-position = Vector2(0, -54)
-texture = ExtResource("3_wu6wx")
-
-[node name="Label" type="Label" parent="BG/GUI/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "15.88"
-vertical_alignment = 1
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="BG/GUI/VBoxContainer"]
-layout_mode = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="BG/GUI/VBoxContainer/HBoxContainer2"]
-position = Vector2(0, -54)
-texture = ExtResource("3_wu6wx")
-
-[node name="Label" type="Label" parent="BG/GUI/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "15.88"
-vertical_alignment = 1
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="BG/GUI/VBoxContainer"]
-layout_mode = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="BG/GUI/VBoxContainer/HBoxContainer3"]
-position = Vector2(0, -54)
-texture = ExtResource("3_wu6wx")
-
-[node name="Label" type="Label" parent="BG/GUI/VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-text = "15.88"
-vertical_alignment = 1
-
-[node name="Control" type="Control" parent="BG/GUI"]
-layout_mode = 1
-anchors_preset = 0
-offset_right = 667.0
-offset_bottom = 353.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="BG/GUI/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -303.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Control2" type="Control" parent="BG/GUI/Control/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="BG/GUI/Control/VBoxContainer/Control2"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -13.0
-offset_right = 41.0
-offset_bottom = 13.0
-grow_vertical = 2
-text = "15.88"
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="BG/GUI/Control/VBoxContainer/Control2"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 50.0
-grow_vertical = 2
-texture = ExtResource("3_wu6wx")
-expand_mode = 5
-stretch_mode = 4
 
 [connection signal="pressed" from="BG/GUI/buttonToAreaSwitch" to="BG/GUI/buttonToAreaSwitch" method="_on_pressed"]

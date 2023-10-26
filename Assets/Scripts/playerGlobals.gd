@@ -1,10 +1,5 @@
 extends Node
 
-var playerName = "player"
-var playerMoney = 24000
+var playerMoney: float = 500.00
 
-func getPlayerName():
-	return playerName
-
-func getPlayerMoney():
-	return playerMoney
+var day1 = {"int1" : 5}

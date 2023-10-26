@@ -1,15 +1,8 @@
 extends Node
 
-var currentScene = null
-var root = null
-var main = null
-var GUI = null
-
-func _ready():
-	# gets root and main and assigns to var
-	root = get_tree().root
-	main = root.get_child(root.get_child_count() - 1)
-	GUI = main.get_child(1)
+var currentScene
+@onready var root = get_tree().root
+@onready var main = root.get_child(root.get_child_count() - 1)
 
 func switchArea(sceneName: String):
 	# called to switch to inputted scene name
@@ -31,7 +24,7 @@ func switchArea(sceneName: String):
 
 func setCurrentScene():
 	# gets the currently active scene to assign to var
-	currentScene = main.get_child(0)
+	currentScene = main.get_child(main.get_child_count() - 1)
 
 func switchAreaHandler(scenePath, sceneName):
 	# takes scene path to be switched to (deferred)
@@ -47,4 +40,5 @@ func _deferred_switchAreaHandler(scenePath):
 	var sceneToSwitchTo = ResourceLoader.load(scenePath)
 	currentScene = sceneToSwitchTo.instantiate()
 	main.add_child(currentScene)
-	main.move_child(GUI, 1)
+	var newSceneNode = main.get_child(0)
+	newSceneNode.add_to_group("Pausable")

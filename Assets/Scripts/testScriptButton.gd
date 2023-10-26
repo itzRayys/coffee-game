@@ -1,18 +1,12 @@
 extends Button
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
-
 func _on_pressed():
-	var monies = PlayerGlobals.getPlayerMoney()
-	var pName = PlayerGlobals.getPlayerName()
-	var tempp = str(monies) + " " + pName
-	print(tempp)
+	var formattedMoney = "$%.2d"
+	var _output = formattedMoney % PlayerGlobals.playerMoney
+	print("$%.2d" % PlayerGlobals.playerMoney)
+	PlayerGlobals.playerMoney += 20
+	print("$%.2d" % PlayerGlobals.playerMoney)
+	PlayerGlobals.playerMoney += 37.52
+	print("$%.2d" % PlayerGlobals.playerMoney)
+	PlayerGlobals.playerMoney += 5.76
+	print("$%.2d" % PlayerGlobals.playerMoney)
