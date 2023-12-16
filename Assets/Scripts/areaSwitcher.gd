@@ -4,38 +4,44 @@ var currentScene
 @onready var root = get_tree().root
 @onready var main = root.get_child(root.get_child_count() - 1)
 
-func switchArea(sceneName: String):
-	# called to switch to inputted scene name
+#called to switch to inputted scene name
+func switchArea(sceneIndex):
 	var scenePath: String
-	if sceneName == "areaSwitch":
+	var newSceneName
+	if sceneIndex == 0:
 		scenePath = "res://Assets/Scenes/areaSwitch.tscn"
-	elif sceneName == "frontCounter":
+		newSceneName = "areaSwitch"
+	elif sceneIndex == 1:
 		scenePath = "res://Assets/Scenes/frontCounter.tscn"
-	elif sceneName == "drinkStation":
+		newSceneName = "frontCounter"
+	elif sceneIndex == 2:
 		scenePath = "res://Assets/Scenes/drinkStation.tscn"
-	elif sceneName == "foodStation":
+		newSceneName = "drinkStation"
+	elif sceneIndex == 3:
 		scenePath = "res://Assets/Scenes/foodStation.tscn"
-	elif sceneName == "title":
+		newSceneName = "foodStation"
+	elif sceneIndex == 4:
 		scenePath = "res://Assets/Scenes/title.tscn"
+		newSceneName = "title"
 	else:
-		print(sceneName + " is not a valid input.")
+		print(sceneIndex + " is not a valid input.")
 		return
-	switchAreaHandler(scenePath, sceneName)
+	switchAreaHandler(scenePath, newSceneName)
 
+#gets the currently active scene to assign to var
 func setCurrentScene():
-	# gets the currently active scene to assign to var
 	currentScene = main.get_child(main.get_child_count() - 1)
 
-func switchAreaHandler(scenePath, sceneName):
-	# takes scene path to be switched to (deferred)
+#takes scene path to be switched to (deferred)
+func switchAreaHandler(scenePath, newSceneName):
 	setCurrentScene()
 	print("___Switching active scene___")
 	print("    From: " + currentScene.name)
-	print("    To: " + sceneName)
+	print("    To: " + newSceneName)
 	call_deferred("_deferred_switchAreaHandler", scenePath)
 
+#switches scene once code is done running in current scene
 func _deferred_switchAreaHandler(scenePath):
-	# switches scene once code is done running in current scene
 	currentScene.free()
 	var sceneToSwitchTo = ResourceLoader.load(scenePath)
 	currentScene = sceneToSwitchTo.instantiate()

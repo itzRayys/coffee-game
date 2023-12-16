@@ -4,6 +4,7 @@ extends Node
 var currentInteractionID: int = 0
 var currentOrder = []
 var completedItems = []
+var isHolding:bool = false
 
 #random values
 var minItems: int = 1

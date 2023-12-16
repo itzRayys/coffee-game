@@ -1,18 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://0eb53wgdkqkb"]
+[gd_scene load_steps=4 format=3 uid="uid://0eb53wgdkqkb"]
 
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="1_xmir6"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="2_4jfe5"]
-[ext_resource type="Script" path="res://Assets/Scripts/testScriptButton.gd" id="3_tp402"]
-
-[sub_resource type="GDScript" id="GDScript_61ufe"]
-script/source = "extends Node2D
-
-@export var testinggg = \"This is a test\"
-"
+[ext_resource type="Script" path="res://Assets/Scripts/areaSwitchButton.gd" id="3_g7wqb"]
 
 [node name="frontCounter" type="Node2D"]
 process_mode = 1
-script = SubResource("GDScript_61ufe")
 
 [node name="BG" type="Sprite2D" parent="."]
 self_modulate = Color(0.85098, 0.576471, 0.658824, 1)
@@ -46,6 +39,7 @@ offset_bottom = -25.0
 grow_vertical = 0
 theme = ExtResource("2_4jfe5")
 text = "V"
-script = ExtResource("3_tp402")
+script = ExtResource("3_g7wqb")
+switchSceneTo = 4
 
 [connection signal="pressed" from="BG/GUI/buttonToAreaSwitch" to="BG/GUI/buttonToAreaSwitch" method="_on_pressed"]

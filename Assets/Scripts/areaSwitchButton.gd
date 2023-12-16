@@ -1,5 +1,10 @@
 extends Button
 
-@export var sceneName: String = "__Scene to switch to here__"
+enum sceneToSwitchTo { areaSwitch, frontCounter, drinkStation, foodStation, title }
+
+@export
+var switchSceneTo: sceneToSwitchTo
+
+
 func _on_pressed():
-	AreaSwitcher.switchArea(sceneName)
+	AreaSwitcher.switchArea(switchSceneTo)

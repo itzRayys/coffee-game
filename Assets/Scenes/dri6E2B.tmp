@@ -1,12 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbdqig4y8k08r"]
+[gd_scene load_steps=12 format=3 uid="uid://cbdqig4y8k08r"]
 
 [ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/stripe.png" id="1_dcby5"]
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="2_5ejwk"]
 [ext_resource type="Script" path="res://Assets/Scripts/cupsMenu.gd" id="3_2kypx"]
+[ext_resource type="Script" path="res://Assets/Scripts/portafilterShelf.gd" id="3_50ytr"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="3_g13jf"]
-[ext_resource type="PackedScene" uid="uid://dlly4id0d6s6v" path="res://Assets/Scenes/coffee_grinder.tscn" id="4_6jc1m"]
-[ext_resource type="PackedScene" uid="uid://b437566e630t4" path="res://Assets/Scenes/pfilterShelf.tscn" id="4_hxpxn"]
-[ext_resource type="PackedScene" uid="uid://dd147s3gtkprx" path="res://Assets/Scenes/portafilter.tscn" id="7_oixdv"]
+[ext_resource type="Script" path="res://Assets/Scripts/coffeeGrinder.gd" id="5_g0px6"]
+[ext_resource type="Texture2D" uid="uid://oiay3wf3vkpr" path="res://icon.svg" id="5_rjufq"]
+[ext_resource type="PackedScene" uid="uid://dwrlgqq4yiaod" path="res://Assets/Scenes/portafilter.tscn" id="7_q8yb2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_buu7y"]
+size = Vector2(250, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3losx"]
+size = Vector2(201, 215)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2tdt"]
 bg_color = Color(0.85098, 0.576471, 0.658824, 1)
@@ -60,17 +67,50 @@ mouse_filter = 2
 texture = ExtResource("2_5ejwk")
 expand_mode = 1
 
-[node name="pfilterShelf" parent="GUI/BG/wall" instance=ExtResource("4_hxpxn")]
+[node name="portafilterShelf" type="TextureRect" parent="GUI/BG/wall"]
+unique_name_in_owner = true
+self_modulate = Color(0.65098, 0.403922, 0.482353, 1)
 layout_mode = 1
-anchors_preset = 5
-anchor_top = 0.0
-anchor_bottom = 0.0
-offset_left = -276.0
-offset_top = 200.0
-offset_right = -26.0
-offset_bottom = 280.0
-grow_vertical = 1
-filterOffsets = Array[Vector2]([Vector2(45, 70), Vector2(120, 42)])
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -50.0
+offset_right = -85.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_5ejwk")
+expand_mode = 1
+script = ExtResource("3_50ytr")
+filterOffsets = Array[Vector2]([Vector2(68, 22), Vector2(131, 54), Vector2(171, 37), Vector2(224, 63)])
+
+[node name="portafilterShelfShadow" type="TextureRect" parent="GUI/BG/wall/portafilterShelf"]
+self_modulate = Color(0.54902, 0.341176, 0.407843, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_right = 125.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("2_5ejwk")
+expand_mode = 1
+
+[node name="shelfArea" type="Area2D" parent="GUI/BG/wall/portafilterShelf"]
+
+[node name="shelfShape" type="CollisionShape2D" parent="GUI/BG/wall/portafilterShelf/shelfArea"]
+position = Vector2(125, 40)
+shape = SubResource("RectangleShape2D_buu7y")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="counterShadow" type="TextureRect" parent="GUI/BG"]
 self_modulate = Color(0.5, 0.435, 0.449083, 1)
@@ -408,8 +448,62 @@ mouse_filter = 2
 texture = ExtResource("2_5ejwk")
 expand_mode = 1
 
-[node name="coffeeGrinder" parent="GUI/BG/counter/border/container/rightMat" instance=ExtResource("4_6jc1m")]
-layout_mode = 0
+[node name="coffeeGrinder" type="TextureRect" parent="GUI/BG/counter/border/container/rightMat"]
+self_modulate = Color(0.34902, 0.215686, 0.258824, 1)
+layout_mode = 1
+offset_left = 15.0
+offset_top = -150.0
+offset_right = 216.0
+offset_bottom = 65.0
+mouse_filter = 2
+texture = ExtResource("2_5ejwk")
+expand_mode = 1
+script = ExtResource("5_g0px6")
+placeOffset = Vector2(100, 180)
+
+[node name="grinderArea" type="Area2D" parent="GUI/BG/counter/border/container/rightMat/coffeeGrinder"]
+
+[node name="grinderShape" type="CollisionShape2D" parent="GUI/BG/counter/border/container/rightMat/coffeeGrinder/grinderArea"]
+position = Vector2(100.5, 107.5)
+shape = SubResource("RectangleShape2D_3losx")
+
+[node name="dispenseDouble" type="Button" parent="GUI/BG/counter/border/container/rightMat/coffeeGrinder"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = 15.0
+offset_right = 25.0
+offset_bottom = 65.0
+grow_horizontal = 2
+
+[node name="dispenseSingle" type="Button" parent="GUI/BG/counter/border/container/rightMat/coffeeGrinder"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = 75.0
+offset_right = 25.0
+offset_bottom = 100.0
+grow_horizontal = 2
+
+[node name="clearOverfill" type="Button" parent="GUI/BG/counter/border/container/rightMat/coffeeGrinder"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+grow_horizontal = 2
+
+[node name="placedPortafilter" type="Sprite2D" parent="GUI/BG/counter/border/container/rightMat/coffeeGrinder"]
+visible = false
+position = Vector2(100, 175)
+scale = Vector2(0.315, 0.39)
+texture = ExtResource("5_rjufq")
 
 [node name="cupsMenu" type="Control" parent="GUI"]
 layout_mode = 1
@@ -599,23 +693,23 @@ grow_vertical = 2
 theme = ExtResource("3_g13jf")
 text = "x"
 
-[node name="portafilter" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
-startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
+[node name="portafilter" parent="." instance=ExtResource("7_q8yb2")]
 
-[node name="portafilter1" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
-ID = 1
-startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
+[node name="portafilter2" parent="." instance=ExtResource("7_q8yb2")]
+filterID = 2
 
-[node name="portafilter2" parent="." instance=ExtResource("7_oixdv")]
-ID = 2
+[node name="portafilter3" parent="." instance=ExtResource("7_q8yb2")]
+isDouble = true
+filterID = 3
 
-[node name="portafilter3" parent="." instance=ExtResource("7_oixdv")]
-ID = 3
-
-[node name="portafilter4" parent="." instance=ExtResource("7_oixdv")]
-ID = 4
+[node name="portafilter4" parent="." instance=ExtResource("7_q8yb2")]
+isDouble = true
+filterID = 4
 
 [connection signal="pressed" from="GUI/BG/counter/border/container/bottomMat/cupsBtn" to="GUI/cupsMenu" method="_on_cups_btn_pressed"]
 [connection signal="pressed" from="GUI/BG/counter/border/container/bottomMat/cupsBtn2" to="GUI/cupsMenu" method="_on_cups_btn_pressed"]
 [connection signal="pressed" from="GUI/BG/counter/border/container/bottomMat/cupsBtn3" to="GUI/cupsMenu" method="_on_cups_btn_pressed"]
+[connection signal="pressed" from="GUI/BG/counter/border/container/rightMat/coffeeGrinder/dispenseDouble" to="GUI/BG/counter/border/container/rightMat/coffeeGrinder" method="_on_dispense_double_pressed"]
+[connection signal="pressed" from="GUI/BG/counter/border/container/rightMat/coffeeGrinder/dispenseSingle" to="GUI/BG/counter/border/container/rightMat/coffeeGrinder" method="_on_dispense_single_pressed"]
+[connection signal="pressed" from="GUI/BG/counter/border/container/rightMat/coffeeGrinder/clearOverfill" to="GUI/BG/counter/border/container/rightMat/coffeeGrinder" method="_on_clear_overfill_pressed"]
 [connection signal="pressed" from="GUI/cupsMenu/menuDim/closeCupMenuBtn" to="GUI/cupsMenu" method="_on_close_cup_menu_btn_pressed"]

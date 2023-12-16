@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dd147s3gtkprx"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/portafilter.gd" id="1_vu4yw"]
+[ext_resource type="Script" path="res://Assets/Scripts/dragDropComponent.gd" id="2_jjvr2"]
+[ext_resource type="Script" path="res://Assets/Scripts/portafilterOzComponent.gd" id="3_7c8w4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibdxk"]
+size = Vector2(64, 84)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_j2noq"]
+size = Vector2(65, 85)
+
+[node name="portafilter" type="Node2D" node_paths=PackedStringArray("dragDrop_component", "oz_component")]
+script = ExtResource("1_vu4yw")
+dragDrop_component = NodePath("drag_drop_component")
+oz_component = NodePath("filter_oz_component")
+
+[node name="drag_drop_component" type="Area2D" parent="." node_paths=PackedStringArray("parent")]
+collision_layer = 2
+collision_mask = 4
+monitorable = false
+script = ExtResource("2_jjvr2")
+parent = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="drag_drop_component"]
+shape = SubResource("RectangleShape2D_ibdxk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_j2noq")
+
+[node name="filter_oz_component" type="Node" parent="." node_paths=PackedStringArray("filter")]
+script = ExtResource("3_7c8w4")
+filter = NodePath("..")
+
+[connection signal="area_entered" from="drag_drop_component" to="drag_drop_component" method="_on_area_entered"]
+[connection signal="area_exited" from="drag_drop_component" to="drag_drop_component" method="_on_area_exited"]
+[connection signal="dropped" from="drag_drop_component" to="." method="_on_drag_drop_component_dropped"]
+[connection signal="mouse_entered" from="drag_drop_component" to="drag_drop_component" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="drag_drop_component" to="drag_drop_component" method="_on_mouse_exited"]

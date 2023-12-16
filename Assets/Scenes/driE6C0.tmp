@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbdqig4y8k08r"]
+[gd_scene load_steps=10 format=3 uid="uid://cbdqig4y8k08r"]
 
 [ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/stripe.png" id="1_dcby5"]
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="2_5ejwk"]
 [ext_resource type="Script" path="res://Assets/Scripts/cupsMenu.gd" id="3_2kypx"]
+[ext_resource type="PackedScene" uid="uid://djgtagba50t22" path="res://Assets/Scenes/portafilter_shelf.tscn" id="3_fkdho"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="3_g13jf"]
 [ext_resource type="PackedScene" uid="uid://dlly4id0d6s6v" path="res://Assets/Scenes/coffee_grinder.tscn" id="4_6jc1m"]
-[ext_resource type="PackedScene" uid="uid://b437566e630t4" path="res://Assets/Scenes/pfilterShelf.tscn" id="4_hxpxn"]
-[ext_resource type="PackedScene" uid="uid://dd147s3gtkprx" path="res://Assets/Scenes/portafilter.tscn" id="7_oixdv"]
+[ext_resource type="PackedScene" uid="uid://dwrlgqq4yiaod" path="res://Assets/Scenes/portafilter.tscn" id="7_q8yb2"]
+[ext_resource type="PackedScene" uid="uid://dd147s3gtkprx" path="res://Assets/Scenes/dDTest.tscn" id="8_0oh8h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2tdt"]
 bg_color = Color(0.85098, 0.576471, 0.658824, 1)
@@ -60,17 +61,21 @@ mouse_filter = 2
 texture = ExtResource("2_5ejwk")
 expand_mode = 1
 
-[node name="pfilterShelf" parent="GUI/BG/wall" instance=ExtResource("4_hxpxn")]
-layout_mode = 1
-anchors_preset = 5
+[node name="portafilterShelf" parent="GUI/BG/wall" node_paths=PackedStringArray("heldFilters") instance=ExtResource("3_fkdho")]
+unique_name_in_owner = true
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
 anchor_top = 0.0
+anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = -276.0
-offset_top = 200.0
-offset_right = -26.0
-offset_bottom = 280.0
+offset_left = 575.0
+offset_top = 250.0
+offset_right = 825.0
+offset_bottom = 330.0
+grow_horizontal = 1
 grow_vertical = 1
-filterOffsets = Array[Vector2]([Vector2(45, 70), Vector2(120, 42)])
+heldFilters = [null, null, null, null]
 
 [node name="counterShadow" type="TextureRect" parent="GUI/BG"]
 self_modulate = Color(0.5, 0.435, 0.449083, 1)
@@ -582,40 +587,4 @@ custom_minimum_size = Vector2(204, 204)
 layout_mode = 2
 mouse_filter = 1
 
-[node name="closeCupMenuBtn" type="Button" parent="GUI/cupsMenu/menuDim"]
-custom_minimum_size = Vector2(65, 65)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 503.0
-offset_top = -391.0
-offset_right = 568.0
-offset_bottom = -326.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("3_g13jf")
-text = "x"
-
-[node name="portafilter" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
-startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
-
-[node name="portafilter1" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
-ID = 1
-startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
-
-[node name="portafilter2" parent="." instance=ExtResource("7_oixdv")]
-ID = 2
-
-[node name="portafilter3" parent="." instance=ExtResource("7_oixdv")]
-ID = 3
-
-[node name="portafilter4" parent="." instance=ExtResource("7_oixdv")]
-ID = 4
-
-[connection signal="pressed" from="GUI/BG/counter/border/container/bottomMat/cupsBtn" to="GUI/cupsMenu" method="_on_cups_btn_pressed"]
-[connection signal="pressed" from="GUI/BG/counter/border/container/bottomMat/cupsBtn2" to="GUI/cupsMenu" method="_on_cups_btn_pressed"]
-[connection signal="pressed" from="GUI/BG/counter/border/container/bottomMat/cupsBtn3" to="GUI/cupsMenu" method="_on_cups_btn_pressed"]
-[connection signal="pressed" from="GUI/cupsMenu/menuDim/closeCupMenuBtn" to="GUI/cupsMenu" method="_on_close_cup_menu_btn_pressed"]
+[node nam

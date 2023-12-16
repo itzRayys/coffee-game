@@ -6,7 +6,7 @@
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="3_g13jf"]
 [ext_resource type="PackedScene" uid="uid://dlly4id0d6s6v" path="res://Assets/Scenes/coffee_grinder.tscn" id="4_6jc1m"]
 [ext_resource type="PackedScene" uid="uid://b437566e630t4" path="res://Assets/Scenes/pfilterShelf.tscn" id="4_hxpxn"]
-[ext_resource type="PackedScene" uid="uid://dd147s3gtkprx" path="res://Assets/Scenes/portafilter.tscn" id="7_oixdv"]
+[ext_resource type="PackedScene" uid="uid://dd147s3gtkprx" path="res://Assets/Scenes/dDTest.tscn" id="8_0oh8h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2tdt"]
 bg_color = Color(0.85098, 0.576471, 0.658824, 1)
@@ -60,17 +60,19 @@ mouse_filter = 2
 texture = ExtResource("2_5ejwk")
 expand_mode = 1
 
-[node name="pfilterShelf" parent="GUI/BG/wall" instance=ExtResource("4_hxpxn")]
-layout_mode = 1
-anchors_preset = 5
+[node name="portafilterShelf2" parent="GUI/BG/wall" instance=ExtResource("4_hxpxn")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
 anchor_top = 0.0
+anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = -276.0
-offset_top = 200.0
-offset_right = -26.0
-offset_bottom = 280.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 250.0
+offset_bottom = 80.0
+grow_horizontal = 1
 grow_vertical = 1
-filterOffsets = Array[Vector2]([Vector2(45, 70), Vector2(120, 42)])
 
 [node name="counterShadow" type="TextureRect" parent="GUI/BG"]
 self_modulate = Color(0.5, 0.435, 0.449083, 1)
@@ -599,21 +601,14 @@ grow_vertical = 2
 theme = ExtResource("3_g13jf")
 text = "x"
 
-[node name="portafilter" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
-startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
+[node name="dDTest" parent="." instance=ExtResource("8_0oh8h")]
+position = Vector2(400, 300)
 
-[node name="portafilter1" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
+[node name="dDTest1" parent="." node_paths=PackedStringArray("dragDrop_component", "oz_component") instance=ExtResource("8_0oh8h")]
+position = Vector2(400, 300)
 ID = 1
-startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
-
-[node name="portafilter2" parent="." instance=ExtResource("7_oixdv")]
-ID = 2
-
-[node name="portafilter3" parent="." instance=ExtResource("7_oixdv")]
-ID = 3
-
-[node name="portafilter4" parent="." instance=ExtResource("7_oixdv")]
-ID = 4
+dragDrop_component = NodePath("../dDTest/drag_drop_component")
+oz_component = NodePath("../dDTest/filter_oz_component")
 
 [connection signal="pressed" from="GUI/BG/counter/border/container/bottomMat/cupsBtn" to="GUI/cupsMenu" method="_on_cups_btn_pressed"]
 [connection signal="pressed" from="GUI/BG/counter/border/container/bottomMat/cupsBtn2" to="GUI/cupsMenu" method="_on_cups_btn_pressed"]
