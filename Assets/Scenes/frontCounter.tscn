@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://0eb53wgdkqkb"]
+[gd_scene load_steps=5 format=3 uid="uid://0eb53wgdkqkb"]
 
+[ext_resource type="Script" path="res://Assets/Scripts/MainScripts/frontCounter.gd" id="1_etii6"]
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="1_xmir6"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="2_4jfe5"]
 [ext_resource type="Script" path="res://Assets/Scripts/areaSwitchButton.gd" id="3_g7wqb"]
 
 [node name="frontCounter" type="Node2D"]
 process_mode = 1
+script = ExtResource("1_etii6")
 
 [node name="BG" type="Sprite2D" parent="."]
 self_modulate = Color(0.85098, 0.576471, 0.658824, 1)
@@ -19,14 +21,14 @@ scale = Vector2(1, 0.289815)
 texture = ExtResource("1_xmir6")
 centered = false
 
-[node name="GUI" type="Control" parent="BG"]
+[node name="GUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
 
-[node name="buttonToAreaSwitch" type="Button" parent="BG/GUI"]
+[node name="buttonToAreaSwitch" type="Button" parent="GUI"]
 self_modulate = Color(1, 1, 1, 0.235294)
 layout_mode = 1
 anchors_preset = 2
@@ -42,4 +44,4 @@ text = "V"
 script = ExtResource("3_g7wqb")
 switchSceneTo = 4
 
-[connection signal="pressed" from="BG/GUI/buttonToAreaSwitch" to="BG/GUI/buttonToAreaSwitch" method="_on_pressed"]
+[connection signal="pressed" from="GUI/buttonToAreaSwitch" to="GUI/buttonToAreaSwitch" method="_on_pressed"]

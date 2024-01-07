@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bytpupsetlnnf"]
+
+[ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="1_q6jyj"]
+
+[node name="blender" type="TextureRect"]
+self_modulate = Color(0.6, 0.521569, 0.545098, 1)
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -540.0
+offset_right = 150.0
+offset_bottom = -340.0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_q6jyj")
+expand_mode = 1

@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6hjopgubjos1"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/drink.gd" id="1_rek8h"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/dragDropComponent.gd" id="2_0cyfw"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/recipeCheckerComponent.gd" id="3_uf7xl"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientContainerComponent.gd" id="4_lxt3n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxvlx"]
+size = Vector2(95, 120)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rjjse"]
+size = Vector2(95, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwsq1"]
+size = Vector2(95, 120)
+
+[node name="drink" type="Node2D" node_paths=PackedStringArray("drinkSprite", "cupSprite", "dragDropComponent")]
+script = ExtResource("1_rek8h")
+drinkSprite = NodePath("")
+cupSprite = NodePath("cupSprite")
+dragDropComponent = NodePath("dragDropComponent")
+
+[node name="dragDropComponent" type="Area2D" parent="." node_paths=PackedStringArray("parent")]
+monitorable = false
+script = ExtResource("2_0cyfw")
+parent = NodePath("..")
+
+[node name="dDShape" type="CollisionShape2D" parent="dragDropComponent"]
+shape = SubResource("RectangleShape2D_mxvlx")
+
+[node name="cupSprite" type="Sprite2D" parent="."]
+self_modulate = Color(0.14902, 0, 0.458824, 1)
+texture = SubResource("PlaceholderTexture2D_rjjse")
+
+[node name="recipeCheckerComponent" type="Node2D" parent="."]
+script = ExtResource("3_uf7xl")
+
+[node name="ingredientContainerComponent" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_lxt3n")
+
+[node name="iContainerShape" type="CollisionShape2D" parent="ingredientContainerComponent"]
+shape = SubResource("RectangleShape2D_lwsq1")

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4n01bifgmj0f"]
+
+[ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="1_x33hm"]
+[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/drinkMat.gd" id="2_lisrs"]
+
+[node name="drinkMat" type="TextureRect"]
+self_modulate = Color(0.6, 0.521569, 0.545098, 1)
+offset_right = 191.0
+offset_bottom = 195.0
+mouse_filter = 2
+texture = ExtResource("1_x33hm")
+expand_mode = 1
+script = ExtResource("2_lisrs")

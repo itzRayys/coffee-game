@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ingredient_resource" load_steps=2 format=3 uid="uid://die1wcthalmth"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/ResourceScripts/ingredientResource.gd" id="1_4j76u"]
+
+[resource]
+script = ExtResource("1_4j76u")
+ingredientName = ""
+ingredientAmount = 0
+isUnlocked = false

@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dlly4id0d6s6v"]
 
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="1_brc38"]
-[ext_resource type="Script" path="res://Assets/Scripts/coffeeGrinder.gd" id="2_7s7co"]
-[ext_resource type="Script" path="res://Assets/Scripts/portafilterContainerComponent.gd" id="3_v0j0q"]
+[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/coffeeGrinder.gd" id="2_7s7co"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/portafilterContainerComponent.gd" id="3_v0j0q"]
 [ext_resource type="PackedScene" uid="uid://kxk2mp6m7myu" path="res://Assets/Scenes/grinderComponent.tscn" id="4_3wvfi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3losx"]
@@ -23,7 +23,6 @@ grinder = NodePath("grinderComponent")
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("3_v0j0q")
-filterSlots = 2
 
 [node name="portafilterContainerShape" type="CollisionShape2D" parent="portafilterContainerGRINDER"]
 position = Vector2(100.5, 107.5)
@@ -61,4 +60,11 @@ offset_top = -50.0
 offset_right = 25.0
 grow_horizontal = 2
 
-[node name="grinderComponent" parent="." instance=ExtResource("4_3wvfi")]
+[node name="grinderComponent" parent="." node_paths=PackedStringArray("filterContainer") instance=ExtResource("4_3wvfi")]
+filterContainer = NodePath("../portafilterContainerGRINDER")
+
+[connection signal="clearedPortafilter" from="portafilterContainerGRINDER" to="grinderComponent" method="_on_portafilter_container_grinder_cleared_portafilter"]
+[connection signal="receivedPortafilter" from="portafilterContainerGRINDER" to="grinderComponent" method="_on_portafilter_container_grinder_received_portafilter"]
+[connection signal="pressed" from="dispenseDouble" to="grinderComponent" method="_on_dispense_double_pressed"]
+[connection signal="pressed" from="dispenseSingle" to="grinderComponent" method="_on_dispense_single_pressed"]
+[connection signal="pressed" from="clearOverfill" to="grinderComponent" method="_on_clear_overfill_pressed"]

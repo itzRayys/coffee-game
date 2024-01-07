@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ingredient_resource" load_steps=2 format=3 uid="uid://mv7jsl5u0of1"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/ResourceScripts/ingredientResource.gd" id="1_ihfrc"]
+
+[resource]
+script = ExtResource("1_ihfrc")
+ingredientName = "Espresso Single"
+ingredientAmount = 0
+isUnlocked = false

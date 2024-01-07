@@ -16,15 +16,13 @@ var canPickup:bool = true
 var isHeld:bool = false
 
 func _process(_delta): #pickup/drop/follow logic
-	if !isHovering: #do nothing if not hovering
-		return
-	if isHeld: #drop if stopped interacting else keep following
+	if isHeld:
+		followMouse()
+	if isHovering:
 		if Input.is_action_just_released("interact"):
 			drop()
-			return
-		followMouse()
-	if Input.is_action_just_pressed("interact") and canPickup and !GameGlobals.isHolding: #pickup if interact pressed
-		pickup()
+		if Input.is_action_just_pressed("interact") and canPickup and !GameGlobals.isHolding:
+			pickup()
 
 func followMouse(): #follow mouse position
 	if !parent:
@@ -47,8 +45,10 @@ func unlock(): #set canPickup
 #__Connections__
 func _on_mouse_entered(): #sets hovering self true
 	isHovering = true
+	parent.scale = Vector2(1.05, 1.05)
 func _on_mouse_exited(): #sets hovering self false
 	isHovering = false
+	parent.scale = Vector2(1, 1)
 func _on_area_entered(area): #stores area as var when hovering
 	targetArea = area
 func _on_area_exited(_area): #clears area var when exiting

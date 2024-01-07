@@ -1,12 +1,12 @@
 [gd_scene load_steps=13 format=3 uid="uid://bfm3kfr3y53j3"]
 
+[ext_resource type="Script" path="res://Assets/Scripts/MainScripts/toggleOrdersMenu.gd" id="1_e2ppr"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="2_a3mdc"]
-[ext_resource type="Script" path="res://Assets/Scripts/toggleOrdersMenu.gd" id="2_khwyf"]
+[ext_resource type="Script" path="res://Assets/Scripts/MainScripts/pauseMenu.gd" id="3_kj610"]
 [ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Assets/dialogueBalloon/balloon.tscn" id="4_7jats"]
-[ext_resource type="Script" path="res://Assets/Scripts/pauseMenu.gd" id="4_hqeih"]
 [ext_resource type="Script" path="res://Assets/dialogueBalloon/balloon.gd" id="5_1redv"]
 [ext_resource type="PackedScene" uid="uid://0eb53wgdkqkb" path="res://Assets/Scenes/frontCounter.tscn" id="5_txt6m"]
-[ext_resource type="PackedScene" uid="uid://cbdqig4y8k08r" path="res://Assets/Scenes/drinkStation.tscn" id="7_yb50e"]
+[ext_resource type="PackedScene" uid="uid://d0ml0manfpx0i" path="res://Assets/Scenes/drinkStation.tscn" id="7_yb50e"]
 [ext_resource type="PackedScene" uid="uid://bp483cfkssqqs" path="res://Assets/Scenes/areaSwitch.tscn" id="8_jg8rx"]
 [ext_resource type="PackedScene" uid="uid://c74gml7scsokp" path="res://Assets/Scenes/title.tscn" id="9_3cg32"]
 
@@ -51,7 +51,7 @@ size_flags_horizontal = 4
 layout_mode = 0
 offset_right = 150.0
 offset_bottom = 150.0
-script = ExtResource("2_khwyf")
+script = ExtResource("1_e2ppr")
 
 [node name="ordersMenuButton" type="Button" parent="GUI/ordersMenu/ordersMenuPanel" groups=["Pausable"]]
 layout_mode = 1
@@ -218,7 +218,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("4_hqeih")
+script = ExtResource("3_kj610")
 
 [node name="pauseBtn" type="Button" parent="GUI/pauseMenu"]
 layout_mode = 1
@@ -366,9 +366,11 @@ grow_vertical = 0
 text = "Back"
 
 [node name="ExampleBalloon" parent="GUI" instance=ExtResource("4_7jats")]
+visible = false
 script = ExtResource("5_1redv")
 
-[node name="frontCounter" parent="." instance=ExtResource("5_txt6m")]
+[node name="frontCounter" parent="." node_paths=PackedStringArray("drinkStation") instance=ExtResource("5_txt6m")]
+drinkStation = NodePath("../drinkStation")
 
 [node name="drinkStation" parent="." instance=ExtResource("7_yb50e")]
 visible = false
