@@ -14,9 +14,8 @@ size = Vector2(95, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwsq1"]
 size = Vector2(95, 120)
 
-[node name="drink" type="Node2D" node_paths=PackedStringArray("drinkSprite", "cupSprite", "dragDropComponent")]
+[node name="drink" type="Node2D" node_paths=PackedStringArray("cupSprite", "dragDropComponent")]
 script = ExtResource("1_rek8h")
-drinkSprite = NodePath("")
 cupSprite = NodePath("cupSprite")
 dragDropComponent = NodePath("dragDropComponent")
 
@@ -39,6 +38,7 @@ script = ExtResource("3_uf7xl")
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("4_lxt3n")
+enableWhitelist = false
 
 [node name="iContainerShape" type="CollisionShape2D" parent="ingredientContainerComponent"]
 shape = SubResource("RectangleShape2D_lwsq1")

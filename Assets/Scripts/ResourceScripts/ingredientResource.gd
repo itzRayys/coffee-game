@@ -10,3 +10,7 @@ class_name ingredient_resource
 @export var ingredientSpriteExtra:Sprite2D
 @export var ingredientSpriteExtraExtra:Sprite2D
 @export var isUnlocked:bool = false
+
+@export_group("Data 2")
+#Sprite used as a sticker on ingredient shaker
+@export var stickerSprite:Texture2D

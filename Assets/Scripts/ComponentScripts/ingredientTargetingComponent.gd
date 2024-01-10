@@ -1,5 +1,5 @@
 extends Area2D
-class_name targeting_component
+class_name ingredient_targeting
 
 var currentTarget
 

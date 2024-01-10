@@ -7,3 +7,4 @@ script = ExtResource("1_ihfrc")
 ingredientName = "Espresso Single"
 ingredientAmount = 0
 isUnlocked = false
+stickerSprite = null

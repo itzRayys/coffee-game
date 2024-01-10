@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0ml0manfpx0i"]
+[gd_scene load_steps=20 format=3 uid="uid://d0ml0manfpx0i"]
 
 [ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/stripe.png" id="1_dcby5"]
 [ext_resource type="Script" path="res://Assets/Scripts/MainScripts/drinkStation.gd" id="1_s61xd"]
@@ -15,6 +15,10 @@
 [ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/blender.gd" id="8_l8ar3"]
 [ext_resource type="PackedScene" uid="uid://deu1n6gl52i6b" path="res://Assets/Scenes/drink_submit.tscn" id="9_enxvm"]
 [ext_resource type="PackedScene" uid="uid://b6hjopgubjos1" path="res://Assets/Scenes/drink.tscn" id="12_v4mwj"]
+[ext_resource type="PackedScene" uid="uid://cknjwd466au73" path="res://Assets/Scenes/ingredient_selecter.tscn" id="16_efse6"]
+[ext_resource type="PackedScene" uid="uid://bn8mickssbjnb" path="res://Assets/Scenes/ingredient_shaker.tscn" id="17_023j7"]
+[ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients Drink/crispies.tres" id="17_o71tt"]
+[ext_resource type="Resource" uid="uid://mv7jsl5u0of1" path="res://Assets/Resources/Ingredients/Ingredients Drink/espresso_single.tres" id="18_g877j"]
 
 [node name="drinkStation" type="Node2D"]
 process_mode = 1
@@ -194,6 +198,23 @@ mouse_filter = 2
 texture = ExtResource("2_5ejwk")
 expand_mode = 1
 
+[node name="leftMat2" type="TextureRect" parent="GUI/BG/counter/border/container/leftMat"]
+self_modulate = Color(0.34902, 0.215686, 0.258824, 1)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -120.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("2_5ejwk")
+expand_mode = 1
+
 [node name="blender" parent="GUI/BG/counter/border/container/leftMat" instance=ExtResource("7_ix713")]
 layout_mode = 1
 anchors_preset = 1
@@ -357,20 +378,38 @@ offset_bottom = 165.0
 layout_mode = 1
 
 [node name="portafilter" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
+position = Vector2(724.585, 275.12)
 startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
 
 [node name="portafilter1" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
+position = Vector2(786.185, 239.495)
 ID = 1
 startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
 
 [node name="portafilter2" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
+position = Vector2(857.835, 259.06)
 isDouble = true
 ID = 2
 startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
 
 [node name="portafilter3" parent="." node_paths=PackedStringArray("startingArea") instance=ExtResource("7_oixdv")]
+position = Vector2(914.435, 238.295)
 isDouble = true
 ID = 3
 startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
 
 [node name="drink" parent="." instance=ExtResource("12_v4mwj")]
+position = Vector2(750, 775)
+
+[node name="ingredientSelecter" parent="." node_paths=PackedStringArray("ingredientShaker") instance=ExtResource("16_efse6")]
+position = Vector2(90, 806.615)
+ingredientDispensed = ExtResource("17_o71tt")
+ingredientShaker = NodePath("../ingredientShaker")
+
+[node name="ingredientSelecter2" parent="." node_paths=PackedStringArray("ingredientShaker") instance=ExtResource("16_efse6")]
+position = Vector2(170, 806.615)
+ingredientDispensed = ExtResource("18_g877j")
+ingredientShaker = NodePath("../ingredientShaker")
+
+[node name="ingredientShaker" parent="." instance=ExtResource("17_023j7")]
+visible = false
