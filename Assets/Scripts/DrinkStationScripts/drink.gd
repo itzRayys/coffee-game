@@ -13,5 +13,5 @@ func addIngredient(givenIngredient):
 		acceptedIngredients[i].ingredientAmount += 1
 		acceptedIngredients[i].updateSprite()
 
-func updateSprite(sprite):
+func updateSprite(_sprite):
 	pass

@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4n01bifgmj0f"]
+[gd_scene load_steps=3 format=3 uid="uid://bm16uuvs56o7l"]
 
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/white.png" id="1_x33hm"]
-[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/drinkMat.gd" id="2_lisrs"]
+
+[sub_resource type="GDScript" id="GDScript_87d54"]
+script/source = "extends Control
+
+
+#@export var wwww
+
+func placeCup(isDouble:bool, skinID:int):
+	pass
+"
 
 [node name="drinkMat" type="TextureRect"]
 self_modulate = Color(0.6, 0.521569, 0.545098, 1)
@@ -10,4 +19,4 @@ offset_bottom = 195.0
 mouse_filter = 2
 texture = ExtResource("1_x33hm")
 expand_mode = 1
-script = ExtResource("2_lisrs")
+script = SubResource("GDScript_87d54")

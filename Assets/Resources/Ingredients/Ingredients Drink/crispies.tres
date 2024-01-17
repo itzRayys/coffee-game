@@ -10,4 +10,6 @@ script = ExtResource("1_lhnn8")
 ingredientName = "Crispies"
 ingredientAmount = 0
 isUnlocked = false
+isMixture = false
+mixtureRecipe = Array[ExtResource("1_lhnn8")]([])
 stickerSprite = SubResource("PlaceholderTexture2D_6cw6n")

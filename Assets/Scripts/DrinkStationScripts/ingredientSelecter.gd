@@ -2,7 +2,7 @@ extends Node2D
 class_name ingredient_selecter
 
 @export var ingredientDispensed:ingredient_resource
-@export var ingredientShaker:ingredient_shaker
+@export var ingredientDispenser:ingredient_dispenser
 @export var hoveringOffset:Vector2
 
 @onready var dispenserSprite = $sprite2d
@@ -17,13 +17,13 @@ func _input(event):
 	if GameGlobals.isHolding or !event.is_action_pressed("interact"):
 		return
 	if isHovering:
-		enableShaker(ingredientDispensed)
+		enableDispenser(ingredientDispensed)
 		hide()
-		ingredientShaker.pickupComponent.dropped.connect(show, CONNECT_ONE_SHOT)
+		ingredientDispenser.pickupComponent.dropped.connect(show, CONNECT_ONE_SHOT)
 
 # Calls shaker's function with ingredient input to be updated and enabled
-func enableShaker(ingredient:ingredient_resource):
-	ingredientShaker.selectShaker(ingredient)
+func enableDispenser(ingredient:ingredient_resource):
+	ingredientDispenser.selectDispenser(ingredient)
 
 # Sets sprite position and glow whether hovering or not
 func setHovering():

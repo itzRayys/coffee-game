@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgm0efgkimam3"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/mouseThings.gd" id="1_qtqcw"]
+[ext_resource type="Script" path="res://Assets/Scripts/MainScripts/customCursor.gd" id="2_vrao1"]
+[ext_resource type="Texture2D" uid="uid://bdq6sopws6b7a" path="res://Assets/Sprites/custom_cursor_temp.png" id="3_k8c8e"]
+
+[node name="mouseThings" type="Node2D"]
+script = ExtResource("1_qtqcw")
+
+[node name="customCursor" type="Node2D" parent="."]
+script = ExtResource("2_vrao1")
+
+[node name="sprite2d" type="Sprite2D" parent="customCursor"]
+texture = ExtResource("3_k8c8e")
+centered = false

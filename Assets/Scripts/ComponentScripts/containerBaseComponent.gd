@@ -4,11 +4,10 @@ class_name container_base_component
 signal receivedPlaceable()
 signal clearedPortafilter()
 
-@export var receiver:placeable_receiver_component
 @export var maxSlots:int = 0
 @onready var parent = get_parent()
 
-var heldPlaceables:Array[Node]
+var heldPlaceables:Array[Node2D]
 
 #
 #func canReceiveCheck() -> bool: #returns if can receive filter

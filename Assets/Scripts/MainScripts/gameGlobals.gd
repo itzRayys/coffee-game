@@ -5,6 +5,7 @@ var currentInteractionID: int = 0
 var currentOrder = []
 var completedItems = []
 var isHolding:bool = false
+var heldObject:Node2D
 
 #random values
 var minItems: int = 1

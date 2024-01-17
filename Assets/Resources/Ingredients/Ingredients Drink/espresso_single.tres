@@ -7,4 +7,5 @@ script = ExtResource("1_ihfrc")
 ingredientName = "Espresso Single"
 ingredientAmount = 0
 isUnlocked = false
-stickerSprite = null
+isMixture = false
+mixtureRecipe = Array[ExtResource("1_ihfrc")]([])

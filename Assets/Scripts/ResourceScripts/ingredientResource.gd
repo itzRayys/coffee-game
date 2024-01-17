@@ -12,5 +12,7 @@ class_name ingredient_resource
 @export var isUnlocked:bool = false
 
 @export_group("Data 2")
+@export var isMixture:bool = false
+@export var mixtureRecipe:Array[ingredient_resource]
 #Sprite used as a sticker on ingredient shaker
 @export var stickerSprite:Texture2D

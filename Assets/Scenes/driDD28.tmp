@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://d0ml0manfpx0i"]
+[gd_scene load_steps=29 format=3 uid="uid://d0ml0manfpx0i"]
 
 [ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/stripe.png" id="1_dcby5"]
 [ext_resource type="Script" path="res://Assets/Scripts/MainScripts/drinkStation.gd" id="1_s61xd"]
@@ -15,16 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://c8xiuhrqngx7e" path="res://Assets/Sprites/temp_drink_station_wall.png" id="11_osrg7"]
 [ext_resource type="Texture2D" uid="uid://n1gdvwu3qvno" path="res://Assets/Sprites/temp_drink_station_counter.png" id="12_qixfj"]
 [ext_resource type="PackedScene" uid="uid://b6hjopgubjos1" path="res://Assets/Scenes/drink.tscn" id="12_v4mwj"]
-[ext_resource type="Resource" uid="uid://babjbal6ofvvn" path="res://Assets/Resources/Ingredients/Ingredients Drink/chocolate_shavings_dark.tres" id="15_v4pfr"]
 [ext_resource type="PackedScene" uid="uid://cknjwd466au73" path="res://Assets/Scenes/ingredient_selecter.tscn" id="16_efse6"]
-[ext_resource type="Resource" uid="uid://bafvkb7higrw7" path="res://Assets/Resources/Ingredients/Ingredients Drink/chocolate_shavings_milk.tres" id="16_vdtk1"]
-[ext_resource type="Resource" uid="uid://die1wcthalmth" path="res://Assets/Resources/Ingredients/Ingredients Drink/ice.tres" id="16_yptro"]
-[ext_resource type="Resource" uid="uid://btoj5v3rcs1bc" path="res://Assets/Resources/Ingredients/Ingredients Drink/milk_2%.tres" id="17_sifca"]
+[ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients Drink/crispies.tres" id="17_o71tt"]
+[ext_resource type="Resource" uid="uid://mv7jsl5u0of1" path="res://Assets/Resources/Ingredients/Ingredients Drink/espresso_single.tres" id="18_g877j"]
 [ext_resource type="PackedScene" uid="uid://bn8mickssbjnb" path="res://Assets/Scenes/ingredient_dispenser.tscn" id="19_3cr71"]
 [ext_resource type="Texture2D" uid="uid://ca4wqistkghpr" path="res://Assets/Textures/white_glow_texture.tres" id="19_wqxv6"]
 [ext_resource type="PackedScene" uid="uid://daqrpthn200hs" path="res://Assets/Scenes/blender_base.tscn" id="20_bsiea"]
-[ext_resource type="Resource" uid="uid://csnacccra06mg" path="res://Assets/Resources/Ingredients/Ingredients Mixtures/mixture_chocolate_milk.tres" id="22_0jgay"]
-[ext_resource type="Resource" uid="uid://d31njdo60i1di" path="res://Assets/Resources/Ingredients/Ingredients Mixtures/mixture_dark_chocolate_milk.tres" id="23_bq846"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_646ul"]
 size = Vector2(125, 150)
@@ -388,97 +384,5 @@ startingArea = NodePath("../GUI/BG/wall/pfilterShelf")
 
 [node name="ingredientSelecter" parent="." node_paths=PackedStringArray("ingredientDispenser") instance=ExtResource("16_efse6")]
 position = Vector2(90, 806.615)
-ingredientDispensed = ExtResource("15_v4pfr")
-ingredientDispenser = NodePath("../ingredientDispenser")
-
-[node name="ingredientSelecter2" parent="." node_paths=PackedStringArray("ingredientDispenser") instance=ExtResource("16_efse6")]
-position = Vector2(170, 806.615)
-ingredientDispensed = ExtResource("16_vdtk1")
-ingredientDispenser = NodePath("../ingredientDispenser")
-
-[node name="ingredientSelecter3" parent="." node_paths=PackedStringArray("ingredientDispenser") instance=ExtResource("16_efse6")]
-position = Vector2(250, 806.615)
-ingredientDispensed = ExtResource("16_yptro")
-ingredientDispenser = NodePath("../ingredientDispenser")
-
-[node name="ingredientSelecter4" parent="." node_paths=PackedStringArray("ingredientDispenser") instance=ExtResource("16_efse6")]
-position = Vector2(330, 806.615)
-ingredientDispensed = ExtResource("17_sifca")
-ingredientDispenser = NodePath("../ingredientDispenser")
-
-[node name="ingredientDispenser" parent="." instance=ExtResource("19_3cr71")]
-visible = false
-
-[node name="blender" parent="." node_paths=PackedStringArray("blenderBase") instance=ExtResource("7_ix713")]
-blenderBase = NodePath("../blenderBase")
-
-[node name="blenderBase" parent="." node_paths=PackedStringArray("blenderCup") instance=ExtResource("20_bsiea")]
-position = Vector2(500, 500)
-blenderCup = NodePath("../blender")
-offset = Vector2(50, -100)
-mixturesList = Array[Resource("res://Assets/Scripts/ResourceScripts/ingredientResource.gd")]([ExtResource("22_0jgay"), ExtResource("23_bq846")])
-
-[node name="drinkMat" type="Node2D" parent="."]
-position = Vector2(753.75, 766.48)
-
-[node name="sprite2d" type="Sprite2D" parent="drinkMat"]
-self_modulate = Color(0.407843, 1, 0.568627, 1)
-texture = SubResource("PlaceholderTexture2D_646ul")
-
-[node name="area2d" type="Area2D" parent="drinkMat"]
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="drinkMat/area2d"]
-shape = SubResource("RectangleShape2D_asyd2")
-
-[node name="drink" parent="." instance=ExtResource("12_v4mwj")]
-position = Vector2(750, 775)
-
-[node name="coffeeGrinder" type="Node2D" parent="."]
-position = Vector2(1404, 508)
-
-[node name="sprite2d" type="Sprite2D" parent="coffeeGrinder"]
-texture = SubResource("PlaceholderTexture2D_rutb1")
-
-[node name="pfilterArea" type="Area2D" parent="coffeeGrinder" groups=["portafilterAreas"]]
-monitoring = false
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="coffeeGrinder/pfilterArea"]
-shape = SubResource("RectangleShape2D_bdeii")
-
-[node name="areaGlow" type="Sprite2D" parent="coffeeGrinder/pfilterArea/collisionShape2d"]
-visible = false
-scale = Vector2(2.69, 2.69)
-texture = ExtResource("19_wqxv6")
-
-[node name="double" type="Area2D" parent="coffeeGrinder" groups=["\'buttonAreas\'"]]
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="coffeeGrinder/double"]
-position = Vector2(30, -32)
-shape = SubResource("RectangleShape2D_qfqt6")
-debug_color = Color(0.243137, 0.588235, 0.431373, 0.866667)
-
-[node name="areaGlow2" type="Sprite2D" parent="coffeeGrinder/double/collisionShape2d"]
-visible = false
-texture = ExtResource("19_wqxv6")
-
-[node name="single" type="Area2D" parent="coffeeGrinder" groups=["\'buttonAreas\'"]]
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="coffeeGrinder/single"]
-position = Vector2(-30, -32)
-shape = SubResource("RectangleShape2D_c8vbo")
-debug_color = Color(0.243137, 0.588235, 0.431373, 0.866667)
-
-[node name="areaGlow3" type="Sprite2D" parent="coffeeGrinder/single/collisionShape2d"]
-visible = false
-texture = ExtResource("19_wqxv6")
-
-[node name="clear" type="Area2D" parent="coffeeGrinder" groups=["\'buttonAreas\'"]]
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="coffeeGrinder/clear"]
-position = Vector2(0, -100)
-shape = SubResource("RectangleShape2D_x2uiv")
-debug_color = Color(0.243137, 0.588235, 0.431373, 0.866667)
-
-[node name="areaGlow4" type="Sprite2D" parent="coffeeGrinder/clear/collisionShape2d"]
-visible = false
-texture = ExtResource("19_wqxv6")
+ingredientDispensed = ExtResource("17_o71tt")
+ingredientDispenser = NodePath("../ingr

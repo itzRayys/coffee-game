@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_nuyow")
-ingredientName = "Milk Chocolate Shavings"
+ingredientName = "Dark Chocolate Shavings"
 ingredientAmount = 0
 isUnlocked = false
+isMixture = false
+mixtureRecipe = Array[ExtResource("1_nuyow")]([])

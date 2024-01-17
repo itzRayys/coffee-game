@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://daqrpthn200hs"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/blenderBase.gd" id="1_nrial"]
+[ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients Drink/crispies.tres" id="3_8jx02"]
+[ext_resource type="Script" path="res://Assets/Scripts/ResourceScripts/ingredientResource.gd" id="4_ek63w"]
+
+[sub_resource type="Resource" id="Resource_7p52f"]
+script = ExtResource("4_ek63w")
+ingredientName = "Unknown Mixture"
+ingredientAmount = 0
+isUnlocked = false
+isMixture = true
+mixtureRecipe = Array[ExtResource("4_ek63w")]([ExtResource("3_8jx02")])
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jr5n1"]
+size = Vector2(100, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mpv3k"]
+size = Vector2(100, 150)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_au0cf"]
+size = Vector2(40, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hj4eb"]
+size = Vector2(40, 30)
+
+[node name="blenderBase" type="Node2D"]
+script = ExtResource("1_nrial")
+testttttt = 5
+unknownMixtureIngredient = SubResource("Resource_7p52f")
+
+[node name="sprite2d" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_jr5n1")
+centered = false
+
+[node name="blenderReturn" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="blenderReturn"]
+position = Vector2(50, -25)
+shape = SubResource("RectangleShape2D_mpv3k")
+
+[node name="blendButton" type="Area2D" parent="."]
+
+[node name="sprite2d2" type="Sprite2D" parent="blendButton"]
+self_modulate = Color(0.4, 1, 0.176471, 1)
+position = Vector2(50, 25)
+texture = SubResource("PlaceholderTexture2D_au0cf")
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="blendButton"]
+position = Vector2(50, 25)
+shape = SubResource("RectangleShape2D_hj4eb")
+debug_color = Color(0.341176, 0.611765, 0.282353, 0.419608)
+
+[connection signal="mouse_entered" from="blendButton" to="." method="_on_blend_button_mouse_entered"]
+[connection signal="mouse_exited" from="blendButton" to="." method="_on_blend_button_mouse_exited"]

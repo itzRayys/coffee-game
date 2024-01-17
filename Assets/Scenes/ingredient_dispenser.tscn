@@ -1,12 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://bn8mickssbjnb"]
+[gd_scene load_steps=9 format=3 uid="uid://bn8mickssbjnb"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/ingredientShaker.gd" id="1_7jk1j"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientTargetingComponent.gd" id="3_tx2rg"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/pickupToggleComponent.gd" id="4_g307t"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientDispenserComponent.gd" id="4_v3o0b"]
+[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/ingredientDispenser.gd" id="1_ljyb8"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientTargetingComponent.gd" id="2_ktbtk"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/pickupToggleComponent.gd" id="3_xlv7w"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_72ggr"]
+size = Vector2(10, 10)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f3uhl"]
 radius = 6.08276
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fcbyv"]
+size = Vector2(50, 75)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hehwn"]
 size = Vector2(50, 75)
@@ -14,18 +19,23 @@ size = Vector2(50, 75)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7b7hm"]
 size = Vector2(25, 25)
 
-[node name="ingredientShaker" type="Node2D" node_paths=PackedStringArray("targeting")]
-script = ExtResource("1_7jk1j")
+[node name="ingredientDispenser" type="Node2D" node_paths=PackedStringArray("targeting")]
+script = ExtResource("1_ljyb8")
 targeting = NodePath("ingredientTargeting")
 
 [node name="ingredientTargeting" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 8
 monitorable = false
-script = ExtResource("3_tx2rg")
+script = ExtResource("2_ktbtk")
+
+[node name="targetingSprite" type="Sprite2D" parent="ingredientTargeting"]
+self_modulate = Color(0.321569, 1, 0.811765, 0.32549)
+position = Vector2(-40, 40)
+texture = SubResource("PlaceholderTexture2D_72ggr")
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="ingredientTargeting"]
-position = Vector2(-68, 54)
+position = Vector2(-40, 40)
 shape = SubResource("CircleShape2D_f3uhl")
 debug_color = Color(1, 0, 0.0980392, 0.14902)
 
@@ -33,13 +43,13 @@ debug_color = Color(1, 0, 0.0980392, 0.14902)
 collision_layer = 0
 collision_mask = 0
 monitorable = false
-script = ExtResource("4_g307t")
+script = ExtResource("3_xlv7w")
 parent = NodePath("..")
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="pickupToggleComponent"]
-position = Vector2(-68, 54)
-shape = SubResource("CircleShape2D_f3uhl")
-debug_color = Color(1, 0, 0.0980392, 0.14902)
+position = Vector2(12.385, -10.39)
+rotation = 1.25664
+shape = SubResource("RectangleShape2D_fcbyv")
 
 [node name="mainSprite" type="Sprite2D" parent="."]
 self_modulate = Color(0.196078, 0.658824, 0, 1)
@@ -52,8 +62,14 @@ centered = false
 position = Vector2(25, 37)
 texture = SubResource("PlaceholderTexture2D_7b7hm")
 
-[node name="ingredientDispenserComponent" type="Node2D" parent="."]
-script = ExtResource("4_v3o0b")
+[node name="label" type="Label" parent="."]
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = -62.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "tyetstegegfd"
 
 [connection signal="area_entered" from="ingredientTargeting" to="ingredientTargeting" method="_on_area_entered"]
 [connection signal="area_exited" from="ingredientTargeting" to="ingredientTargeting" method="_on_area_exited"]
