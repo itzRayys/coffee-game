@@ -1,38 +1,37 @@
-extends Area2D
-class_name ingredient_container_component
+extends Node2D
+class_name ingredient_container_component2
 
 # Emitted only when ingredient is accepted and added into array
 signal ingredientAdded()
 
+@export var isEnabled:bool = true
 @export var allowDuplicates:bool = true
 @export var heldIngredients:Array[ingredient_resource]
 
 @export_group("Whitelist")
-@export var enableWhitelist:bool = true
+@export var enableWhitelist:bool = false
 @export var whitelistedIngredients:Array[ingredient_resource]
 
-@export_group("Extras")
-@export var disableContainerOnHeld:bool = true
-@export var collisionShape:CollisionShape2D
-@export var pickupComponent:pickup_toggle_component
+@export_group("Internals")
+@export var pickupComponent:pickup_component
 @export var heldIngredientsPreview:Label
+@export var dispenserPosition:Marker2D
 
+var originalPosition
+var originalRotation
 
 func _ready():
 	updatePreviewLabel()
-	disableOnHeldSetup()
 
 # Called by ingredient dispensers, checks if the inputted ingredient can be received, and added if true
 func receiveIngredient(ingredient:ingredient_resource):
 	if !canReceiveCheck(ingredient):
 		return
 	addIngredient(ingredient)
-	updatePreviewLabel()
-	print("Added ", ingredient.ingredientName)
 
 # Returns if inputted ingredient[ingredient_resource] can be accepted or not.
 func canReceiveCheck(ingredient:ingredient_resource) -> bool:
-	if !isOnWhitelist(ingredient) or isDuplicate(ingredient):
+	if !isEnabled or !isOnWhitelist(ingredient) or isDuplicate(ingredient):
 		return false
 	return true
 
@@ -64,34 +63,40 @@ func isOnWhitelist(ingredient:ingredient_resource) -> bool:
 func addIngredient(ingredient:ingredient_resource):
 	heldIngredients.append(ingredient)
 	ingredientAdded.emit()
+	updatePreviewLabel()
 
 # Clears held ingredients
 func clearIngredients():
 	heldIngredients.clear()
 	updatePreviewLabel()
 
-# Sets up shape disable/enable to pickupComponent signals
-func disableOnHeldSetup():
-	if !disableContainerOnHeld or !pickupComponent:
+func enableDispensePreview(dispenser:Node2D):
+	originalPosition = dispenser.get_global_transform().get_origin()
+	originalRotation = dispenser.rotation
+	dispenser.modulate.a = .25
+	dispenser.position = dispenserPosition.get_global_transform().get_origin()
+	dispenser.rotation = dispenserPosition.rotation
+func disableDispensePreview(dispenser:Node2D):
+	if !dispenser:
 		return
-	pickupComponent.pickedUp.connect(disableShape, CONNECT_DEFERRED)
-	pickupComponent.dropped.connect(enableShape, CONNECT_DEFERRED)
+	dispenser.modulate.a = 1
+	dispenser.position = originalPosition
+	dispenser.rotation = originalRotation
 
+# Formats and updates a label to preview ingredientsHeld
 func updatePreviewLabel():
 	if !heldIngredientsPreview:
 		return
-	var test:String = ""
-	for i in heldIngredients.size():
-		var test2 = heldIngredients[i].ingredientName + '\n'
-		test += test2
-	heldIngredientsPreview.text = test
+	var mainString:String = ""
+	if heldIngredients.size() > 0:
+		for i in heldIngredients.size():
+			var formatString = heldIngredients[i].ingredientName + '\n'
+			mainString += formatString
+	heldIngredientsPreview.text = mainString
+	print(mainString)
 
-# Enable/disable collision shape (Used if container is able to be picked up and used as dispenser [blender])
-func enableShape():
-	if !collisionShape:
-		return
-	collisionShape.disabled = false
-func disableShape():
-	if !collisionShape:
-		return
-	collisionShape.disabled = true
+# Enables/disables ingredient container
+func enableContainer():
+	isEnabled = true
+func disableContainer():
+	isEnabled = false

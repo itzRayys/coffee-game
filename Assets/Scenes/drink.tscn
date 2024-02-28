@@ -1,44 +1,67 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6hjopgubjos1"]
+[gd_scene load_steps=9 format=3 uid="uid://b6hjopgubjos1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/drink.gd" id="1_rek8h"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/dragDropComponent.gd" id="2_0cyfw"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/visualComponent.gd" id="2_wxmox"]
 [ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/recipeCheckerComponent.gd" id="3_uf7xl"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientContainerComponent.gd" id="4_lxt3n"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/pickupComponent.gd" id="4_knc75"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientContainerComponent2.gd" id="5_vl7q5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxvlx"]
-size = Vector2(95, 120)
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ovjb1"]
+size = Vector2(105, 130)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rjjse"]
 size = Vector2(95, 120)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwsq1"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_56mvm"]
 size = Vector2(95, 120)
 
-[node name="drink" type="Node2D" node_paths=PackedStringArray("cupSprite", "dragDropComponent")]
+[node name="drink" type="Node2D" node_paths=PackedStringArray("ingredientContainer", "visualComponent", "pickupComponent")]
 script = ExtResource("1_rek8h")
-cupSprite = NodePath("cupSprite")
-dragDropComponent = NodePath("dragDropComponent")
+ingredientContainer = NodePath("ingredientContainerComponent2")
+visualComponent = NodePath("visualComponent")
+pickupComponent = NodePath("pickupComponent")
 
-[node name="dragDropComponent" type="Area2D" parent="." node_paths=PackedStringArray("parent")]
-monitorable = false
-script = ExtResource("2_0cyfw")
+[node name="pickupComponent" type="Node2D" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("4_knc75")
 parent = NodePath("..")
 
-[node name="dDShape" type="CollisionShape2D" parent="dragDropComponent"]
-shape = SubResource("RectangleShape2D_mxvlx")
+[node name="recipeCheckerComponent" type="Node2D" parent="."]
+script = ExtResource("3_uf7xl")
+
+[node name="visualComponent" type="Node2D" parent="." node_paths=PackedStringArray("glowSprite")]
+script = ExtResource("2_wxmox")
+glowSprite = NodePath("../glowSprite")
+
+[node name="ingredientContainerComponent2" type="Node2D" parent="." node_paths=PackedStringArray("pickupComponent", "heldIngredientsPreview", "dispenserPosition")]
+script = ExtResource("5_vl7q5")
+allowDuplicates = false
+pickupComponent = NodePath("../pickupComponent")
+heldIngredientsPreview = NodePath("label")
+dispenserPosition = NodePath("../marker2d")
+
+[node name="label" type="Label" parent="ingredientContainerComponent2"]
+offset_left = -39.0
+offset_top = -51.0
+offset_right = 1.0
+offset_bottom = -28.0
+
+[node name="glowSprite" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 0, 0.458824, 1)
+texture = SubResource("PlaceholderTexture2D_ovjb1")
 
 [node name="cupSprite" type="Sprite2D" parent="."]
 self_modulate = Color(0.14902, 0, 0.458824, 1)
 texture = SubResource("PlaceholderTexture2D_rjjse")
 
-[node name="recipeCheckerComponent" type="Node2D" parent="."]
-script = ExtResource("3_uf7xl")
+[node name="area2d" type="Area2D" parent="."]
 
-[node name="ingredientContainerComponent" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 0
-script = ExtResource("4_lxt3n")
-enableWhitelist = false
+[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
+shape = SubResource("RectangleShape2D_56mvm")
 
-[node name="iContainerShape" type="CollisionShape2D" parent="ingredientContainerComponent"]
-shape = SubResource("RectangleShape2D_lwsq1")
+[node name="marker2d" type="Marker2D" parent="."]
+position = Vector2(46, -78)
+rotation = -0.937242
+
+[connection signal="mouse_entered" from="area2d" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="area2d" to="." method="_on_area_2d_mouse_exited"]

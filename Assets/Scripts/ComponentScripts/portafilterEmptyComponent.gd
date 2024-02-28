@@ -3,7 +3,7 @@ class_name empty_filter_component
 
 signal emptiedFilter()
 
-@export var filterContainer:pfilter_container
+@export var filterContainer:pfilter_container_component
 var currentPortafilter:pfilter_filter
 var filterOz:pfilter_oz
 

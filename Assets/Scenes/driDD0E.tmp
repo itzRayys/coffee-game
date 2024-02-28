@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://d0ml0manfpx0i"]
+[gd_scene load_steps=34 format=3 uid="uid://d0ml0manfpx0i"]
 
 [ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/stripe.png" id="1_dcby5"]
 [ext_resource type="Script" path="res://Assets/Scripts/MainScripts/drinkStation.gd" id="1_s61xd"]
@@ -9,29 +9,30 @@
 [ext_resource type="PackedScene" uid="uid://do1y0ar0416g5" path="res://Assets/Scenes/blender.tscn" id="7_ix713"]
 [ext_resource type="PackedScene" uid="uid://dd147s3gtkprx" path="res://Assets/Scenes/portafilter.tscn" id="7_oixdv"]
 [ext_resource type="PackedScene" uid="uid://dxko44sll1xhg" path="res://Assets/Scenes/cups_menu.tscn" id="8_dqjb4"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/visualComponent.gd" id="11_cj7ob"]
 [ext_resource type="Texture2D" uid="uid://c8xiuhrqngx7e" path="res://Assets/Sprites/temp_drink_station_wall.png" id="11_osrg7"]
 [ext_resource type="Texture2D" uid="uid://n1gdvwu3qvno" path="res://Assets/Sprites/temp_drink_station_counter.png" id="12_qixfj"]
 [ext_resource type="PackedScene" uid="uid://b6hjopgubjos1" path="res://Assets/Scenes/drink.tscn" id="12_v4mwj"]
-[ext_resource type="PackedScene" uid="uid://dugs6yi15j2jj" path="res://Assets/Scenes/ingredient_dispenser.tscn" id="19_3cr71"]
+[ext_resource type="Resource" uid="uid://babjbal6ofvvn" path="res://Assets/Resources/Ingredients/Ingredients Drink/chocolate_shavings_dark.tres" id="15_v4pfr"]
+[ext_resource type="PackedScene" uid="uid://cknjwd466au73" path="res://Assets/Scenes/ingredient_selecter.tscn" id="16_efse6"]
+[ext_resource type="Resource" uid="uid://bafvkb7higrw7" path="res://Assets/Resources/Ingredients/Ingredients Drink/chocolate_shavings_milk.tres" id="16_vdtk1"]
+[ext_resource type="Resource" uid="uid://die1wcthalmth" path="res://Assets/Resources/Ingredients/Ingredients Drink/ice.tres" id="16_yptro"]
+[ext_resource type="Resource" uid="uid://btoj5v3rcs1bc" path="res://Assets/Resources/Ingredients/Ingredients Drink/milk_2%.tres" id="17_sifca"]
+[ext_resource type="PackedScene" uid="uid://bn8mickssbjnb" path="res://Assets/Scenes/ingredient_dispenser.tscn" id="19_3cr71"]
 [ext_resource type="PackedScene" uid="uid://daqrpthn200hs" path="res://Assets/Scenes/blender_base.tscn" id="20_bsiea"]
 [ext_resource type="Resource" uid="uid://csnacccra06mg" path="res://Assets/Resources/Ingredients/Ingredients Mixtures/mixture_chocolate_milk.tres" id="22_0jgay"]
 [ext_resource type="Resource" uid="uid://d31njdo60i1di" path="res://Assets/Resources/Ingredients/Ingredients Mixtures/mixture_dark_chocolate_milk.tres" id="23_bq846"]
 [ext_resource type="PackedScene" uid="uid://gfvi342wm2b" path="res://Assets/Scenes/coffee_grinder.tscn" id="24_e6fhy"]
-[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/drinkStationVisuals.gd" id="25_41edo"]
 [ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/filterShelf.gd" id="26_2rsuw"]
 [ext_resource type="PackedScene" uid="uid://dglckw1llxjwj" path="res://Assets/Scenes/drink_submit.tscn" id="26_3osxd"]
 [ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/holdInfo.gd" id="27_5p5k6"]
 [ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/portafilterContainerComponent.gd" id="27_bwcd2"]
 [ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/holdComponent.gd" id="27_tnpce"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m65yn"]
-size = Vector2(200, 75)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_soc4e"]
-size = Vector2(220, 95)
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/holdGlow.gd" id="27_walg8"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6niqh"]
+size = Vector2(200, 75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m65yn"]
 size = Vector2(200, 75)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_646ul"]
@@ -45,13 +46,9 @@ font_size = 24
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[node name="drinkStation" type="Node2D" node_paths=PackedStringArray("ingredientContainers", "drinkStationVisuals", "holdInfo", "holdComponent")]
+[node name="drinkStation" type="Node2D"]
 process_mode = 1
 script = ExtResource("1_s61xd")
-ingredientContainers = [NodePath("blender")]
-drinkStationVisuals = NodePath("visuals")
-holdInfo = NodePath("holdComponent/holdInfo")
-holdComponent = NodePath("holdComponent")
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
@@ -338,9 +335,9 @@ position = Vector2(700, 250)
 script = ExtResource("26_2rsuw")
 filterContainer = NodePath("portafilterContainerComponent")
 
-[node name="visualComponent" type="Node2D" parent="filterShelf" node_paths=PackedStringArray("glowSprite")]
-script = ExtResource("11_cj7ob")
-glowSprite = NodePath("../glow")
+[node name="sprite2d" type="Sprite2D" parent="filterShelf"]
+self_modulate = Color(0.14902, 1, 0.0313726, 1)
+texture = SubResource("PlaceholderTexture2D_6niqh")
 
 [node name="filterHome" type="Marker2D" parent="filterShelf"]
 position = Vector2(-70.7, -13.5)
@@ -365,15 +362,6 @@ filterPositions = [NodePath("../filterHome"), NodePath("../filterHome2"), NodePa
 [node name="collisionShape2d" type="CollisionShape2D" parent="filterShelf/portafilterContainerComponent"]
 shape = SubResource("RectangleShape2D_m65yn")
 
-[node name="glow" type="Sprite2D" parent="filterShelf"]
-visible = false
-self_modulate = Color(0.364706, 0.517647, 1, 1)
-texture = SubResource("PlaceholderTexture2D_soc4e")
-
-[node name="sprite2d" type="Sprite2D" parent="filterShelf"]
-self_modulate = Color(0.14902, 1, 0.0313726, 1)
-texture = SubResource("PlaceholderTexture2D_6niqh")
-
 [node name="drinkSubmit" parent="." node_paths=PackedStringArray("holdComponent") groups=["place_drinks"] instance=ExtResource("26_3osxd")]
 position = Vector2(1650, 200)
 holdComponent = NodePath("../holdComponent")
@@ -392,6 +380,12 @@ texture = SubResource("PlaceholderTexture2D_646ul")
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="drinkMat/area2d"]
 shape = SubResource("RectangleShape2D_asyd2")
+
+[node name="blenderBase" parent="." node_paths=PackedStringArray("blenderCup") instance=ExtResource("20_bsiea")]
+position = Vector2(500, 500)
+blenderCup = NodePath("../blender")
+offset = Vector2(50, -100)
+mixturesList = Array[Resource("res://Assets/Scripts/ResourceScripts/ingredientResource.gd")]([ExtResource("22_0jgay"), ExtResource("23_bq846")])
 
 [node name="portafilter" parent="." node_paths=PackedStringArray("filterShelf") groups=["pickup_portafilters"] instance=ExtResource("7_oixdv")]
 position = Vector2(724.585, 275.12)
@@ -414,28 +408,53 @@ filterShelf = NodePath("../filterShelf")
 isDouble = true
 ID = 3
 
-[node name="blenderBase" parent="." node_paths=PackedStringArray("blenderCup") instance=ExtResource("20_bsiea")]
-position = Vector2(550, 525)
-blenderCup = NodePath("../blender")
-mixturesList = Array[Resource("res://Assets/Scripts/ResourceScripts/ingredientResource.gd")]([ExtResource("22_0jgay"), ExtResource("23_bq846")])
+[node name="ingredientSelecter" parent="." node_paths=PackedStringArray("ingredientDispenser") groups=["pickup_ingredients"] instance=ExtResource("16_efse6")]
+position = Vector2(90, 806.615)
+ingredientDispensed = ExtResource("15_v4pfr")
+ingredientDispenser = NodePath("../ingredientDispenser")
 
-[node name="blender" parent="." node_paths=PackedStringArray("blenderBase", "holdComponent") groups=["pickup_ingredients"] instance=ExtResource("7_ix713")]
-position = Vector2(550, 400)
+[node name="ingredientSelecter2" parent="." node_paths=PackedStringArray("ingredientDispenser") groups=["pickup_ingredients"] instance=ExtResource("16_efse6")]
+position = Vector2(170, 806.615)
+ingredientDispensed = ExtResource("16_vdtk1")
+ingredientDispenser = NodePath("../ingredientDispenser")
+
+[node name="ingredientSelecter3" parent="." node_paths=PackedStringArray("ingredientDispenser") groups=["pickup_ingredients"] instance=ExtResource("16_efse6")]
+position = Vector2(250, 806.615)
+ingredientDispensed = ExtResource("16_yptro")
+ingredientDispenser = NodePath("../ingredientDispenser")
+
+[node name="ingredientSelecter4" parent="." node_paths=PackedStringArray("ingredientDispenser") groups=["pickup_ingredients"] instance=ExtResource("16_efse6")]
+position = Vector2(330, 806.615)
+ingredientDispensed = ExtResource("17_sifca")
+ingredientDispenser = NodePath("../ingredientDispenser")
+
+[node name="ingredientDispenser" parent="." instance=ExtResource("19_3cr71")]
+visible = false
+
+[node name="blender" parent="." node_paths=PackedStringArray("blenderBase") groups=["pickup_ingredients"] instance=ExtResource("7_ix713")]
 blenderBase = NodePath("../blenderBase")
-holdComponent = NodePath("../holdComponent")
 
 [node name="drink" parent="." node_paths=PackedStringArray("holdComponent") groups=["pickup_drinks"] instance=ExtResource("12_v4mwj")]
 position = Vector2(750, 775)
 holdComponent = NodePath("../holdComponent")
 
-[node name="holdComponent" type="Node2D" parent="."]
+[node name="holdComponent" type="Node2D" parent="." node_paths=PackedStringArray("drinkLocations", "holdInfo")]
 script = ExtResource("27_tnpce")
+drinkLocations = [NodePath("../drinkSubmit")]
+holdInfo = NodePath("holdInfo")
+
+[node name="holdGlows" type="Node2D" parent="holdComponent"]
+script = ExtResource("27_walg8")
 
 [node name="holdInfo" type="Node2D" parent="holdComponent" node_paths=PackedStringArray("holdComponent", "label")]
 script = ExtResource("27_5p5k6")
 holdComponent = NodePath("..")
 labelOffset = Vector2(25, 0)
 label = NodePath("label")
+labelTemplate = "Held Item: {0}
+	State: {1}
+	Visual: {2}
+	Pickup: {3}"
 
 [node name="label" type="Label" parent="holdComponent/holdInfo"]
 offset_right = 40.0
@@ -443,16 +462,6 @@ offset_bottom = 23.0
 theme_override_font_sizes/font_size = 24
 label_settings = SubResource("LabelSettings_jv6bb")
 
-[node name="ingredientDispenser" parent="." node_paths=PackedStringArray("holdComponent") instance=ExtResource("19_3cr71")]
-position = Vector2(90, 806)
-holdComponent = NodePath("../holdComponent")
-
-[node name="visuals" type="Node" parent="." node_paths=PackedStringArray("drinkLocations", "portafilterLocations", "blenderLocations", "ingredientLocations")]
-script = ExtResource("25_41edo")
-drinkLocations = [NodePath("../drinkSubmit")]
-portafilterLocations = [NodePath("../filterShelf"), NodePath("../coffeeGrinder")]
-blenderLocations = [NodePath("../blenderBase")]
-ingredientLocations = [NodePath("../blender"), NodePath("../drink")]
-
-[connection signal="itemDropped" from="holdComponent" to="." method="_on_hold_component_item_dropped"]
-[connection signal="itemPickedUp" from="holdComponent" to="." method="_on_hold_component_item_picked_up"]
+[connection signal="itemDropped" from="holdComponent" to="drinkSubmit" method="_on_hold_component_item_dropped"]
+[connection signal="itemPickedUp" from="holdComponent" to="drinkSubmit" method="_on_hold_component_item_picked_up"]
+[connection signal="itemPlaced" from="holdComponent" to="drinkSubmit" method="_on_hold_component_item_placed"]

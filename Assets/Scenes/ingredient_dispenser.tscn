@@ -1,77 +1,45 @@
-[gd_scene load_steps=9 format=3 uid="uid://bn8mickssbjnb"]
+[gd_scene load_steps=9 format=3 uid="uid://dugs6yi15j2jj"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/ingredientDispenser.gd" id="1_ljyb8"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientTargetingComponent.gd" id="2_ktbtk"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/pickupToggleComponent.gd" id="3_xlv7w"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientDispenser.gd" id="1_grc5a"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientDispenserComponent.gd" id="2_j40ws"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/pickupComponent.gd" id="3_a852s"]
+[ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients Drink/crispies.tres" id="3_ikvte"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/visualComponent.gd" id="4_nmunw"]
+[ext_resource type="Texture2D" uid="uid://hp855m0rss08" path="res://Assets/Sprites/ingredient_shaker_temp.png" id="5_gx5qq"]
+[ext_resource type="Texture2D" uid="uid://4l3wn0c3v058" path="res://Assets/Sprites/ingredient_shaker_glow_temp.png" id="6_5gevn"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_72ggr"]
-size = Vector2(10, 10)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8acm2"]
+size = Vector2(60, 80)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_f3uhl"]
-radius = 6.08276
+[node name="ingredientDispenser" type="Node2D" node_paths=PackedStringArray("ingredientDispenser", "pickupComponent", "visualComponent")]
+script = ExtResource("1_grc5a")
+ingredientDispenser = NodePath("ingredientDispenserComponent")
+pickupComponent = NodePath("pickupComponent")
+visualComponent = NodePath("visualComponent")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fcbyv"]
-size = Vector2(50, 75)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hehwn"]
-size = Vector2(50, 75)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7b7hm"]
-size = Vector2(25, 25)
-
-[node name="ingredientDispenser" type="Node2D" node_paths=PackedStringArray("targeting")]
-script = ExtResource("1_ljyb8")
-targeting = NodePath("ingredientTargeting")
-
-[node name="ingredientTargeting" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 8
-monitorable = false
-script = ExtResource("2_ktbtk")
-
-[node name="targetingSprite" type="Sprite2D" parent="ingredientTargeting"]
-self_modulate = Color(0.321569, 1, 0.811765, 0.32549)
-position = Vector2(-40, 40)
-texture = SubResource("PlaceholderTexture2D_72ggr")
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="ingredientTargeting"]
-position = Vector2(-40, 40)
-shape = SubResource("CircleShape2D_f3uhl")
-debug_color = Color(1, 0, 0.0980392, 0.14902)
-
-[node name="pickupToggleComponent" type="Area2D" parent="." node_paths=PackedStringArray("parent")]
-collision_layer = 0
-collision_mask = 0
-monitorable = false
-script = ExtResource("3_xlv7w")
+[node name="pickupComponent" type="Node2D" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("3_a852s")
 parent = NodePath("..")
 
-[node name="collisionShape2d" type="CollisionShape2D" parent="pickupToggleComponent"]
-position = Vector2(12.385, -10.39)
-rotation = 1.25664
-shape = SubResource("RectangleShape2D_fcbyv")
+[node name="ingredientDispenserComponent" type="Node2D" parent="."]
+script = ExtResource("2_j40ws")
+ingredientDispensed = ExtResource("3_ikvte")
 
-[node name="mainSprite" type="Sprite2D" parent="."]
-self_modulate = Color(0.196078, 0.658824, 0, 1)
-position = Vector2(-16, 25)
-rotation = -1.88496
-texture = SubResource("PlaceholderTexture2D_hehwn")
-centered = false
+[node name="visualComponent" type="Node2D" parent="." node_paths=PackedStringArray("glowSprite")]
+script = ExtResource("4_nmunw")
+glowSprite = NodePath("../glow")
 
-[node name="stickerSprite" type="Sprite2D" parent="mainSprite"]
-position = Vector2(25, 37)
-texture = SubResource("PlaceholderTexture2D_7b7hm")
+[node name="sprite2d" type="Sprite2D" parent="."]
+texture = ExtResource("5_gx5qq")
 
-[node name="label" type="Label" parent="."]
-offset_top = -100.0
-offset_right = 150.0
-offset_bottom = -62.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 25
-text = "tyetstegegfd"
+[node name="glow" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("6_5gevn")
 
-[connection signal="area_entered" from="ingredientTargeting" to="ingredientTargeting" method="_on_area_entered"]
-[connection signal="area_exited" from="ingredientTargeting" to="ingredientTargeting" method="_on_area_exited"]
-[connection signal="dropped" from="pickupToggleComponent" to="." method="_on_pickup_toggle_component_dropped"]
-[connection signal="pickedUp" from="pickupToggleComponent" to="." method="_on_pickup_toggle_component_picked_up"]
+[node name="area2d" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
+shape = SubResource("RectangleShape2D_8acm2")
+
+[connection signal="mouse_entered" from="area2d" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="area2d" to="." method="_on_area_2d_mouse_exited"]

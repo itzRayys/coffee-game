@@ -1,7 +1,7 @@
 extends Control
 
-@export var returnLocation:pfilter_shelf
-@export var filterContainer:pfilter_container
+@export var returnLocation:filter_shelf
+@export var filterContainer:pfilter_container_component
 @export var autoReturn:bool = true
 
 func _on_portafilter_empty_component_emptied_filter():

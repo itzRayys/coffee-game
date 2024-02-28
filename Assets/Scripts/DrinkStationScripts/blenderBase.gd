@@ -9,6 +9,9 @@ class_name blender_base
 @export_group("Extras")
 @export var mixturesList:Array[ingredient_resource]
 
+@export_group("Internals")
+@export var visualComponent:visual_component
+
 var hasBlender:bool = true
 var hoveringBlendButton:bool = false
 
@@ -99,3 +102,5 @@ func _on_blend_button_mouse_entered():
 	hoveringBlendButton = true
 func _on_blend_button_mouse_exited():
 	hoveringBlendButton = false
+
+

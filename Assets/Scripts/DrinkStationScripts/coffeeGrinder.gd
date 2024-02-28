@@ -1,12 +1,6 @@
-extends Control
+extends Node2D
 class_name coffee_grinder
 
-@export var filterContainer:pfilter_container
+@export var filterContainer:pfilter_container_component
 @export var grinder:grinder_component
 
-func _ready():
-	pass
-	#filterContainer.received2Portafilter.connect(setPortafilter)
-func setPortafilter(filter):
-	print("set filter", filter)
-	grinder.currentPortafilter = filterContainer.heldPortafilter

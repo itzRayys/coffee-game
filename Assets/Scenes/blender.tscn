@@ -1,14 +1,23 @@
-[gd_scene load_steps=13 format=3 uid="uid://do1y0ar0416g5"]
+[gd_scene load_steps=12 format=3 uid="uid://do1y0ar0416g5"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/blender.gd" id="1_4ykkg"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientContainerComponent.gd" id="3_kjrpx"]
-[ext_resource type="Resource" uid="uid://babjbal6ofvvn" path="res://Assets/Resources/Ingredients/Ingredients Drink/chocolate_shavings_dark.tres" id="4_qt4sk"]
+[ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients Drink/crispies.tres" id="3_4idfo"]
+[ext_resource type="Script" path="res://Assets/Scripts/ResourceScripts/ingredientResource.gd" id="4_h17cs"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/visualComponent.gd" id="4_ia6tj"]
 [ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientDispenserComponent.gd" id="4_rn3bj"]
-[ext_resource type="Resource" uid="uid://bafvkb7higrw7" path="res://Assets/Resources/Ingredients/Ingredients Drink/chocolate_shavings_milk.tres" id="5_8ornj"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/pickupToggleComponent.gd" id="5_i7n6g"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientTargetingComponent.gd" id="5_tvp3v"]
-[ext_resource type="Resource" uid="uid://die1wcthalmth" path="res://Assets/Resources/Ingredients/Ingredients Drink/ice.tres" id="6_m5ad1"]
-[ext_resource type="Resource" uid="uid://btoj5v3rcs1bc" path="res://Assets/Resources/Ingredients/Ingredients Drink/milk_2%.tres" id="7_ab2dd"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/pickupComponent.gd" id="8_bun5q"]
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/ingredientContainerComponent2.gd" id="9_disgr"]
+
+[sub_resource type="Resource" id="Resource_upu02"]
+script = ExtResource("4_h17cs")
+ingredientName = "Unknown Mixture"
+ingredientAmount = 0
+isUnlocked = false
+isMixture = true
+mixtureRecipe = Array[ExtResource("4_h17cs")]([ExtResource("3_4idfo")])
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_myghr"]
+size = Vector2(160, 210)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_066e5"]
 size = Vector2(150, 200)
@@ -16,61 +25,55 @@ size = Vector2(150, 200)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mbw6"]
 size = Vector2(150, 200)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_di3np"]
-
-[node name="blender" type="Node2D"]
+[node name="blender" type="Node2D" node_paths=PackedStringArray("ingredientDispenser", "pickupComponent", "visualComponent", "ingredientContainer")]
 script = ExtResource("1_4ykkg")
+ingredientDispenser = NodePath("ingredientDispenserComponent")
+pickupComponent = NodePath("pickupComponent")
+visualComponent = NodePath("visualComponent")
+ingredientContainer = NodePath("ingredientContainerComponent2")
+
+[node name="ingredientDispenserComponent" type="Node2D" parent="."]
+script = ExtResource("4_rn3bj")
+ingredientDispensed = SubResource("Resource_upu02")
+maxDispenses = 1
+
+[node name="pickupComponent" type="Node2D" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("8_bun5q")
+parent = NodePath("..")
+
+[node name="visualComponent" type="Node2D" parent="." node_paths=PackedStringArray("glowSprite")]
+script = ExtResource("4_ia6tj")
+glowSprite = NodePath("../glow")
+
+[node name="glow" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(0.380392, 1, 0.211765, 1)
+texture = SubResource("PlaceholderTexture2D_myghr")
 
 [node name="sprite2d" type="Sprite2D" parent="."]
 self_modulate = Color(0.0705882, 1, 0.211765, 1)
 texture = SubResource("PlaceholderTexture2D_066e5")
 
-[node name="pickupToggleComponent" type="Area2D" parent="." node_paths=PackedStringArray("parent")]
-monitorable = false
-script = ExtResource("5_i7n6g")
-parent = NodePath("..")
+[node name="area2d" type="Area2D" parent="."]
 
-[node name="collisionShape2d" type="CollisionShape2D" parent="pickupToggleComponent"]
+[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
 shape = SubResource("RectangleShape2D_8mbw6")
-debug_color = Color(0.215686, 0.576471, 0.745098, 0.419608)
 
-[node name="ingredientContainerComponent" type="Area2D" parent="." node_paths=PackedStringArray("pickupComponent", "heldIngredientsPreview")]
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("3_kjrpx")
-allowDuplicates = false
-whitelistedIngredients = Array[Resource("res://Assets/Scripts/ResourceScripts/ingredientResource.gd")]([ExtResource("4_qt4sk"), ExtResource("5_8ornj"), ExtResource("6_m5ad1"), ExtResource("7_ab2dd")])
-pickupComponent = NodePath("../pickupToggleComponent")
+[node name="marker2d" type="Marker2D" parent="."]
+position = Vector2(90, -150)
+rotation = -2.06298
+
+[node name="ingredientContainerComponent2" type="Node2D" parent="." node_paths=PackedStringArray("pickupComponent", "heldIngredientsPreview", "dispenserPosition")]
+script = ExtResource("9_disgr")
+pickupComponent = NodePath("../pickupComponent")
 heldIngredientsPreview = NodePath("label")
+dispenserPosition = NodePath("../marker2d")
 
-[node name="collisionShape2d" type="CollisionShape2D" parent="ingredientContainerComponent"]
-shape = SubResource("RectangleShape2D_8mbw6")
-
-[node name="label" type="Label" parent="ingredientContainerComponent"]
+[node name="label" type="Label" parent="ingredientContainerComponent2"]
 offset_left = -62.0
 offset_top = -88.0
 offset_right = -22.0
 offset_bottom = -65.0
 
-[node name="ingredientDispenserComponent" type="Node2D" parent="." node_paths=PackedStringArray("targeting")]
-script = ExtResource("4_rn3bj")
-targeting = NodePath("../ingredientTargetingComponent")
-maxDispenses = 1
-
-[node name="ingredientTargetingComponent" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 8
-monitorable = false
-script = ExtResource("5_tvp3v")
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="ingredientTargetingComponent"]
-position = Vector2(-125, 0)
-shape = SubResource("RectangleShape2D_di3np")
-
-[connection signal="area_entered" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_area_entered"]
-[connection signal="area_exited" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_area_exited"]
-[connection signal="dropped" from="pickupToggleComponent" to="." method="_on_pickup_toggle_component_dropped"]
-[connection signal="mouse_entered" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_mouse_exited"]
-[connection signal="pickedUp" from="pickupToggleComponent" to="." method="_on_pickup_toggle_component_picked_up"]
+[connection signal="mouse_entered" from="area2d" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="area2d" to="." method="_on_area_2d_mouse_exited"]

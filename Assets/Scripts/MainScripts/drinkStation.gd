@@ -1,9 +1,30 @@
 extends Node2D
 class_name main_drink_station
 
+
 @export var completedDrinks:Array[drink_drink]
 
-var num:int = 0
+# Just finished organizing and cleaning a bit up. blender
+# sometimes does wonkyness with blending and adding mix
+# when picking up to itself?? fix pls
+#Working mainly here and visual^^ also blender/iContainer
+#doing stuff like handling inputs where to put and
+#what is listening etc. check drawing, pretty much next
+# WORK ON CONTAINERS AND INTERACT THINGS!! They listen
+# if input is interact then check if holding item
+# IF SO THEN TAKE THE ITEM AND DO THINGS WITH IT!!!!
+# Or just what you need from item, so on. so item is
+# Coded just holding the information and needed funcs
+
+
+@export_group("Internals")
+@export var ingredientContainers:Array[Node2D]
+@export var drinkStationVisuals:drink_station_visuals
+@export var holdInfo:hold_info
+@export var holdComponent:hold_component
+
+var iContainersEnabled:bool = false
+
 #OROROROR it could be an array that accepts type:ingredients
 #each ingredient is a resource (no node) that has the name
 #	plus the sprites for different amounts and the int to set amount
@@ -13,3 +34,89 @@ var num:int = 0
 #	each ingredient, check list to remove possibles/set what drink
 #	currently is!!!!!!!
 
+func _ready():
+	holdInfo.updateLabel(null)
+	setAllIngredientContainers(false)
+
+# __Signal Calls__
+func onItemPickup(item:Node2D):
+	holdInfo.updateLabel(item)
+	doDrinkThings(item)
+	doFilterThings(item)
+	doDispenserThings(item)
+	doBlenderThings(item)
+func onItemDropped(item:Node2D):
+	if iContainersEnabled:
+		setAllIngredientContainers(false)
+	holdInfo.updateLabel(null)
+	drinkStationVisuals.disableAllGlows()
+	drinkStationVisuals.disableItemGlow(item)
+
+
+
+# __Item specific calls__
+
+# Enables drink place glows
+func doDrinkThings(item:Node2D):
+	if !item is drink_drink:
+		return
+	drinkStationVisuals.enableDrinkGlows(item)
+# Enables filter place glows
+func doFilterThings(item:Node2D):
+	if !item is pfilter_filter:
+		return
+	drinkStationVisuals.enablePortafilterGlows(item)
+# Enables ingredient place glows
+func doDispenserThings(item:Node2D):
+	var ingredient = getIngredientDispensed(item)
+	if !ingredient:
+		return
+	drinkStationVisuals.enableIngredientGlows(ingredient)
+	setAllIngredientContainers(true)
+	setHeldIngredientDispensed(ingredient)
+# Enables blender place glows
+func doBlenderThings(item:Node2D):
+	if !item is blender_blender:
+		return
+	drinkStationVisuals.enableBlenderGlows(item)
+
+
+
+
+
+# __Extra Functions__
+
+# Sets all ingredient containers to inputted active/inactive
+func setAllIngredientContainers(isActive:bool):
+	print("\n___Setting All iContainers isActive To {0}___\n".format([isActive]).to_upper())
+	iContainersEnabled = isActive
+	for i in ingredientContainers.size():
+		if !ingredientContainers[i].has_method("setIngredientContainer"):
+			print("    - ", ingredientContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE AN ICONTAINER**")
+			return
+		print("    - ", ingredientContainers[i].name, ": SET!")
+		ingredientContainers[i].setIngredientContainer(isActive)
+	print("\n")
+# Sets holdComponent.itemIngredientDispensed
+func setHeldIngredientDispensed(ingredient:ingredient_resource):
+	holdComponent.itemIngredientDispensed = ingredient
+# Input an item and return ingredient it can dispense/null
+func getIngredientDispensed(item) -> ingredient_resource:
+	if item.get_child_count() <= 0:
+		return null
+	
+	var nodes = item.get_children()
+	for i in nodes.size():
+		if nodes[i] is ingredient_dispenser_component:
+			return nodes[i].ingredientDispensed
+	return null
+
+
+
+
+
+# __Signals__
+func _on_hold_component_item_dropped(item):
+	onItemDropped(item)
+func _on_hold_component_item_picked_up(item):
+	onItemPickup(item)

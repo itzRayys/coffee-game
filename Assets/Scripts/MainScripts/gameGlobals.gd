@@ -1,5 +1,8 @@
 extends Node
 
+signal pickedUp()
+signal dropped()
+
 #important globals
 var currentInteractionID: int = 0
 var currentOrder = []

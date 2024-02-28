@@ -1,11 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dd147s3gtkprx"]
+[gd_scene load_steps=8 format=3 uid="uid://dd147s3gtkprx"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/DrinkStationScripts/portafilter.gd" id="1_chd5a"]
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/dragDropComponent.gd" id="2_ptofa"]
 [ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/portafilterOzComponent.gd" id="3_ib3ny"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibdxk"]
-size = Vector2(64, 84)
+[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/pickupToggleComponent.gd" id="3_y1o3u"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_j2noq"]
 size = Vector2(65, 85)
@@ -15,22 +12,19 @@ font_size = 50
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[node name="portafilter" type="Node2D" node_paths=PackedStringArray("dragDrop_component", "oz_component")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibdxk"]
+size = Vector2(64, 84)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g6hnt"]
+size = Vector2(64, 84)
+
+[node name="portafilter" type="Node2D" node_paths=PackedStringArray("oz_component", "pickupComponent")]
 script = ExtResource("1_chd5a")
-dragDrop_component = NodePath("drag_drop_component")
 oz_component = NodePath("filter_oz_component")
-
-[node name="drag_drop_component" type="Area2D" parent="." node_paths=PackedStringArray("parent")]
-collision_layer = 2
-collision_mask = 4
-monitorable = false
-script = ExtResource("2_ptofa")
-parent = NodePath("..")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="drag_drop_component"]
-shape = SubResource("RectangleShape2D_ibdxk")
+pickupComponent = NodePath("pickupToggleComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 0.141176, 1)
 texture = SubResource("PlaceholderTexture2D_j2noq")
 
 [node name="filter_oz_component" type="Node" parent="." node_paths=PackedStringArray("filter", "label")]
@@ -51,8 +45,30 @@ text = "30"
 label_settings = SubResource("LabelSettings_p7yvh")
 horizontal_alignment = 1
 
-[connection signal="area_entered" from="drag_drop_component" to="drag_drop_component" method="_on_area_entered"]
-[connection signal="area_exited" from="drag_drop_component" to="drag_drop_component" method="_on_area_exited"]
-[connection signal="dropped" from="drag_drop_component" to="." method="_on_drag_drop_component_dropped"]
-[connection signal="mouse_entered" from="drag_drop_component" to="drag_drop_component" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="drag_drop_component" to="drag_drop_component" method="_on_mouse_exited"]
+[node name="pickupToggleComponent" type="Area2D" parent="." node_paths=PackedStringArray("parent", "sprite")]
+collision_mask = 5
+script = ExtResource("3_y1o3u")
+parent = NodePath("..")
+sprite = NodePath("../Sprite2D")
+positionOffset = Vector2(10.725, 5.545)
+rotationOffset = -5.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pickupToggleComponent"]
+shape = SubResource("RectangleShape2D_ibdxk")
+
+[node name="area2d" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="area2d"]
+shape = SubResource("RectangleShape2D_g6hnt")
+
+[connection signal="area_entered" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_area_entered"]
+[connection signal="area_exited" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_area_exited"]
+[connection signal="dropped" from="pickupToggleComponent" to="." method="_on_pickup_toggle_component_dropped"]
+[connection signal="mouse_entered" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_mouse_exited"]
+[connection signal="pickedUp" from="pickupToggleComponent" to="." method="_on_pickup_toggle_component_picked_up"]
+[connection signal="area_entered" from="area2d" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="area2d" to="." method="_on_area_2d_area_exited"]
