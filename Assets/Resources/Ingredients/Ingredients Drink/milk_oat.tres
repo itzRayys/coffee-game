@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="ingredient_resource" load_steps=2 format=3 uid="uid://c1kq4fismca8f"]
-
-[ext_resource type="Script" path="res://Assets/Scripts/ResourceScripts/ingredientResource.gd" id="1_iaqvd"]
-
-[resource]
-script = ExtResource("1_iaqvd")
-ingredientName = ""
-ingredientAmount = 0
-isUnlocked = false

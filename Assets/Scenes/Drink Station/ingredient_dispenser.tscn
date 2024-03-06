@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3 uid="uid://dugs6yi15j2jj"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientDispenser.gd" id="1_grc5a"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientDispenserComponent.gd" id="2_j40ws"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/pickupComponent.gd" id="3_a852s"]
+[ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients/crispies.tres" id="4_h3h5f"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/visualComponent.gd" id="4_nmunw"]
+[ext_resource type="Texture2D" uid="uid://hp855m0rss08" path="res://Assets/Sprites/ingredient_shaker_temp.png" id="5_gx5qq"]
+[ext_resource type="Texture2D" uid="uid://4l3wn0c3v058" path="res://Assets/Sprites/ingredient_shaker_glow_temp.png" id="6_5gevn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8acm2"]
+size = Vector2(60, 80)
+
+[node name="ingredientDispenser" type="Node2D" node_paths=PackedStringArray("ingredientDispenser", "pickupComponent", "visualComponent")]
+script = ExtResource("1_grc5a")
+ingredientDispenser = NodePath("ingredientDispenserComponent")
+pickupComponent = NodePath("pickupComponent")
+visualComponent = NodePath("visualComponent")
+
+[node name="pickupComponent" type="Node2D" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("3_a852s")
+parent = NodePath("..")
+
+[node name="ingredientDispenserComponent" type="Node2D" parent="."]
+script = ExtResource("2_j40ws")
+ingredientDispensed = ExtResource("4_h3h5f")
+
+[node name="visualComponent" type="Node2D" parent="." node_paths=PackedStringArray("glowSprite")]
+script = ExtResource("4_nmunw")
+glowSprite = NodePath("../glow")
+
+[node name="sprite2d" type="Sprite2D" parent="."]
+texture = ExtResource("5_gx5qq")
+
+[node name="glow" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("6_5gevn")
+
+[node name="area2d" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
+shape = SubResource("RectangleShape2D_8acm2")
+
+[connection signal="mouse_entered" from="area2d" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="area2d" to="." method="_on_area_2d_mouse_exited"]

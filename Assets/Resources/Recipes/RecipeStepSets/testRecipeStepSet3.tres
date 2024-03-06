@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="recipe_step_set" load_steps=4 format=3 uid="uid://c0yqjrapns1lr"]
 
-[ext_resource type="Resource" uid="uid://babjbal6ofvvn" path="res://Assets/Resources/Ingredients/Ingredients Drink/chocolate_shavings_dark.tres" id="1_edj2x"]
-[ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients Drink/crispies.tres" id="2_jc4ev"]
-[ext_resource type="Script" path="res://Assets/Scripts/ResourceScripts/recipeStepSet.gd" id="5_vj1sn"]
+[ext_resource type="Resource" uid="uid://babjbal6ofvvn" path="res://Assets/Resources/Ingredients/Ingredients/chocolate_shavings_dark.tres" id="1_edj2x"]
+[ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients/crispies.tres" id="2_jc4ev"]
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/recipe_steps_set.gd" id="3_5ixm8"]
 
 [resource]
-script = ExtResource("5_vj1sn")
+script = ExtResource("3_5ixm8")
 isOrdered = false
 ingredients = Array[Resource("res://Assets/Scripts/ResourceScripts/ingredientResource.gd")]([ExtResource("1_edj2x"), ExtResource("2_jc4ev")])

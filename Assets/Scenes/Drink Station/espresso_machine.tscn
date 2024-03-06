@@ -1,0 +1,166 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg00wrkak7osn"]
+
+[ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/temp_white.png" id="1_oratt"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/espressoMachine.gd" id="2_q476f"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/portafilterContainerComponent.gd" id="3_m47t6"]
+[ext_resource type="Texture2D" uid="uid://oiay3wf3vkpr" path="res://icon.svg" id="4_7thxf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4cw4n"]
+size = Vector2(106, 120)
+
+[node name="espressoMachine" type="TextureRect"]
+self_modulate = Color(0.701961, 0.607843, 0.635294, 1)
+offset_right = 500.0
+offset_bottom = 215.0
+mouse_filter = 2
+texture = ExtResource("1_oratt")
+expand_mode = 1
+script = ExtResource("2_q476f")
+
+[node name="milkJugTray" type="TextureRect" parent="."]
+self_modulate = Color(0.6, 0.522, 0.5441, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -225.0
+offset_top = 10.0
+offset_right = 225.0
+offset_bottom = 70.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("1_oratt")
+expand_mode = 1
+
+[node name="milkJug" type="TextureRect" parent="milkJugTray"]
+self_modulate = Color(0.8, 0.694118, 0.72549, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -95.0
+offset_top = -105.0
+offset_right = -35.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("1_oratt")
+expand_mode = 1
+
+[node name="milkJug2" type="TextureRect" parent="milkJugTray"]
+self_modulate = Color(0.8, 0.694118, 0.72549, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -90.0
+offset_right = 70.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("1_oratt")
+expand_mode = 1
+
+[node name="dripTray" type="TextureRect" parent="."]
+self_modulate = Color(0.6, 0.522, 0.5441, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -65.0
+offset_right = 210.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("1_oratt")
+expand_mode = 1
+
+[node name="groupLeft" type="TextureRect" parent="."]
+self_modulate = Color(0.6, 0.522, 0.5441, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -27.5
+offset_right = -50.0
+offset_bottom = -2.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_oratt")
+expand_mode = 1
+
+[node name="groupRight" type="TextureRect" parent="."]
+self_modulate = Color(0.6, 0.522, 0.5441, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 50.0
+offset_top = -27.5
+offset_right = 100.0
+offset_bottom = -2.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_oratt")
+expand_mode = 1
+
+[node name="steamWand" type="TextureRect" parent="."]
+self_modulate = Color(0.6, 0.522, 0.5441, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = -27.5
+offset_right = 77.0
+offset_bottom = 17.5
+grow_vertical = 2
+rotation = 0.1309
+mouse_filter = 2
+texture = ExtResource("1_oratt")
+expand_mode = 1
+
+[node name="filterContainerEspressoMachineLeft" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_m47t6")
+
+[node name="CollisionShapeLeft" type="CollisionShape2D" parent="filterContainerEspressoMachineLeft"]
+position = Vector2(177, 140)
+shape = SubResource("RectangleShape2D_4cw4n")
+
+[node name="Sprite2D" type="Sprite2D" parent="filterContainerEspressoMachineLeft/CollisionShapeLeft"]
+position = Vector2(0.499994, 0.500001)
+scale = Vector2(0.835938, 0.945313)
+texture = ExtResource("4_7thxf")
+
+[node name="filterContainerEspressoMachineRight" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_m47t6")
+
+[node name="CollisionShapeRight" type="CollisionShape2D" parent="filterContainerEspressoMachineRight"]
+position = Vector2(327, 140)
+shape = SubResource("RectangleShape2D_4cw4n")
+
+[node name="Sprite2D2" type="Sprite2D" parent="filterContainerEspressoMachineRight/CollisionShapeRight"]
+scale = Vector2(0.835938, 0.945313)
+texture = ExtResource("4_7thxf")

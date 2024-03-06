@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://kxk2mp6m7myu"]
-
-[ext_resource type="Script" path="res://Assets/Scripts/ComponentScripts/grinderComponent.gd" id="1_f4ncp"]
-
-[node name="grinderComponent" type="Node2D"]
-script = ExtResource("1_f4ncp")

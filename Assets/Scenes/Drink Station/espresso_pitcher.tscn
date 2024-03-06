@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://p8s2vk6pi30d"]
+
+[ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/temp_white.png" id="1_h4lvg"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/placeableReceiverComponent.gd" id="2_uae7s"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientContainerComponent.gd" id="3_651c1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5yatd"]
+size = Vector2(122, 220)
+
+[node name="espressoPitcher" type="TextureRect"]
+self_modulate = Color(0.407843, 0.517647, 0.419608, 1)
+offset_right = 122.0
+offset_bottom = 220.0
+mouse_filter = 2
+texture = ExtResource("1_h4lvg")
+expand_mode = 1
+
+[node name="placeableReceiverComponent" type="Area2D" parent="."]
+script = ExtResource("2_uae7s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="placeableReceiverComponent"]
+position = Vector2(61, 110)
+shape = SubResource("RectangleShape2D_5yatd")
+
+[node name="ContainerComponent" type="Node2D" parent="."]
+script = ExtResource("3_651c1")

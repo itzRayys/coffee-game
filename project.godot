@@ -11,17 +11,17 @@ config_version=5
 [application]
 
 config/name="coffeeGame"
-run/main_scene="res://Assets/Scenes/main.tscn"
+run/main_scene="res://Assets/Scenes/Main/main.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 run/low_processor_mode=true
 config/icon="res://icon.svg"
 
 [autoload]
 
-PlayerGlobals="*res://Assets/Scripts/MainScripts/playerGlobals.gd"
-AreaSwitcher="*res://Assets/Scripts/MainScripts/areaSwitcher.gd"
+PlayerGlobals="*res://Assets/Scripts/Globals/playerGlobals.gd"
+AreaSwitcher="*res://Assets/Scripts/Main/areaSwitcher.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
-GameGlobals="*res://Assets/Scripts/MainScripts/gameGlobals.gd"
+GameGlobals="*res://Assets/Scripts/Globals/gameGlobals.gd"
 
 [display]
 

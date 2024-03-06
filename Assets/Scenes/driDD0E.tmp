@@ -385,7 +385,7 @@ shape = SubResource("RectangleShape2D_asyd2")
 position = Vector2(500, 500)
 blenderCup = NodePath("../blender")
 offset = Vector2(50, -100)
-mixturesList = Array[Resource("res://Assets/Scripts/ResourceScripts/ingredientResource.gd")]([ExtResource("22_0jgay"), ExtResource("23_bq846")])
+mixturesList = Array[Resource("res://Assets/Scripts/ResourceScripts/ingredient.gd")]([ExtResource("22_0jgay"), ExtResource("23_bq846")])
 
 [node name="portafilter" parent="." node_paths=PackedStringArray("filterShelf") groups=["pickup_portafilters"] instance=ExtResource("7_oixdv")]
 position = Vector2(724.585, 275.12)

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6u2kinqk3pj5"]
+
+[ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/temp_white.png" id="1_he07x"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/cupBox.gd" id="2_64pnu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_achk7"]
+
+[node name="cupBox" type="TextureRect"]
+self_modulate = Color(0.407843, 0.517647, 0.419608, 1)
+offset_right = 240.0
+offset_bottom = 110.0
+mouse_filter = 2
+texture = ExtResource("1_he07x")
+expand_mode = 1
+script = ExtResource("2_64pnu")
+
+[node name="button" type="Button" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_achk7")
+
+[connection signal="pressed" from="button" to="." method="_on_button_pressed"]

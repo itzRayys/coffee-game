@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ingredient_resource" load_steps=2 format=3 uid="uid://g7d5s6h5lyuy"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/ingredient.gd" id="1_turqq"]
+
+[resource]
+script = ExtResource("1_turqq")
+ingredientName = "Almond Milk"
+ingredientAmount = 0
+isUnlocked = false
