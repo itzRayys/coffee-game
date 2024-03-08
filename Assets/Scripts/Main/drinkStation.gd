@@ -71,8 +71,10 @@ func doDispenserThings(item:Node2D):
 	var ingredient = getIngredientDispensed(item)
 	if !ingredient:
 		return
-	drinkStationVisuals.enableIngredientGlows(ingredient)
 	setAllIngredientContainers(true)
+	if item.has_method("setIngredientContainer"):
+		item.setIngredientContainer(false)
+	drinkStationVisuals.enableIngredientGlows(ingredient)
 	setHeldIngredientDispensed(ingredient)
 # Enables blender place glows
 func doBlenderThings(item:Node2D):
@@ -88,15 +90,14 @@ func doBlenderThings(item:Node2D):
 
 # Sets all ingredient containers to inputted active/inactive
 func setAllIngredientContainers(isActive:bool):
-	print("\n___Setting All iContainers isActive To {0}___\n".format([isActive]).to_upper())
+	print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] Setting iContainers active state to {0}...[/color]".format([isActive]))
 	iContainersEnabled = isActive
 	for i in ingredientContainers.size():
 		if !ingredientContainers[i].has_method("setIngredientContainer"):
-			print("    - ", ingredientContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE AN ICONTAINER**")
+			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", ingredientContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE AN ICONTAINER**[/color]")
 			return
-		print("    - ", ingredientContainers[i].name, ": SET!")
+		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", ingredientContainers[i].name, ": SET![/color]")
 		ingredientContainers[i].setIngredientContainer(isActive)
-	print("\n")
 # Sets holdComponent.itemIngredientDispensed
 func setHeldIngredientDispensed(ingredient:ingredient_resource):
 	holdComponent.itemIngredientDispensed = ingredient

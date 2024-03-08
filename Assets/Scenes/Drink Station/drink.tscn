@@ -37,7 +37,7 @@ script = ExtResource("5_vl7q5")
 allowDuplicates = false
 pickupComponent = NodePath("../pickupComponent")
 heldIngredientsPreview = NodePath("label")
-dispenserPosition = NodePath("../marker2d")
+dispenserPosition = NodePath("../corner")
 
 [node name="label" type="Label" parent="ingredientContainerComponent2"]
 offset_left = -39.0
@@ -59,9 +59,8 @@ texture = SubResource("PlaceholderTexture2D_rjjse")
 [node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
 shape = SubResource("RectangleShape2D_56mvm")
 
-[node name="marker2d" type="Marker2D" parent="."]
-position = Vector2(46, -78)
-rotation = -0.937242
+[node name="corner" type="Marker2D" parent="."]
+position = Vector2(47, -60)
 
 [connection signal="mouse_entered" from="area2d" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="area2d" to="." method="_on_area_2d_mouse_exited"]

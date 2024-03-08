@@ -2,6 +2,7 @@ extends Node2D
 class_name ingredient_dispenser
 
 @export var holdComponent:hold_component
+@export var ingredientDispensedOverride:ingredient_resource
 
 @export_group("Internals")
 @export var ingredientDispenser:ingredient_dispenser_component
@@ -10,6 +11,10 @@ class_name ingredient_dispenser
 
 var isHovering:bool = false
 
+func _ready():
+	if !ingredientDispensedOverride or !ingredientDispenser:
+		return
+	ingredientDispenser.setIngredient(ingredientDispensedOverride)
 
 func _input(event):
 	if holdComponent.itemHeld or !event.is_action_pressed("interact") or !isHovering:

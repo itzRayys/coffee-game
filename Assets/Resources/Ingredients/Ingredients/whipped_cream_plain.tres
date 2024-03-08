@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_4b1co")
-ingredientName = "Ice"
+ingredientName = "Whipped Cream"
 ingredientAmount = 0
 isUnlocked = false
+isMixture = false
+mixtureRecipe = Array[ExtResource("1_4b1co")]([])

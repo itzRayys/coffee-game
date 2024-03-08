@@ -23,7 +23,6 @@ func _input(event):
 		print("pickup blender")
 		pickupComponent.pickup(holdComponent)
 	if holdComponent.itemHeld and ingredientContainer.isEnabled:
-		print("get ingredient to blender")
 		ingredientContainer.receiveIngredient(holdComponent.itemIngredientDispensed)
 
 # Returns blenderCup on ready
@@ -51,7 +50,7 @@ func onHover(itemHeld, isDispenser):
 	if !itemHeld:
 		visualComponent.enableGlow()
 		return
-	elif isDispenser:
+	elif isDispenser and itemHeld != self:
 		ingredientContainer.enableDispensePreview(itemHeld)
 		previewing = true
 		return
@@ -60,7 +59,7 @@ func onHover(itemHeld, isDispenser):
 func noHover(itemHeld):
 	if itemHeld != self:
 		visualComponent.disableGlow()
-	if !previewing:
+	if !previewing or itemHeld == self:
 		return
 	ingredientContainer.disableDispensePreview(itemHeld)
 

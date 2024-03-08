@@ -8,12 +8,13 @@ class_name drink_station_visuals
 @export var blenderLocations:Array[Node2D]
 @export var ingredientLocations:Array[Node2D]
 
+#CURRENTLY NOT BEING CALLED PROBABLY OLD CODE
 func setGlows(item):
 	if !item:
 		disableAllGlows()
 		return
 	enableDrinkGlows(item)
-	enableIngredientGlows(item)
+	#enableIngredientGlows(item)
 	enableBlenderGlows(item)
 	enablePortafilterGlows(item)
 
@@ -37,7 +38,7 @@ func disableItemGlow(item):
 func enableDrinkGlows(item):
 	if !item is drink_drink:
 		return
-	print("[Drink Station Visuals] Enabling drink glows...")
+	print_rich("[color=orange]", Time.get_datetime_string_from_system(true, true), " [Drink Station Visuals] Enabling drink glows...[/color]")
 	for i in drinkLocations.size():
 		if drinkLocations[i].placeComponent and drinkLocations[i].placeComponent.canPlaceCheck() and drinkLocations[i].visualComponent:
 			drinkLocations[i].visualComponent.enableGlow()
@@ -46,16 +47,17 @@ func enableDrinkGlows(item):
 func enableIngredientGlows(ingredient:ingredient_resource):
 	if !ingredient:
 		return
-	print("[Drink Station Visuals] Enabling iContainer glows...")
+	print_rich("[color=orange]", Time.get_datetime_string_from_system(true, true), " [Drink Station Visuals] Enabling iContainer glows...[/color]")
 	for i in ingredientLocations.size():
 		if ingredientLocations[i].ingredientContainer and ingredientLocations[i].ingredientContainer.canReceiveCheck(ingredient) and ingredientLocations[i].visualComponent:
+			print_rich("[color=orange]", Time.get_datetime_string_from_system(true, true), " [Drink Station Visuals]         - ", ingredientLocations[i].name, "[/color]")
 			ingredientLocations[i].visualComponent.enableGlow()
 
 # Enables glow of valid blender locations
 func enableBlenderGlows(item):
 	if !item is blender_blender:
 		return
-	print("[Drink Station Visuals] Enabling blender glows...")
+	print_rich("[color=orange]", Time.get_datetime_string_from_system(true, true), " [Drink Station Visuals] Enabling blender glows...[/color]")
 	for i in blenderLocations.size():
 		if blenderLocations[i] is blender_base:
 			blenderLocations[i].visualComponent.enableGlow()
@@ -64,7 +66,7 @@ func enableBlenderGlows(item):
 func enablePortafilterGlows(item):
 	if !item is pfilter_filter:
 		return
-	print("[Drink Station Visuals] Enabling pfilter glows...")
+	print_rich("[color=orange]", Time.get_datetime_string_from_system(true, true), " [Drink Station Visuals] Enabling pfilter glows...[/color]")
 	var currentLocation = item.currentLocation
 	for i in portafilterLocations.size():
 		if portafilterLocations[i].name != currentLocation.name and portafilterLocations[i].canReceiveCheck(item) and portafilterLocations[i].visualComponent:
@@ -72,6 +74,7 @@ func enablePortafilterGlows(item):
 
 # Disables all glows
 func disableAllGlows():
+	print_rich("[color=orange]", Time.get_datetime_string_from_system(true, true), " [Drink Station Visuals] Disabling all glows...[/color]")
 	disableGlows(drinkLocations)
 	disableGlows(portafilterLocations)
 	disableGlows(blenderLocations)

@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_iaqvd")
-ingredientName = ""
+ingredientName = "Oat Milk"
 ingredientAmount = 0
 isUnlocked = false
+isMixture = false
+mixtureRecipe = Array[ExtResource("1_iaqvd")]([])

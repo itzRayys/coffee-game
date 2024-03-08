@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_rp1qp")
-ingredientName = "Plain Whipped Cream"
+ingredientName = "Strawberry Whipped Cream"
 ingredientAmount = 0
 isUnlocked = false
+isMixture = false
+mixtureRecipe = Array[ExtResource("1_rp1qp")]([])

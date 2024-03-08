@@ -9,6 +9,8 @@ signal itemDropped(item:Node2D)
 
 @export var itemIngredientDispensed:ingredient_resource
 
+var canPickup
+
 
 var isPreviewing:bool = false
 var originalPosition:Vector2
@@ -42,3 +44,9 @@ func getOriginalValues(item:Node2D):
 	originalPosition = item.global_position
 	originalRotation = item.global_rotation
 	originalAlpha = item.modulate.a
+
+
+###DRINKSTATION
+###HOLDCOMPONENT (THIS)
+###PICKUPCOMPONENT
+###was working on hover preview things, just have functions in each container so when you pickup specific item type they get enabled. if hover while enabled then take item and preview okok!!

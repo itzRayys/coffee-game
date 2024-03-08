@@ -24,6 +24,7 @@ func onHover():
 	if !holdComponent:
 		return
 	if !holdComponent.itemHeld:
+		previewing = false
 		visualComponent.enableGlow()
 	elif holdComponent.itemHeld is ingredient_dispenser or holdComponent.itemHeld is blender_blender:
 		ingredientContainer.enableDispensePreview(holdComponent.itemHeld)
