@@ -2,8 +2,7 @@ extends Button
 
 enum sceneToSwitchTo { areaSwitch, frontCounter, drinkStation, foodStation, title }
 
-@export
-var switchSceneTo: sceneToSwitchTo
+@export var switchSceneTo: sceneToSwitchTo
 
 
 func _on_pressed():

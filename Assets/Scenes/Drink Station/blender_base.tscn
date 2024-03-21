@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://daqrpthn200hs"]
+[gd_scene load_steps=10 format=3 uid="uid://daqrpthn200hs"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/blenderBase.gd" id="1_nrial"]
 [ext_resource type="Resource" uid="uid://bg5k7dythg6pd" path="res://Assets/Resources/Ingredients/Ingredients/crispies.tres" id="2_l2kr0"]
 [ext_resource type="Script" path="res://Assets/Scripts/Resources/ingredient.gd" id="4_ek63w"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/visualComponent.gd" id="4_si15l"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="5_r15dm"]
+[ext_resource type="Texture2D" uid="uid://cxqc3juvtp1dm" path="res://Assets/Sprites/blender_base_temp.png" id="6_3imt5"]
 
 [sub_resource type="Resource" id="Resource_7p52f"]
 script = ExtResource("4_ek63w")
@@ -17,16 +19,7 @@ mixtureRecipe = Array[ExtResource("4_ek63w")]([ExtResource("2_l2kr0")])
 size = Vector2(100, 150)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hj4eb"]
-size = Vector2(40, 30)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8a7sj"]
-size = Vector2(110, 60)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jr5n1"]
-size = Vector2(100, 50)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lyc6i"]
-size = Vector2(40, 30)
+size = Vector2(31, 17)
 
 [node name="blenderBase" type="Node2D" node_paths=PackedStringArray("visualComponent")]
 script = ExtResource("1_nrial")
@@ -45,24 +38,24 @@ collision_mask = 0
 [node name="collisionShape2d" type="CollisionShape2D" parent="blenderReturn"]
 position = Vector2(0, -50)
 shape = SubResource("RectangleShape2D_mpv3k")
+debug_color = Color(0.588235, 0.533333, 0.423529, 0.188235)
 
 [node name="blendButton" type="Area2D" parent="."]
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="blendButton"]
+position = Vector2(-0.5, 11.5)
 shape = SubResource("RectangleShape2D_hj4eb")
 debug_color = Color(0.341176, 0.611765, 0.282353, 0.419608)
 
 [node name="glow" type="Sprite2D" parent="."]
 visible = false
-self_modulate = Color(0.0745098, 1, 0.839216, 1)
-texture = SubResource("PlaceholderTexture2D_8a7sj")
+self_modulate = Color(0.329412, 0.690196, 0.631373, 1)
+position = Vector2(0, 5)
+scale = Vector2(0.9105, 0.6505)
+texture = ExtResource("5_r15dm")
 
 [node name="sprite2d" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_jr5n1")
-
-[node name="sprite2d2" type="Sprite2D" parent="."]
-self_modulate = Color(0.4, 1, 0.176471, 1)
-texture = SubResource("PlaceholderTexture2D_lyc6i")
+texture = ExtResource("6_3imt5")
 
 [connection signal="mouse_entered" from="blendButton" to="." method="_on_blend_button_mouse_entered"]
 [connection signal="mouse_exited" from="blendButton" to="." method="_on_blend_button_mouse_exited"]

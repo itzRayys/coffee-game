@@ -1,7 +1,7 @@
 extends Node
 
-signal pickedUp()
-signal dropped()
+signal pickedUp(holdable:holdable_component)
+signal cancelled(holdable:holdable_component)
 
 #important globals
 var currentInteractionID: int = 0
@@ -150,3 +150,9 @@ func loadFoodResources():
 			foodResources.push_back(load(foodsPath.path_join(currentFoodFileName)))
 		currentFoodFileName = foodsFolder.get_next()
 	foodsFolder.list_dir_end()
+
+func setHeldHoldable(holdable:holdable_component):
+	if !holdable or isHolding:
+		return
+	heldObject = holdable
+	pickedUp.emit(holdable)

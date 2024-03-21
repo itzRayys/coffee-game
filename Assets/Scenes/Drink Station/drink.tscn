@@ -5,12 +5,8 @@
 [ext_resource type="Script" path="res://Assets/Scripts/Components/recipeCheckerComponent.gd" id="3_uf7xl"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/pickupComponent.gd" id="4_knc75"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientContainerComponent2.gd" id="5_vl7q5"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ovjb1"]
-size = Vector2(105, 130)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rjjse"]
-size = Vector2(95, 120)
+[ext_resource type="Texture2D" uid="uid://dmgu26qdbohij" path="res://Assets/Sprites/cup_temp.png" id="6_gb0tf"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="6_xbt0m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_56mvm"]
 size = Vector2(95, 120)
@@ -45,19 +41,18 @@ offset_top = -51.0
 offset_right = 1.0
 offset_bottom = -28.0
 
-[node name="glowSprite" type="Sprite2D" parent="."]
-visible = false
-self_modulate = Color(1, 0, 0.458824, 1)
-texture = SubResource("PlaceholderTexture2D_ovjb1")
-
-[node name="cupSprite" type="Sprite2D" parent="."]
-self_modulate = Color(0.14902, 0, 0.458824, 1)
-texture = SubResource("PlaceholderTexture2D_rjjse")
-
 [node name="area2d" type="Area2D" parent="."]
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
 shape = SubResource("RectangleShape2D_56mvm")
+
+[node name="glowSprite" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 0, 0.458824, 1)
+texture = ExtResource("6_xbt0m")
+
+[node name="cupSprite" type="Sprite2D" parent="."]
+texture = ExtResource("6_gb0tf")
 
 [node name="corner" type="Marker2D" parent="."]
 position = Vector2(47, -60)

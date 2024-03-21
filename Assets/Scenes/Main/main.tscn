@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bfm3kfr3y53j3"]
+[gd_scene load_steps=14 format=3 uid="uid://bfm3kfr3y53j3"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Main/toggleOrdersMenu.gd" id="1_e2ppr"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="2_a3mdc"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d0ml0manfpx0i" path="res://Assets/Scenes/Main/drinkStation.tscn" id="7_yb50e"]
 [ext_resource type="PackedScene" uid="uid://bp483cfkssqqs" path="res://Assets/Scenes/Main/areaSwitch.tscn" id="8_jg8rx"]
 [ext_resource type="PackedScene" uid="uid://c74gml7scsokp" path="res://Assets/Scenes/Main/title.tscn" id="9_3cg32"]
+[ext_resource type="PackedScene" uid="uid://d3bn0t4gnk7vw" path="res://Assets/Scenes/Main/entry screen.tscn" id="10_qusf7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dufu5"]
 bg_color = Color(0, 0, 0, 0.411765)
@@ -26,6 +27,7 @@ process_mode = 3
 
 [node name="GUI" type="Control" parent="."]
 process_mode = 3
+visible = false
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
@@ -370,6 +372,7 @@ visible = false
 script = ExtResource("5_1redv")
 
 [node name="frontCounter" parent="." node_paths=PackedStringArray("drinkStation") instance=ExtResource("5_txt6m")]
+visible = false
 drinkStation = NodePath("../drinkStation")
 
 [node name="drinkStation" parent="." instance=ExtResource("7_yb50e")]
@@ -380,6 +383,11 @@ visible = false
 
 [node name="title" parent="." instance=ExtResource("9_3cg32")]
 visible = false
+
+[node name="titleScreen" parent="." node_paths=PackedStringArray("entryScene") instance=ExtResource("10_qusf7")]
+offset_right = 1920.0
+offset_bottom = 1080.0
+entryScene = NodePath("../frontCounter")
 
 [connection signal="pressed" from="GUI/ordersMenu/ordersMenuPanel/ordersMenuButton" to="GUI/ordersMenu/ordersMenuPanel" method="_on_orders_menu_button_pressed"]
 [connection signal="pressed" from="GUI/pauseMenu/pauseBtn" to="GUI/pauseMenu" method="_on_pause_btn_pressed"]

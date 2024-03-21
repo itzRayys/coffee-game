@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dd147s3gtkprx"]
+[gd_scene load_steps=9 format=3 uid="uid://dd147s3gtkprx"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/portafilter.gd" id="1_chd5a"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/portafilterOzComponent.gd" id="3_ib3ny"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/pickupToggleComponent.gd" id="3_y1o3u"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/pickupComponent.gd" id="4_t8wjm"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_j2noq"]
 size = Vector2(65, 85)
@@ -18,10 +19,13 @@ size = Vector2(64, 84)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g6hnt"]
 size = Vector2(64, 84)
 
-[node name="portafilter" type="Node2D" node_paths=PackedStringArray("oz_component", "pickupComponent")]
+[node name="portafilter" type="Node2D" node_paths=PackedStringArray("oz_component", "pickupComponent", "pickupComp")]
 script = ExtResource("1_chd5a")
+isDouble = null
+ID = null
 oz_component = NodePath("filter_oz_component")
 pickupComponent = NodePath("pickupToggleComponent")
+pickupComp = NodePath("pickupComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 0.141176, 1)
@@ -63,6 +67,10 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="area2d"]
 shape = SubResource("RectangleShape2D_g6hnt")
+
+[node name="pickupComponent" type="Node2D" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("4_t8wjm")
+parent = NodePath("..")
 
 [connection signal="area_entered" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_area_entered"]
 [connection signal="area_exited" from="pickupToggleComponent" to="pickupToggleComponent" method="_on_area_exited"]

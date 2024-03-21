@@ -5,7 +5,9 @@
 [ext_resource type="Script" path="res://Assets/Scripts/Resources/ingredient.gd" id="4_h17cs"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/visualComponent.gd" id="4_ia6tj"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientDispenserComponent.gd" id="4_rn3bj"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="7_qstv6"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/pickupComponent.gd" id="8_bun5q"]
+[ext_resource type="Texture2D" uid="uid://bmg6qm5sdd6sh" path="res://Assets/Sprites/blender_cup_temp.png" id="8_jayy2"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientContainerComponent2.gd" id="9_disgr"]
 
 [sub_resource type="Resource" id="Resource_upu02"]
@@ -15,12 +17,6 @@ ingredientAmount = 0
 isUnlocked = false
 isMixture = true
 mixtureRecipe = Array[ExtResource("4_h17cs")]([ExtResource("3_3edfx")])
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_myghr"]
-size = Vector2(160, 210)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_066e5"]
-size = Vector2(150, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mbw6"]
 size = Vector2(150, 200)
@@ -51,19 +47,21 @@ parent = NodePath("..")
 script = ExtResource("4_ia6tj")
 glowSprite = NodePath("../glow")
 
-[node name="glow" type="Sprite2D" parent="."]
-visible = false
-self_modulate = Color(0.380392, 1, 0.211765, 1)
-texture = SubResource("PlaceholderTexture2D_myghr")
-
-[node name="sprite2d" type="Sprite2D" parent="."]
-self_modulate = Color(0.0705882, 1, 0.211765, 1)
-texture = SubResource("PlaceholderTexture2D_066e5")
-
 [node name="area2d" type="Area2D" parent="."]
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
 shape = SubResource("RectangleShape2D_8mbw6")
+debug_color = Color(0, 0.596078, 0.701961, 0.223529)
+
+[node name="glow" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(0.380392, 1, 0.211765, 0.580392)
+position = Vector2(0, 2)
+scale = Vector2(1.148, 1.404)
+texture = ExtResource("7_qstv6")
+
+[node name="sprite2d" type="Sprite2D" parent="."]
+texture = ExtResource("8_jayy2")
 
 [node name="marker2d" type="Marker2D" parent="."]
 position = Vector2(90, -150)

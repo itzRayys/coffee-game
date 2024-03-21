@@ -29,17 +29,17 @@ dispenserSprite = NodePath("../sprite2d")
 script = ExtResource("4_nmunw")
 glowSprite = NodePath("../glow")
 
+[node name="area2d" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
+shape = SubResource("RectangleShape2D_8acm2")
+
 [node name="sprite2d" type="Sprite2D" parent="."]
 texture = ExtResource("5_gx5qq")
 
 [node name="glow" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("6_5gevn")
-
-[node name="area2d" type="Area2D" parent="."]
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
-shape = SubResource("RectangleShape2D_8acm2")
 
 [node name="label" type="Label" parent="."]
 self_modulate = Color(1, 1, 1, 0.686275)

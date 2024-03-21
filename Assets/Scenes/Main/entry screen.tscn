@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3bn0t4gnk7vw"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Main/titleScreen.gd" id="1_hvdrj"]
+
+[sub_resource type="Gradient" id="Gradient_qosuh"]
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(-0.305, 0.642045, 0.931818, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.1003, 0.181675, 0.14159, 1, 0.2065, 0.35, 0.304558, 1, 0.425545, 0.54876, 0.721262, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_blmtc"]
+gradient = SubResource("Gradient_qosuh")
+
+[node name="titleScreen" type="Control" node_paths=PackedStringArray("blackOverlay", "fadeTimer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hvdrj")
+blackOverlay = NodePath("colorRect")
+fadeTimer = NodePath("timer")
+
+[node name="textureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_blmtc")
+
+[node name="colorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="gui_input" from="textureRect" to="." method="_on_texture_rect_gui_input"]
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
