@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cuxbfrc1nx63x"]
-
-[ext_resource type="Script" path="res://Assets/Scripts/Components/portafilterOzComponent.gd" id="1_g7hdm"]
-
-[node name="ozComponent" type="Node" node_paths=PackedStringArray("filter", "label")]
-script = ExtResource("1_g7hdm")
-filter = NodePath("")
-label = NodePath("")

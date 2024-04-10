@@ -1,0 +1,173 @@
+[gd_scene load_steps=16 format=3 uid="uid://cxt21b7snyjxu"]
+
+[ext_resource type="Texture2D" uid="uid://njvbt1bpe571" path="res://Assets/Sprites/espresso_machine_temp.png" id="1_rb6is"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/espressoMachineREDO.gd" id="2_iy417"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/espressoMachineSlot.gd" id="3_xping"]
+[ext_resource type="Resource" uid="uid://c7usmgnum15co" path="res://Assets/Resources/Ingredients/Ingredients/espresso.tres" id="4_1dcgt"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="4_uh8ij"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/previewComponent.gd" id="5_p688x"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientDispenserComponent.gd" id="6_uupi5"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/eeeeee.gd" id="8_qvwdw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsv4l"]
+size = Vector2(161.344, 116.19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ilai"]
+size = Vector2(164.097, 71.1947)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hl31s"]
+radius = 23.1602
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ouqtk"]
+radius = 23.1602
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enttt"]
+size = Vector2(194.934, 211.129)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6s6ep"]
+radius = 23.1602
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ugd5q"]
+radius = 23.1602
+
+[node name="espressoMachine" type="Sprite2D"]
+position = Vector2(1327, 478)
+scale = Vector2(0.908, 0.814667)
+texture = ExtResource("1_rb6is")
+script = ExtResource("2_iy417")
+
+[node name="espressoMachineSlot" type="Area2D" parent="." node_paths=PackedStringArray("machine")]
+visible = false
+script = ExtResource("3_xping")
+machine = NodePath("..")
+
+[node name="area" type="CollisionShape2D" parent="espressoMachineSlot"]
+position = Vector2(-77.0925, 56.4648)
+shape = SubResource("RectangleShape2D_jsv4l")
+debug_color = Color(0, 0.596078, 0.701961, 0.0784314)
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="espressoMachineSlot"]
+position = Vector2(-77.0925, 3.06879)
+shape = SubResource("RectangleShape2D_1ilai")
+
+[node name="single" type="CollisionShape2D" parent="espressoMachineSlot"]
+position = Vector2(-143.172, -77.3322)
+shape = SubResource("CircleShape2D_hl31s")
+debug_color = Color(0.603922, 0.686275, 0.701961, 0.0901961)
+
+[node name="double" type="CollisionShape2D" parent="espressoMachineSlot"]
+position = Vector2(-81.4978, -79.7872)
+shape = SubResource("CircleShape2D_ouqtk")
+debug_color = Color(0.580392, 0.682353, 0.701961, 0.113725)
+
+[node name="filter" type="Marker2D" parent="espressoMachineSlot"]
+position = Vector2(-95.8149, -13.5024)
+
+[node name="mug" type="Marker2D" parent="espressoMachineSlot"]
+position = Vector2(-92.5111, 110.475)
+
+[node name="glow" type="Sprite2D" parent="espressoMachineSlot"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-96.9163, 66.2849)
+scale = Vector2(1.43612, 1.84861)
+texture = ExtResource("4_uh8ij")
+
+[node name="previewComponent" type="Node2D" parent="espressoMachineSlot"]
+script = ExtResource("5_p688x")
+
+[node name="ingredientDispenserComponent" type="Node2D" parent="espressoMachineSlot"]
+script = ExtResource("6_uupi5")
+ingredientDispensed = ExtResource("4_1dcgt")
+
+[node name="timer" type="Timer" parent="espressoMachineSlot"]
+
+[node name="node2d" type="Node2D" parent="."]
+script = ExtResource("8_qvwdw")
+
+[node name="filter2" type="Area2D" parent="node2d"]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="node2d/filter2"]
+position = Vector2(-83.1498, -7.36493)
+shape = SubResource("RectangleShape2D_1ilai")
+
+[node name="mug2" type="Area2D" parent="node2d"]
+
+[node name="area" type="CollisionShape2D" parent="node2d/mug2"]
+position = Vector2(-80.1211, 86.7493)
+shape = SubResource("RectangleShape2D_jsv4l")
+debug_color = Color(0, 0.596078, 0.701961, 0.0784314)
+
+[node name="buttons" type="Area2D" parent="node2d"]
+
+[node name="single" type="CollisionShape2D" parent="node2d/buttons"]
+position = Vector2(-143.172, -77.3322)
+shape = SubResource("CircleShape2D_hl31s")
+debug_color = Color(0.603922, 0.686275, 0.701961, 0.0901961)
+
+[node name="double" type="CollisionShape2D" parent="node2d/buttons"]
+position = Vector2(-81.4978, -79.7872)
+shape = SubResource("CircleShape2D_ouqtk")
+debug_color = Color(0.580392, 0.682353, 0.701961, 0.113725)
+
+[node name="filter" type="Marker2D" parent="node2d"]
+position = Vector2(-95.8149, -13.5024)
+
+[node name="mug" type="Marker2D" parent="node2d"]
+position = Vector2(-92.5111, 110.475)
+
+[node name="glow" type="Sprite2D" parent="node2d"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-96.9163, 66.2849)
+scale = Vector2(1.43612, 1.84861)
+texture = ExtResource("4_uh8ij")
+
+[node name="previewComponent" type="Node2D" parent="node2d"]
+script = ExtResource("5_p688x")
+
+[node name="ingredientDispenserComponent" type="Node2D" parent="node2d"]
+script = ExtResource("6_uupi5")
+ingredientDispensed = ExtResource("4_1dcgt")
+
+[node name="timer" type="Timer" parent="node2d"]
+
+[node name="slot2" type="Area2D" parent="."]
+
+[node name="area" type="CollisionShape2D" parent="slot2"]
+position = Vector2(105.176, 51.5548)
+shape = SubResource("RectangleShape2D_enttt")
+debug_color = Color(0, 0.596078, 0.701961, 0.0352941)
+
+[node name="single" type="CollisionShape2D" parent="slot2"]
+position = Vector2(61.674, -85.9246)
+shape = SubResource("CircleShape2D_6s6ep")
+debug_color = Color(0.580392, 0.682353, 0.701961, 0.12549)
+
+[node name="double" type="CollisionShape2D" parent="slot2"]
+position = Vector2(116.74, -89.6072)
+shape = SubResource("CircleShape2D_ugd5q")
+debug_color = Color(0.560784, 0.678431, 0.701961, 0.105882)
+
+[node name="filter" type="Marker2D" parent="slot2"]
+position = Vector2(100.22, -27.0049)
+
+[node name="mug" type="Marker2D" parent="slot2"]
+position = Vector2(105.727, 100.655)
+
+[node name="glow2" type="Sprite2D" parent="slot2"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(111.234, 51.5548)
+scale = Vector2(1.44053, 1.80442)
+texture = ExtResource("4_uh8ij")
+
+[node name="previewComponent" type="Node2D" parent="slot2"]
+script = ExtResource("5_p688x")
+
+[connection signal="input_event" from="espressoMachineSlot" to="." method="_on_slot_1_input_event" flags=18]
+[connection signal="input_event" from="espressoMachineSlot" to="espressoMachineSlot" method="_on_input_event"]
+[connection signal="input_event" from="node2d/filter2" to="node2d" method="_on_filter_2_input_event"]
+[connection signal="input_event" from="node2d/mug2" to="node2d" method="_on_mug_2_input_event"]
+[connection signal="input_event" from="node2d/buttons" to="node2d" method="_on_buttons_input_event"]
+[connection signal="input_event" from="slot2" to="." method="_on_slot_2_input_event" flags=18]

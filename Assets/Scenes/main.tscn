@@ -1,15 +1,25 @@
-[gd_scene load_steps=14 format=3 uid="uid://bfm3kfr3y53j3"]
+[gd_scene load_steps=17 format=3 uid="uid://bfm3kfr3y53j3"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Main/toggleOrdersMenu.gd" id="1_e2ppr"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="2_a3mdc"]
 [ext_resource type="Script" path="res://Assets/Scripts/Main/pauseMenu.gd" id="3_kj610"]
 [ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Assets/dialogueBalloon/balloon.tscn" id="4_7jats"]
 [ext_resource type="Script" path="res://Assets/dialogueBalloon/balloon.gd" id="5_1redv"]
-[ext_resource type="PackedScene" uid="uid://0eb53wgdkqkb" path="res://Assets/Scenes/Main/frontCounter.tscn" id="5_txt6m"]
-[ext_resource type="PackedScene" uid="uid://d0ml0manfpx0i" path="res://Assets/Scenes/Main/drinkStation.tscn" id="7_yb50e"]
-[ext_resource type="PackedScene" uid="uid://bp483cfkssqqs" path="res://Assets/Scenes/Main/areaSwitch.tscn" id="8_jg8rx"]
-[ext_resource type="PackedScene" uid="uid://c74gml7scsokp" path="res://Assets/Scenes/Main/title.tscn" id="9_3cg32"]
-[ext_resource type="PackedScene" uid="uid://d3bn0t4gnk7vw" path="res://Assets/Scenes/Main/entry screen.tscn" id="10_qusf7"]
+[ext_resource type="Script" path="res://Assets/Scripts/Main/frontCounter.gd" id="6_1kafq"]
+[ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/temp_white.png" id="7_xpdel"]
+[ext_resource type="Script" path="res://Assets/Scripts/areaSwitchButton.gd" id="8_a2urv"]
+[ext_resource type="PackedScene" uid="uid://d0ml0manfpx0i" path="res://Assets/Scenes/drinkStation.tscn" id="10_dw4sc"]
+[ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/temp_stripe.png" id="11_vbpsp"]
+[ext_resource type="Script" path="res://Assets/Scripts/Main/titleScreen.gd" id="50_dpdd7"]
+
+[sub_resource type="Gradient" id="Gradient_qosuh"]
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(-0.305, 0.642045, 0.931818, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.1003, 0.181675, 0.14159, 1, 0.2065, 0.35, 0.304558, 1, 0.425545, 0.54876, 0.721262, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_blmtc"]
+gradient = SubResource("Gradient_qosuh")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dufu5"]
 bg_color = Color(0, 0, 0, 0.411765)
@@ -24,6 +34,44 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="main" type="Node2D"]
 process_mode = 3
+
+[node name="titleScreen" type="Control" parent="." node_paths=PackedStringArray("entryScene", "blackOverlay", "fadeTimer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4000.0
+offset_top = 3000.0
+offset_right = 4000.0
+offset_bottom = 3000.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("50_dpdd7")
+entryScene = NodePath("../frontCounter")
+blackOverlay = NodePath("colorRect")
+fadeTimer = NodePath("timer")
+
+[node name="textureRect" type="TextureRect" parent="titleScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_blmtc")
+
+[node name="colorRect" type="ColorRect" parent="titleScreen"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="timer" type="Timer" parent="titleScreen"]
+one_shot = true
 
 [node name="GUI" type="Control" parent="."]
 process_mode = 3
@@ -371,27 +419,143 @@ text = "Back"
 visible = false
 script = ExtResource("5_1redv")
 
-[node name="frontCounter" parent="." node_paths=PackedStringArray("drinkStation") instance=ExtResource("5_txt6m")]
-visible = false
-drinkStation = NodePath("../drinkStation")
+[node name="frontCounter" type="Node2D" parent="."]
+process_mode = 1
+position = Vector2(0, 3000)
+script = ExtResource("6_1kafq")
 
-[node name="drinkStation" parent="." instance=ExtResource("7_yb50e")]
-visible = false
+[node name="BG" type="Sprite2D" parent="frontCounter"]
+self_modulate = Color(0.85098, 0.576471, 0.658824, 1)
+texture = ExtResource("7_xpdel")
+centered = false
 
-[node name="areaSwitch" parent="." instance=ExtResource("8_jg8rx")]
-visible = false
+[node name="counter" type="Sprite2D" parent="frontCounter/BG"]
+self_modulate = Color(0.34902, 0.176471, 0.164706, 1)
+position = Vector2(0, 767)
+scale = Vector2(1, 0.289815)
+texture = ExtResource("7_xpdel")
+centered = false
 
-[node name="title" parent="." instance=ExtResource("9_3cg32")]
-visible = false
-
-[node name="titleScreen" parent="." node_paths=PackedStringArray("entryScene") instance=ExtResource("10_qusf7")]
+[node name="GUI" type="Control" parent="frontCounter"]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-entryScene = NodePath("../frontCounter")
+mouse_filter = 2
 
+[node name="buttonToAreaSwitch" type="Button" parent="frontCounter/GUI"]
+self_modulate = Color(1, 1, 1, 0.235294)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = -25.0
+grow_vertical = 0
+theme = ExtResource("2_a3mdc")
+text = "V"
+script = ExtResource("8_a2urv")
+switchSceneTo = 4
+
+[node name="drinkStation" parent="." node_paths=PackedStringArray("ingredientContainers", "filterContainers") instance=ExtResource("10_dw4sc")]
+ingredientContainers = [null, null]
+filterContainers = [NodePath("grinder"), null, NodePath("coffeeCan"), NodePath("scale")]
+
+[node name="title" type="Node2D" parent="."]
+process_mode = 1
+visible = false
+position = Vector2(4000, 0)
+
+[node name="GUI" type="Control" parent="title"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="BG" type="TextureRect" parent="title/GUI"]
+self_modulate = Color(0.760784, 0.560784, 0.635294, 1)
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+texture = ExtResource("11_vbpsp")
+
+[node name="areaSwitches" type="Control" parent="title/GUI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -300.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="frontBtn" type="Button" parent="title/GUI/areaSwitches"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_a3mdc")
+text = "frontCounter"
+script = ExtResource("8_a2urv")
+switchSceneTo = 1
+
+[node name="drinkBtn" type="Button" parent="title/GUI/areaSwitches"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = -50.0
+offset_right = -150.0
+offset_bottom = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("2_a3mdc")
+text = "drinkStation"
+script = ExtResource("8_a2urv")
+switchSceneTo = 2
+
+[node name="areaBtn" type="Button" parent="title/GUI/areaSwitches"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 150.0
+offset_top = -50.0
+offset_right = 550.0
+offset_bottom = 50.0
+grow_vertical = 2
+theme = ExtResource("2_a3mdc")
+text = "areaSwitch"
+script = ExtResource("8_a2urv")
+
+[node name="camera2d" type="Camera2D" parent="."]
+offset = Vector2(0, 6000)
+
+[connection signal="gui_input" from="titleScreen/textureRect" to="titleScreen" method="_on_texture_rect_gui_input" flags=18]
+[connection signal="timeout" from="titleScreen/timer" to="titleScreen" method="_on_timer_timeout" flags=18]
 [connection signal="pressed" from="GUI/ordersMenu/ordersMenuPanel/ordersMenuButton" to="GUI/ordersMenu/ordersMenuPanel" method="_on_orders_menu_button_pressed"]
 [connection signal="pressed" from="GUI/pauseMenu/pauseBtn" to="GUI/pauseMenu" method="_on_pause_btn_pressed"]
 [connection signal="pressed" from="GUI/pauseMenu/pauseMenuDim/pauseMenuPanel/VBoxContainer/resumeBtn" to="GUI/pauseMenu" method="_on_unpause_btn_pressed"]
 [connection signal="pressed" from="GUI/pauseMenu/pauseMenuDim/pauseMenuPanel/VBoxContainer/settingsBtn" to="GUI/pauseMenu" method="_on_settings_btn_pressed"]
 [connection signal="item_selected" from="GUI/pauseMenu/pauseMenuDim/settingsMenuPanel/VBoxContainer/resolutionLabel/resolutionSelect" to="GUI/pauseMenu" method="_on_resolution_select_item_selected"]
 [connection signal="pressed" from="GUI/pauseMenu/pauseMenuDim/settingsMenuPanel/closeSettingsBtn" to="GUI/pauseMenu" method="_on_close_settings_btn_pressed"]
+[connection signal="pressed" from="frontCounter/GUI/buttonToAreaSwitch" to="frontCounter/GUI/buttonToAreaSwitch" method="_on_pressed" flags=18]
+[connection signal="pressed" from="title/GUI/areaSwitches/frontBtn" to="title/GUI/areaSwitches/frontBtn" method="_on_pressed" flags=18]
+[connection signal="pressed" from="title/GUI/areaSwitches/drinkBtn" to="title/GUI/areaSwitches/drinkBtn" method="_on_pressed" flags=18]
+[connection signal="pressed" from="title/GUI/areaSwitches/areaBtn" to="title/GUI/areaSwitches/areaBtn" method="_on_pressed" flags=18]

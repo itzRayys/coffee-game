@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://y4db3g2d1lnc"]
+
+[ext_resource type="Texture2D" uid="uid://ws5ftbgq32g7" path="res://Assets/Sprites/coffee_can_temp.png" id="1_hasrs"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/coffeeCan.gd" id="2_3p8pc"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="3_yucok"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ia1tv"]
+size = Vector2(154, 121)
+
+[node name="coffeeCan" type="Sprite2D"]
+position = Vector2(1796, 928)
+texture = ExtResource("1_hasrs")
+script = ExtResource("2_3p8pc")
+
+[node name="glow" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-2, 1)
+scale = Vector2(1.352, 1.148)
+texture = ExtResource("3_yucok")
+
+[node name="area2d" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_ia1tv")
+debug_color = Color(0.588235, 0.301961, 0.137255, 0.172549)
+
+[node name="marker2d" type="Marker2D" parent="."]
+
+[connection signal="input_event" from="area2d" to="." method="_on_area_2d_input_event"]

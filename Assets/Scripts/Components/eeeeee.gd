@@ -1,5 +1,5 @@
-extends Area2D
-class_name espresso_machine_slot
+extends Node2D
+class_name espresso_machine_slot2
 
 signal mainButton(mug1:mug_mug, mug2:mug_mug)
 
@@ -154,3 +154,21 @@ func _on_input_event(_viewport, event, shape_idx):
 		return
 	print("222222")
 	interact(shape_idx)
+
+
+func _on_filter_2_input_event(viewport, event, shape_idx):
+	if !GameGlobals.eventIsInteractCheck(event):
+		return
+	print("1111r")
+
+
+func _on_mug_2_input_event(viewport, event, shape_idx):
+	if !GameGlobals.eventIsInteractCheck(event):
+		return
+	print("222r")
+
+
+func _on_buttons_input_event(viewport, event, shape_idx):
+	if !GameGlobals.eventIsInteractCheck(event):
+		return
+	print("333r3")

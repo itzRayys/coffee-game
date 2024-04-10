@@ -24,7 +24,6 @@ func _input(event):
 			enterGame()
 
 func _process(delta):
-	print(fadeTimer.time_left)
 	if splashPlaying:
 		blackOverlay.self_modulate.a = fadeTimer.time_left / fadeTime
 		

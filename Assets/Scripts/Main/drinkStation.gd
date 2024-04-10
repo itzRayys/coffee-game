@@ -1,29 +1,21 @@
 extends Node2D
 class_name main_drink_station
 
+signal pickedUpFilter()
 
 @export var completedDrinks:Array[drink_drink]
 
-# Just finished organizing and cleaning a bit up. blender
-# sometimes does wonkyness with blending and adding mix
-# when picking up to itself?? fix pls
-#Working mainly here and visual^^ also blender/iContainer
-#doing stuff like handling inputs where to put and
-#what is listening etc. check drawing, pretty much next
-# WORK ON CONTAINERS AND INTERACT THINGS!! They listen
-# if input is interact then check if holding item
-# IF SO THEN TAKE THE ITEM AND DO THINGS WITH IT!!!!
-# Or just what you need from item, so on. so item is
-# Coded just holding the information and needed funcs
-
-
-@export_group("Internals")
-@export var ingredientContainers:Array[Node2D]
+@export_category("Internals")
+@export var holdingComponent:holding_component
 @export var drinkStationVisuals:drink_station_visuals
-@export var holdInfo:hold_info
-@export var holdComponent:hold_component
+
+@export var ingredientContainers:Array[Node2D]
+@export var filterContainers:Array[Node2D]
+@export var mugContainers:Array[Node2D]
 
 var iContainersEnabled:bool = false
+var filterContainersEnabled:bool = false
+var mugContainersEnabled:bool = false
 
 #OROROROR it could be an array that accepts type:ingredients
 #each ingredient is a resource (no node) that has the name
@@ -35,12 +27,10 @@ var iContainersEnabled:bool = false
 #	currently is!!!!!!!
 
 func _ready():
-	holdInfo.updateLabel(null)
 	setAllIngredientContainers(false)
 
 # __Signal Calls__
 func onItemPickup(item:Node2D):
-	holdInfo.updateLabel(item)
 	doDrinkThings(item)
 	doFilterThings(item)
 	doDispenserThings(item)
@@ -48,7 +38,6 @@ func onItemPickup(item:Node2D):
 func onItemDropped(item:Node2D):
 	if iContainersEnabled:
 		setAllIngredientContainers(false)
-	holdInfo.updateLabel(null)
 	drinkStationVisuals.disableAllGlows()
 	drinkStationVisuals.disableItemGlow(item)
 
@@ -75,7 +64,6 @@ func doDispenserThings(item:Node2D):
 	if item.has_method("setIngredientContainer"):
 		item.setIngredientContainer(false)
 	drinkStationVisuals.enableIngredientGlows(ingredient)
-	setHeldIngredientDispensed(ingredient)
 # Enables blender place glows
 func doBlenderThings(item:Node2D):
 	if !item is blender_blender:
@@ -98,9 +86,32 @@ func setAllIngredientContainers(isActive:bool):
 			return
 		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", ingredientContainers[i].name, ": SET![/color]")
 		ingredientContainers[i].setIngredientContainer(isActive)
-# Sets holdComponent.itemIngredientDispensed
-func setHeldIngredientDispensed(ingredient:ingredient_resource):
-	holdComponent.itemIngredientDispensed = ingredient
+func setFilterContainers(isActive:bool):
+	print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] Setting filter container active states to {0}...[/color]".format([isActive]))
+	filterContainersEnabled = isActive
+	for i in filterContainers.size():
+		if !filterContainers[i].has_method("setState"):
+			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE METHOD 'ENABLE/DISABLE'**[/color]")
+			return
+		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": SET![/color]")
+		filterContainers[i].setState(isActive)
+func toggleMugContainers(toggle:bool):
+	print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] Setting mug container active states to {0}...[/color]".format([toggle]))
+	mugContainersEnabled = toggle
+	for i in mugContainers.size():
+		if !mugContainers[i].has_method("setState"):
+			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE METHOD 'ENABLE/DISABLE'**[/color]")
+			return
+		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": SET![/color]")
+		filterContainers[i].setState(toggle)
+
+
+
+
+
+
+
+
 # Input an item and return ingredient it can dispense/null
 func getIngredientDispensed(item) -> ingredient_resource:
 	if item.get_child_count() <= 0:
@@ -117,7 +128,39 @@ func getIngredientDispensed(item) -> ingredient_resource:
 
 
 # __Signals__
+### OLD ONES OG
 func _on_hold_component_item_dropped(item):
 	onItemDropped(item)
 func _on_hold_component_item_picked_up(item):
 	onItemPickup(item)
+
+
+
+
+
+func _on_holding_component_picked_up_dispenser(ingredient):
+	pass # Replace with function body.
+
+func _on_holding_component_picked_up_filter(_filter):
+	setFilterContainers(true)
+
+func _on_holding_component_picked_up_mug():
+	pass # Replace with function body.
+
+
+func _on_holding_component_dropped():
+	if iContainersEnabled:
+		setAllIngredientContainers(false)
+	if filterContainersEnabled:
+		setFilterContainers(false)
+	if mugContainersEnabled:
+		toggleMugContainers(false)
+
+
+func _on_holding_component_placed():
+	if iContainersEnabled:
+		setAllIngredientContainers(false)
+	if filterContainersEnabled:
+		setFilterContainers(false)
+	if mugContainersEnabled:
+		toggleMugContainers(false)

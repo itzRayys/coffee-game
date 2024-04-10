@@ -1,14 +1,10 @@
 extends Node
 
-signal pickedUp(holdable:holdable_component)
-signal cancelled(holdable:holdable_component)
 
 #important globals
 var currentInteractionID: int = 0
 var currentOrder = []
 var completedItems = []
-var isHolding:bool = false
-var heldObject:Node2D
 
 #random values
 var minItems: int = 1
@@ -18,8 +14,11 @@ var maxItems: int = 5
 var drinkResources = []
 var foodResources = []
 
+
+
 func _ready():
 	loadAllMenuItemResources()
+
 
 #handles creating a random order
 func newRandomOrder():
@@ -28,13 +27,13 @@ func newRandomOrder():
 	currentOrder = getRandomItems(itemCount)
 	
 	print()
-	print("Interaction #: ", currentInteractionID)
-	print("Number of items ordered: ", itemCount)
+	print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Interaction #: ", currentInteractionID, "[/color]")
+	print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Number of items ordered: ", itemCount, "[/color]")
 	print()
-	print("List of items ordered: ")
+	print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] List of items ordered: [/color]")
 	for i in range(currentOrder.size()):
 		var itemName = currentOrder[i].menuItemName
-		print("     - ", itemName)
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals]      - ", itemName, "[/color]")
 	print()
 
 #input number of random items to be returned
@@ -58,7 +57,7 @@ func submitOrder():
 	var isOrderComplete = checkSubmittedItems(completedItems)
 	if !isOrderComplete:
 		#handle wrong order
-		print("test11111")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] test11111[/color]")
 		return
 	completedItems.clear()
 	#give reward
@@ -68,20 +67,20 @@ func submitOrder():
 #	matches the current customer order
 func checkSubmittedItems(itemsToCheck):
 	
-	print("List of items submitted: ")
+	print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] List of items submitted: [/color]")
 	for i in range(itemsToCheck.size()):
 		var itemName = itemsToCheck[i].menuItemName
-		print("     - ", itemName)
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals]      - ", itemName, "[/color]")
 	print()
 	
 	if itemsToCheck.is_empty():
-		print("No items completed")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] No items completed[/color]")
 		return false
 	if itemsToCheck.size() > currentOrder.size():
-		print("Too many items!")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Too many items![/color]")
 		return false
 	if itemsToCheck.size() < currentOrder.size():
-		print("Too little items!")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Too little items![/color]")
 		return false
 	
 	var tempOrder = currentOrder.duplicate()
@@ -92,28 +91,28 @@ func checkSubmittedItems(itemsToCheck):
 			if itemCheck.menuItemName == orderedItem.menuItemName:
 				tempOrder.remove_at(i)
 				isMatched = true
-				print("Item match found!")
+				print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Item match found![/color]")
 				break;
 			elif i == tempOrder.size() + 1:
 				isMatched = false
-				print("Item doesn't match any!")
+				print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Item doesn't match any![/color]")
 				break;
 		if !isMatched:
-			print("Order is incorrect.")
+			print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Order is incorrect.[/color]")
 			break
 		
 		
-		print("List of items still needed: ")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] List of items still needed: [/color]")
 		for i in range(tempOrder.size()):
 			var itemName = tempOrder[i].menuItemName
-			print("     - ", itemName)
+			print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals]      - ", itemName, "[/color]")
 		print()
 		
 	if tempOrder.size() <= 0:
-		print("Order completed!!")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Order completed!![/color]")
 		return true
 	else:
-		print("Something went wrong")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Something went wrong[/color]")
 		return false
 
 #calls loadDrink and loadFood resources
@@ -125,7 +124,7 @@ func loadAllMenuItemResources():
 func loadDrinkResources():
 	var drinksPath = "res://Assets/Resources/Drinks/"
 	if !drinksPath:
-		print("Something went wrong loading drink resources!")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Something went wrong loading drink resources!")
 		return
 	var drinksFolder = DirAccess.open(drinksPath)
 	drinksFolder.list_dir_begin()
@@ -140,7 +139,7 @@ func loadDrinkResources():
 func loadFoodResources():
 	var foodsPath = "res://Assets/Resources/Foods/"
 	if !foodsPath:
-		print("Something went wrong loading drink resources!")
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Something went wrong loading drink resources!")
 		return
 	var foodsFolder = DirAccess.open(foodsPath)
 	foodsFolder.list_dir_begin()
@@ -151,8 +150,16 @@ func loadFoodResources():
 		currentFoodFileName = foodsFolder.get_next()
 	foodsFolder.list_dir_end()
 
-func setHeldHoldable(holdable:holdable_component):
-	if !holdable or isHolding:
-		return
-	heldObject = holdable
-	pickedUp.emit(holdable)
+
+func eventIsInteractCheck(event:InputEvent) -> bool:
+	if event is InputEventMouseButton and event.button_index == 1 and event.pressed == true:
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Interact was Pressed!![/color]")
+		return true
+	else:
+		return false
+func eventIsCancelCheck(event:InputEvent) -> bool:
+	if event is InputEventMouseButton and event.button_index == 2 and event.pressed == true:
+		print_rich("[color=green]", Time.get_datetime_string_from_system(true, true), " [Game Globals] Cancel was Pressed!![/color]")
+		return true
+	else:
+		return false

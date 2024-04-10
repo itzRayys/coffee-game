@@ -1,0 +1,143 @@
+[gd_scene load_steps=15 format=3 uid="uid://dajj1bi6f3nm"]
+
+[ext_resource type="Texture2D" uid="uid://cnmift010ifu4" path="res://Assets/Sprites/grinder_temp.png" id="1_ndvs5"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/grinder.gd" id="2_bga84"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="3_ehx0j"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/previewComponent.gd" id="4_jcd1o"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/pfilterContainer.gd" id="5_r15r2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rvnwg"]
+size = Vector2(223, 132)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mg8ng"]
+radius = 21.2132
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bcq3p"]
+radius = 21.2132
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tv3dh"]
+radius = 20.2549
+height = 104.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_a7bp6"]
+size = Vector2(50, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ahc8x"]
+size = Vector2(20.5334, 21.1379)
+
+[sub_resource type="Gradient" id="Gradient_ytwml"]
+colors = PackedColorArray(0, 0, 0, 1, 0.656, 1, 0.57, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tedhk"]
+gradient = SubResource("Gradient_ytwml")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tn6sd"]
+size = Vector2(25, 25)
+
+[node name="grinder" type="Sprite2D" node_paths=PackedStringArray("debugSprite", "filterMarker")]
+position = Vector2(770, 404)
+texture = ExtResource("1_ndvs5")
+script = ExtResource("2_bga84")
+debugSprite = NodePath("slot/dispensingDBUG")
+filterMarker = NodePath("slot/marker2d")
+
+[node name="slot" type="Node2D" parent="."]
+
+[node name="area" type="Area2D" parent="slot"]
+position = Vector2(4.495, 157.08)
+
+[node name="area" type="CollisionShape2D" parent="slot/area"]
+position = Vector2(-6.495, 4.91998)
+shape = SubResource("RectangleShape2D_rvnwg")
+debug_color = Color(0.317647, 0.611765, 0.403922, 0.0431373)
+
+[node name="single" type="Area2D" parent="slot"]
+position = Vector2(-48, 58)
+
+[node name="single" type="CollisionShape2D" parent="slot/single"]
+shape = SubResource("CircleShape2D_mg8ng")
+debug_color = Color(0.537255, 0.67451, 0.701961, 0.121569)
+
+[node name="double" type="Area2D" parent="slot"]
+position = Vector2(26, 56)
+
+[node name="double" type="CollisionShape2D" parent="slot/double"]
+shape = SubResource("CircleShape2D_bcq3p")
+debug_color = Color(0.580392, 0.682353, 0.701961, 0.113725)
+
+[node name="hold" type="Area2D" parent="slot"]
+position = Vector2(-8.77, 18.42)
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="slot/hold"]
+position = Vector2(-0.23, -5.675)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_tv3dh")
+debug_color = Color(0, 0.596078, 0.701961, 0.0392157)
+
+[node name="sprite2d" type="Sprite2D" parent="slot/hold"]
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-0.23, -5.675)
+scale = Vector2(1.56, 0.64)
+texture = SubResource("PlaceholderTexture2D_a7bp6")
+
+[node name="refill" type="Area2D" parent="slot"]
+position = Vector2(-10, -159)
+scale = Vector2(7.40503, 6.3746)
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="slot/refill"]
+position = Vector2(0.273483, 0.686005)
+shape = SubResource("RectangleShape2D_ahc8x")
+
+[node name="sprite2d" type="Sprite2D" parent="slot"]
+visible = false
+position = Vector2(-14.5, -20.5)
+scale = Vector2(0.546875, 0.359375)
+texture = SubResource("GradientTexture2D_tedhk")
+
+[node name="glow" type="Sprite2D" parent="slot"]
+visible = false
+self_modulate = Color(1, 0.658824, 0.74902, 0.509804)
+position = Vector2(8.00006, 70)
+scale = Vector2(2.32922, 2.69836)
+texture = ExtResource("3_ehx0j")
+
+[node name="marker2d" type="Marker2D" parent="slot"]
+position = Vector2(1, 192)
+
+[node name="previewComponent" type="Node2D" parent="slot"]
+script = ExtResource("4_jcd1o")
+
+[node name="pfilterContainer" type="Node2D" parent="slot"]
+script = ExtResource("5_r15r2")
+
+[node name="dispensingDBUG" type="Sprite2D" parent="slot"]
+visible = false
+self_modulate = Color(0.52549, 1, 0.0196078, 1)
+position = Vector2(116.86, 0)
+texture = SubResource("PlaceholderTexture2D_tn6sd")
+
+[node name="label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -170.965
+offset_top = -104.7
+offset_right = -130.965
+offset_bottom = -81.7
+grow_horizontal = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="timer" type="Timer" parent="."]
+
+[node name="timer2" type="Timer" parent="."]
+
+[connection signal="input_event" from="slot/area" to="." method="_on_area_input_event"]
+[connection signal="mouse_entered" from="slot/area" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_exited" from="slot/area" to="." method="_on_area_mouse_exited"]
+[connection signal="input_event" from="slot/single" to="." method="_on_single_input_event"]
+[connection signal="input_event" from="slot/double" to="." method="_on_double_input_event"]
+[connection signal="input_event" from="slot/hold" to="." method="_on_hold_input_event"]
+[connection signal="mouse_shape_exited" from="slot/hold" to="." method="_on_hold_mouse_shape_exited"]
+[connection signal="input_event" from="slot/refill" to="." method="_on_refill_input_event"]
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

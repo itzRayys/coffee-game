@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ingredient_resource" load_steps=2 format=3 uid="uid://c7usmgnum15co"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/ingredient.gd" id="1_islou"]
+
+[resource]
+script = ExtResource("1_islou")
+ingredientName = "Espresso"
+ingredientAmount = 0
+isUnlocked = false
+isMixture = false
+mixtureRecipe = Array[ExtResource("1_islou")]([])

@@ -23,6 +23,8 @@ func _input(event):
 
 # Sets labelOffset and calls updateLabel()
 func _ready():
+	if !label:
+		return
 	label.set_position(labelOffset)
 	updateLabel(null)
 
