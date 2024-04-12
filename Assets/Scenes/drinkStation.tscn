@@ -41,7 +41,7 @@ size = Vector2(221.618, 238.375)
 [node name="drinkStation" type="Node2D" node_paths=PackedStringArray("filterContainers")]
 process_mode = 1
 script = ExtResource("1_s7vgl")
-filterContainers = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("portafilters/portafilterSelect")]
+filterContainers = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("portafilters/portafilterSelect"), NodePath("espressoMachine")]
 
 [node name="bg" type="Sprite2D" parent="."]
 texture = ExtResource("2_w42l3")
@@ -60,8 +60,9 @@ holdingComponent = NodePath("../holdingComponent")
 
 [node name="mugs" type="Node2D" parent="."]
 
-[node name="mugSelect" type="Area2D" parent="mugs"]
+[node name="mugSelect" type="Area2D" parent="mugs" node_paths=PackedStringArray("holdingComponent")]
 script = ExtResource("10_ks7yf")
+holdingComponent = NodePath("../../holdingComponent")
 
 [node name="mugSelect" type="CollisionShape2D" parent="mugs/mugSelect"]
 position = Vector2(1216.81, 333)
@@ -140,10 +141,10 @@ position = Vector2(-25, 8)
 
 [node name="portafilters" type="Node2D" parent="."]
 
-[node name="portafilterSelect" type="Area2D" parent="portafilters" node_paths=PackedStringArray("holdingComponent", "filter", "filterHanging", "filterMarker")]
+[node name="portafilterSelect" type="Area2D" parent="portafilters" node_paths=PackedStringArray("holdingComponent", "heldFilter", "filterHanging", "filterMarker")]
 script = ExtResource("13_k8u5v")
 holdingComponent = NodePath("../../holdingComponent")
-filter = NodePath("../portafilter")
+heldFilter = NodePath("../portafilter")
 filterHanging = NodePath("../portafilterHanging")
 filterMarker = NodePath("marker2d")
 
@@ -239,6 +240,7 @@ text = "text"
 [connection signal="input_event" from="portafilters/portafilterSelect" to="portafilters/portafilterSelect" method="_on_input_event" flags=18]
 [connection signal="input_event" from="portafilters/spoonHolder/area2d" to="portafilters/spoonHolder" method="_on_area_2d_input_event"]
 [connection signal="dropped" from="holdingComponent" to="." method="_on_holding_component_dropped"]
+[connection signal="dropped" from="holdingComponent" to="espressoMachine" method="_on_holding_component_dropped"]
 [connection signal="pickedUpDispenser" from="holdingComponent" to="." method="_on_holding_component_picked_up_dispenser"]
 [connection signal="pickedUpFilter" from="holdingComponent" to="." method="_on_holding_component_picked_up_filter"]
 [connection signal="pickedUpFilter" from="holdingComponent" to="espressoMachine" method="_on_holding_component_picked_up_filter"]

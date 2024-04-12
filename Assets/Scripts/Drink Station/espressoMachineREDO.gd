@@ -10,22 +10,35 @@ signal slotClicked(slot:espresso_machine_slot)
 
 @export_group("Slots")
 @export var slots:Array[espresso_machine_slot]
-@export var slot1:espresso_machine_slot
-@export var slot2:espresso_machine_slot
 
 var isPlacing:bool = false
+
+func placeFilter(slot:espresso_machine_slot):
+	if !slot or !holdComponent or !holdComponent.heldItem:
+		return
+	slot.setPortafilter(holdComponent.heldItem)
+	disableContainers()
+	holdComponent.place()
+
+func pickupFilter(slot, filter):
+	if !holdComponent or holdComponent.heldItem:
+		return
+	holdComponent.pickup(filter)
+
 
 # Sets state of slots to inputted bool
 func setState(toggle:bool):
 	for i in slots.size():
-		slots[i].setState(toggle)
+		if !slots[i].has_method("setState"):
+			return
+		slots[i].setState(toggle, holdComponent.heldItem)
 
 
 
 func onSlotInteract(item):
 	if !isPlacing:
 		pickup(item)
-		
+
 func pickup(item):
 	if item is pfilter:
 		pass
@@ -34,48 +47,35 @@ func pickup(item):
 
 
 
-func mugAction(_slot, _action):
-	pass
-
-func placeMug(mug, slot):
-	if slot == 1:
-		slot1.setMug(mug)
-		return
-	slot2.setMug(mug)
-
-
-
-
-
-# Enables glows of slots that have an open space for the inputted item
-func enableGlows(item):
+# Input item, toggle containers on/off
+func toggleContainers(item):
 	isPlacing = true
-	if item is pfilter:
+	if !item:
 		for i in slots.size():
-			if !slots[i].filterCheck():
-				slots[i].setGlow(true)
-	elif item is mug_mug:
-		for i in slots.size():
-			if !slots[i].mugCheck():
-				slots[i].setGlow(true)
-
-# Disables all glows
-func disableGlows():
-	for i in slots.size():
-		slots[i].setGlow(false)
-
-# Called by slot to emit self when clicked
-func emitInteract(slot:espresso_machine_slot):
-	if isPlacing:
-		isPlacing = false
-		disableGlows()
+			slots[i].setActive(false)
 		return
-	slotClicked.emit(slot)
-
-
+	
+	var callable:String
+	if item is pfilter:
+		callable = "filterCheck"
+	elif item is mug_mug:
+		callable = "mugCheck"
+	
+	for i in slots.size():
+		if !slots[i].call(callable):
+			slots[i].setActive(true)
+		else:
+			slots[i].setActive(false)
+# Disables all slots
+func disableContainers():
+	isPlacing = false
+	for i in slots.size():
+			slots[i].setActive(false)
 
 
 func _on_holding_component_picked_up_filter(filter):
-	pass # Replace with function body.
+	toggleContainers(filter)
 func _on_holding_component_picked_up_mug(mug):
-	enableGlows(mug)
+	toggleContainers(mug)
+func _on_holding_component_dropped():
+	disableContainers()

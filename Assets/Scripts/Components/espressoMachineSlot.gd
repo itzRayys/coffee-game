@@ -1,6 +1,7 @@
-extends Area2D
+extends Node2D
 class_name espresso_machine_slot
 
+signal filterClick(slot:espresso_machine_slot)
 signal mainButton(mug1:mug_mug, mug2:mug_mug)
 
 @export var machine:espresso_machine
@@ -17,6 +18,7 @@ signal mainButton(mug1:mug_mug, mug2:mug_mug)
 
 var isMugContainerEnabled:bool = false
 var isHolding:bool = false
+var isEnabled:bool = false
 
 var heldPortafilter:pfilter
 var heldMug:mug_mug
@@ -81,11 +83,11 @@ func mugCount() -> int:
 	return returnNum
 
 # Sets portafilter
-func setPortafilter(portafilter):
+func setPortafilter(portafilter:pfilter):
 	if heldPortafilter != null:
 		return
 	heldPortafilter = portafilter
-	heldPortafilter.position = portafilterMarker.position
+	portafilter.move(portafilterMarker, removePortafilter)
 
 # Sets mug
 func setMug(mug:mug_mug):
@@ -122,13 +124,6 @@ func togglePreview(item):
 		else:
 			preview.setGlow(glow, true)
 
-# Sets glow visibility
-func setGlow(toggle:bool):
-	if toggle:
-		glow.show()
-		return
-	glow.hide()
-
 # Returns true if slots are full
 func mugCheck() -> bool:
 	if heldMug != null and heldMug2 != null:
@@ -141,12 +136,15 @@ func filterCheck() -> bool:
 		return true
 	return false
 
+# Called by machine to toggle glow and isEnabled
+func setActive(toggle:bool):
+	if toggle:
+		isEnabled = true
+		glow.show()
+		return
+	isEnabled = false
+	glow.hide()
 
-func toggleMugContainer(toggle:bool):
-	isMugContainerEnabled = toggle
-func setState(toggle:bool):
-	toggleMugContainer(toggle)
-	setGlow(toggle)
 
 
 func _on_input_event(_viewport, event, shape_idx):
@@ -154,3 +152,25 @@ func _on_input_event(_viewport, event, shape_idx):
 		return
 	print("222222")
 	interact(shape_idx)
+
+
+func _on_filter_2_input_event(viewport, event, shape_idx):
+	if !GameGlobals.eventIsInteractCheck(event) or !machine:
+		return
+	if !isEnabled and heldPortafilter:
+		machine.pickupFilter(self, heldPortafilter)
+		return
+	elif isEnabled and !heldPortafilter:
+		machine.placeFilter(self)
+
+
+func _on_mug_2_input_event(viewport, event, shape_idx):
+	if !GameGlobals.eventIsInteractCheck(event):
+		return
+	print("222r")
+
+
+func _on_buttons_input_event(viewport, event, shape_idx):
+	if !GameGlobals.eventIsInteractCheck(event):
+		return
+	print("333r3")

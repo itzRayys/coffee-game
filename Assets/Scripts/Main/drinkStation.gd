@@ -164,3 +164,4 @@ func _on_holding_component_placed():
 		setFilterContainers(false)
 	if mugContainersEnabled:
 		toggleMugContainers(false)
+

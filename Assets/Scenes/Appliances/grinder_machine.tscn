@@ -133,8 +133,6 @@ vertical_alignment = 1
 [node name="timer2" type="Timer" parent="."]
 
 [connection signal="input_event" from="slot/area" to="." method="_on_area_input_event"]
-[connection signal="mouse_entered" from="slot/area" to="." method="_on_area_mouse_entered"]
-[connection signal="mouse_exited" from="slot/area" to="." method="_on_area_mouse_exited"]
 [connection signal="input_event" from="slot/single" to="." method="_on_single_input_event"]
 [connection signal="input_event" from="slot/double" to="." method="_on_double_input_event"]
 [connection signal="input_event" from="slot/hold" to="." method="_on_hold_input_event"]

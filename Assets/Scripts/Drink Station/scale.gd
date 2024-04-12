@@ -15,10 +15,10 @@ var isEnabled:bool = false
 
 
 func setState(isActive:bool):
-	if isActive:
-		enable()
-	else:
+	if heldFilter or !isActive:
 		disable()
+		return
+	enable()
 func enable():
 	isEnabled = true
 	glow.show()
@@ -37,7 +37,6 @@ func clearFilter():
 	if !heldFilter:
 		return
 	heldFilter = null
-	print("testing")
 	readWeight(null)
 # Called when timer finishes
 func readWeight(filter:pfilter):

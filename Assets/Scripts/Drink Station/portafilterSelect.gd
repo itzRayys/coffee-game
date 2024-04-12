@@ -5,7 +5,7 @@ signal pickupFilter(filter)
 @export var holdingComponent:holding_component
 
 @export_group("Filter 1")
-@export var filter:pfilter
+@export var heldFilter:pfilter
 @export var filterHanging:Sprite2D
 @export var filterMarker:Marker2D
 
@@ -13,26 +13,19 @@ signal pickupFilter(filter)
 
 var isEnabled:bool = false
 var canEnable:bool = false
-var hasFilter:bool = false
 
-func _ready():
-	if !filter:
-		return
-	hasFilter = true
 
 func setState(toggle:bool):
-	if toggle:
-		enable()
+	if heldFilter or !toggle:
+		disable()
 		return
-	disable()
+	enable()
 
 func enable():
-	if hasFilter:
+	if heldFilter:
 		disable()
-		print(1)
 		return
 	isEnabled = true
-	print(2)
 	glow.show()
 func disable():
 	isEnabled = false
@@ -41,37 +34,36 @@ func disable():
 func interact():
 	if !holdingComponent:
 		return
-	if hasFilter and !holdingComponent.heldItem:
+	if heldFilter and !holdingComponent.heldItem:
 		selectFilter()
-	elif !hasFilter and holdingComponent.heldItem and holdingComponent.heldItem is pfilter:
+	elif !heldFilter and holdingComponent.heldItem and holdingComponent.heldItem is pfilter:
 		returnFilter()
 
+
 func selectFilter():
-	if !hasFilter:
+	if !heldFilter:
 		return
-	hasFilter = false
-	holdingComponent.pickup(filter)
+	holdingComponent.pickup(heldFilter)
 	filterHanging.hide()
-	filter.show()
+	heldFilter.show()
 
 func returnFilter():
-	if hasFilter:
+	if heldFilter:
 		return
-	hasFilter = true
-	filter.position = filterMarker.position
+	heldFilter.position = filterMarker.position
 	filterHanging.show()
-	filter.hide()
+	heldFilter.hide()
 
 func toggleAllowEnable(toggle:bool):
 	canEnable = toggle
 
 func resetHangingFilter():
 	filterHanging.show()
-	filter.hide()
+	heldFilter.hide()
 
 func clearFilter():
-	filter.saveLocationComponent.returnedToSavedLocation.connect(resetHangingFilter, CONNECT_ONE_SHOT)
-	hasFilter = false
+	heldFilter.saveLocationComponent.returnedToSavedLocation.connect(resetHangingFilter, CONNECT_ONE_SHOT)
+	heldFilter = null
 
 
 func _on_input_event(viewport:Viewport, event:InputEvent, shape_idx):
