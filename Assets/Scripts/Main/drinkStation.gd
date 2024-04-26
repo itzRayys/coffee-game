@@ -145,7 +145,7 @@ func _on_holding_component_picked_up_filter(_filter):
 	setFilterContainers(true)
 
 func _on_holding_component_picked_up_mug():
-	pass # Replace with function body.
+	toggleMugContainers(true)
 
 
 func _on_holding_component_dropped():

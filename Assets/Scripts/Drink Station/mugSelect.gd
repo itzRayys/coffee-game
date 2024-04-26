@@ -5,23 +5,25 @@ signal mugSelected(Mug:mug_mug)
 @export var holdingComponent:holding_component
 
 @export_group("Mug 1")
-@export var mug:mug_mug
+@export var heldMug:mug_mug
+@export var heldMug2:mug_mug
 @export var mugMarker:Marker2D
 
 @onready var glow = $glow
 
 var isEnabled:bool = false
-var hasMug:bool = false
+var canEnable:bool = false
+
 
 
 func setState(toggle:bool):
-	if toggle:
-		enable()
+	if heldMug or !toggle:
+		disable()
 		return
-	disable()
+	enable()
 
 func enable():
-	if hasMug:
+	if heldMug:
 		disable()
 		return
 	isEnabled = true
@@ -30,35 +32,32 @@ func disable():
 	isEnabled = false
 	glow.hide()
 
-func interact():
-	if !holdingComponent:
-		return
-	if hasMug and !holdingComponent.heldItem:
-		selectMug()
-	elif !hasMug and holdingComponent.heldItem and holdingComponent.heldItem is mug_mug:
-		returnFilter()
-
 func selectMug():
-	if !hasMug:
+	if !heldMug and !heldMug2:
 		return
-	hasMug = false
-	holdingComponent.pickup(mug)
-	mug.show()
-
-func returnFilter():
-	if hasMug:
+	elif heldMug:
+		holdingComponent.pickup(heldMug)
+		heldMug = null
+		print(1)
 		return
-	hasMug = true
-	mug.position = mugMarker.position
+	print(2)
+	holdingComponent.pickup(heldMug2)
+	heldMug2 = null
 
+func returnMug():
+	if heldMug:
+		return
+	heldMug.position = mugMarker.position
 
-func clearFilter():
-	hasMug = false
-	mug = null
+func toggleAllowEnable(toggle:bool):
+	canEnable = toggle
 
 
 func _on_input_event(viewport:Viewport, event:InputEvent, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
-	interact()
+	if heldMug or heldMug2 and !holdingComponent.heldItem:
+		selectMug()
+	elif !heldMug and isEnabled:
+		returnMug()
 	viewport.set_input_as_handled()

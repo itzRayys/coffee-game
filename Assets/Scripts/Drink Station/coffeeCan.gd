@@ -10,12 +10,12 @@ var isEnabled:bool = false
 var heldFilter:pfilter
 
 func setState(isActive:bool):
-	if isActive:
-		glow.show()
-		isEnabled = true
+	if !isActive or heldFilter:
+		isEnabled = false
+		glow.hide()
 		return
-	isEnabled = false
-	glow.hide()
+	glow.show()
+	isEnabled = true
 
 func receiveFilter(filter:pfilter):
 	heldFilter = filter
@@ -38,7 +38,6 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 		return
 	if heldFilter and !holdingComponent.heldItem:
 		holdingComponent.pickup(heldFilter)
-		clearPortafilter()
 		return
 	elif !heldFilter and isEnabled and holdingComponent.heldItem:
 		receiveFilter(holdingComponent.heldItem)

@@ -14,7 +14,7 @@ signal slotClicked(slot:espresso_machine_slot)
 var isPlacing:bool = false
 
 func placeFilter(slot:espresso_machine_slot):
-	if !slot or !holdComponent or !holdComponent.heldItem:
+	if !slot or !holdComponent or !holdComponent.heldItem or !holdComponent.heldItem is pfilter:
 		return
 	slot.setPortafilter(holdComponent.heldItem)
 	disableContainers()
@@ -24,6 +24,20 @@ func pickupFilter(slot, filter):
 	if !holdComponent or holdComponent.heldItem:
 		return
 	holdComponent.pickup(filter)
+
+func placeMug(slot:espresso_machine_slot):
+	if !slot or !holdComponent or !holdComponent.heldItem or !holdComponent.heldItem is mug_mug:
+		return
+	slot.setMug(holdComponent.heldItem)
+	disableContainers()
+	holdComponent.place()
+
+func pickupMug(slot, mug):
+	if !holdComponent or holdComponent.heldItem:
+		return
+	holdComponent.pickup(mug)
+
+
 
 
 # Sets state of slots to inputted bool

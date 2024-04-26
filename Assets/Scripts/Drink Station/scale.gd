@@ -56,8 +56,10 @@ func _on_timer_timeout():
 func _on_area_2d_input_event(viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
+	elif !holdingComponent:
+		return
 	if !isEnabled and heldFilter:
 		holdingComponent.pickup(heldFilter)
-	else:
+	elif isEnabled and holdingComponent.heldItem and holdingComponent.heldItem is pfilter:
 		receiveFilter(holdingComponent.heldItem)
 		holdingComponent.place()

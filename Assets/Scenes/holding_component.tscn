@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd85wtg7d1cct"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Components/holdingComponent.gd" id="1_kav44"]
+
+[node name="holdingComponent" type="Node2D" node_paths=PackedStringArray("infoContainer", "itemNameLabel", "ingredientNameLabel")]
+script = ExtResource("1_kav44")
+infoContainer = NodePath("vBoxContainer")
+itemNameLabel = NodePath("vBoxContainer/label")
+ingredientNameLabel = NodePath("vBoxContainer/label2")
+
+[node name="vBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 98.0
+offset_bottom = 121.0
+
+[node name="label" type="Label" parent="vBoxContainer"]
+layout_mode = 2
+text = "text"
+
+[node name="label2" type="Label" parent="vBoxContainer"]
+layout_mode = 2
+text = "text"

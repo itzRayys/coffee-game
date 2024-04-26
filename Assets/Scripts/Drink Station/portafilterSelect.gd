@@ -31,15 +31,6 @@ func disable():
 	isEnabled = false
 	glow.hide()
 
-func interact():
-	if !holdingComponent:
-		return
-	if heldFilter and !holdingComponent.heldItem:
-		selectFilter()
-	elif !heldFilter and holdingComponent.heldItem and holdingComponent.heldItem is pfilter:
-		returnFilter()
-
-
 func selectFilter():
 	if !heldFilter:
 		return
@@ -69,5 +60,8 @@ func clearFilter():
 func _on_input_event(viewport:Viewport, event:InputEvent, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
-	interact()
+	if heldFilter and !holdingComponent.heldItem:
+		selectFilter()
+	elif !heldFilter and isEnabled:
+		returnFilter()
 	viewport.set_input_as_handled()

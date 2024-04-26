@@ -8,6 +8,10 @@ signal mainButton(mug1:mug_mug, mug2:mug_mug)
 @export var singleAmount:int = 2
 @export var doubleAmount:int = 4
 
+@export var mugOffset1:Vector2 = Vector2(-25, 5)
+@export var mugOffset2:Vector2 = Vector2(25, -5)
+
+
 @onready var portafilterMarker:Marker2D = $filter
 @onready var mugMarker:Marker2D = $mug
 @onready var glow:Sprite2D = $glow
@@ -49,7 +53,17 @@ func interact(shapeIndex):
 		print(3)
 #		dispense(doubleAmount, heldPortafilter.getOzAmount())
 		return
+
+
+func buttonPress(shapeIndex):
+	if !heldPortafilter or !heldMug and !heldMug2:
+		return
 	
+	if shapeIndex == 0:
+		dispense(singleAmount, heldPortafilter.getOzAmount())
+	elif shapeIndex == 1:
+		dispense(doubleAmount, heldPortafilter.getOzAmount())
+
 # Dispenses espresso to mugs
 func dispense(amount, oz):
 	if mugCount() == 0:
@@ -93,11 +107,12 @@ func setPortafilter(portafilter:pfilter):
 func setMug(mug:mug_mug):
 	if heldMug == null:
 		heldMug = mug
+		mug.move(mugMarker.global_position + mugOffset1, removeMug)
+		return
 	elif heldMug2 == null:
 		heldMug2 = mug
-	else:
+		mug.move(mugMarker.global_position + mugOffset2, removeMug)
 		return
-	updatePositions()
 
 # Updates positions of mugs
 func updatePositions():
@@ -115,6 +130,9 @@ func removePortafilter():
 
 # Sets heldMug to null
 func removeMug():
+	if heldMug2:
+		heldMug2 = null
+		return
 	heldMug = null
 
 func togglePreview(item):
@@ -144,7 +162,15 @@ func setActive(toggle:bool):
 		return
 	isEnabled = false
 	glow.hide()
-
+# Called by machine to set glow and place state
+func setState(toggle:bool, item):
+	if !toggle or !item:
+		isEnabled = false
+		glow.hide()
+		return
+	if item is mug_mug and !mugCheck() or item is pfilter and !filterCheck():
+		isEnabled = true
+		glow.show()
 
 
 func _on_input_event(_viewport, event, shape_idx):
@@ -167,10 +193,17 @@ func _on_filter_2_input_event(viewport, event, shape_idx):
 func _on_mug_2_input_event(viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
-	print("222r")
+	if !isEnabled and heldMug or heldMug2:
+		if heldMug2:
+			machine.pickupMug(self, heldMug2)
+			return
+		machine.pickupMug(self, heldMug)
+		return
+	elif isEnabled and !heldMug or !heldMug2:
+		machine.placeMug(self)
 
 
 func _on_buttons_input_event(viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
-	print("333r3")
+	buttonPress(shape_idx)

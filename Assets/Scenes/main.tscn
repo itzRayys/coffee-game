@@ -1,266 +1,107 @@
-[gd_scene load_steps=17 format=3 uid="uid://bfm3kfr3y53j3"]
+[gd_scene load_steps=18 format=3 uid="uid://bfm3kfr3y53j3"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Main/toggleOrdersMenu.gd" id="1_e2ppr"]
-[ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="2_a3mdc"]
+[ext_resource type="Texture2D" uid="uid://jtnaeayb0dxx" path="res://Assets/Sprites/temp office/temp-office-bg.png" id="1_hjucd"]
+[ext_resource type="Texture2D" uid="uid://dkknge1rtphjy" path="res://Assets/Sprites/temp office/temp-desk.png" id="2_gcevb"]
+[ext_resource type="Texture2D" uid="uid://cidcl1t0s6lce" path="res://Assets/Sprites/temp office/temp-laptop.png" id="3_k0cas"]
 [ext_resource type="Script" path="res://Assets/Scripts/Main/pauseMenu.gd" id="3_kj610"]
-[ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Assets/dialogueBalloon/balloon.tscn" id="4_7jats"]
-[ext_resource type="Script" path="res://Assets/dialogueBalloon/balloon.gd" id="5_1redv"]
-[ext_resource type="Script" path="res://Assets/Scripts/Main/frontCounter.gd" id="6_1kafq"]
-[ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/temp_white.png" id="7_xpdel"]
-[ext_resource type="Script" path="res://Assets/Scripts/areaSwitchButton.gd" id="8_a2urv"]
+[ext_resource type="Script" path="res://Assets/Scripts/Main/GUI.gd" id="3_uwids"]
+[ext_resource type="Script" path="res://Assets/Scripts/Office/laptop.gd" id="4_ouqs6"]
+[ext_resource type="PackedScene" uid="uid://c4nwcd8674cnx" path="res://Assets/Scenes/area_switch.tscn" id="6_iwp0x"]
+[ext_resource type="Script" path="res://Assets/Scripts/Main/GameManager.gd" id="7_7yhvd"]
+[ext_resource type="PackedScene" uid="uid://cdaw46b4qgdi1" path="res://Assets/Scenes/front_counter.tscn" id="8_krguc"]
 [ext_resource type="PackedScene" uid="uid://d0ml0manfpx0i" path="res://Assets/Scenes/drinkStation.tscn" id="10_dw4sc"]
-[ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/temp_stripe.png" id="11_vbpsp"]
-[ext_resource type="Script" path="res://Assets/Scripts/Main/titleScreen.gd" id="50_dpdd7"]
+[ext_resource type="Theme" uid="uid://bilsq7fjihupe" path="res://Assets/Themes/placeHolderTheme/placeholderTheme.tres" id="11_j0lck"]
 
-[sub_resource type="Gradient" id="Gradient_qosuh"]
-interpolation_mode = 2
-interpolation_color_space = 1
-offsets = PackedFloat32Array(-0.305, 0.642045, 0.931818, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.1003, 0.181675, 0.14159, 1, 0.2065, 0.35, 0.304558, 1, 0.425545, 0.54876, 0.721262, 1)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_56dcn"]
+size = Vector2(427, 290)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_blmtc"]
-gradient = SubResource("Gradient_qosuh")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i8cj3"]
+bg_color = Color(0.639216, 0.294118, 0.701961, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dufu5"]
-bg_color = Color(0, 0, 0, 0.411765)
+[sub_resource type="Gradient" id="Gradient_rnoal"]
+offsets = PackedFloat32Array(0, 0.291457, 1)
+colors = PackedColorArray(0.75, 0.63725, 0.585, 1, 0.81, 0.638415, 0.5589, 1, 0.82, 0.328, 0.369, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0460d"]
-bg_color = Color(0.74902, 0.74902, 0.74902, 1)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tkj0g"]
+gradient = SubResource("Gradient_rnoal")
+width = 244
+height = 179
+fill = 1
+fill_from = Vector2(0.10687, 0)
+fill_to = Vector2(0.770992, 0.941703)
 
-[sub_resource type="LabelSettings" id="LabelSettings_uyuev"]
-font_size = 24
-outline_size = 4
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_mtu4v"]
+offsets = PackedFloat32Array(0, 0.356784, 0.829146)
+colors = PackedColorArray(0, 0, 0, 1, 0.17, 0.17, 0.17, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ak51p"]
+gradient = SubResource("Gradient_mtu4v")
+fill_to = Vector2(0, 1)
 
 [node name="main" type="Node2D"]
-process_mode = 3
 
-[node name="titleScreen" type="Control" parent="." node_paths=PackedStringArray("entryScene", "blackOverlay", "fadeTimer")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 4000.0
-offset_top = 3000.0
-offset_right = 4000.0
-offset_bottom = 3000.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("50_dpdd7")
-entryScene = NodePath("../frontCounter")
-blackOverlay = NodePath("colorRect")
-fadeTimer = NodePath("timer")
+[node name="office" type="Node2D" parent="."]
+position = Vector2(0, 6000)
 
-[node name="textureRect" type="TextureRect" parent="titleScreen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture1D_blmtc")
+[node name="BG" type="Sprite2D" parent="office"]
+texture = ExtResource("1_hjucd")
+centered = false
 
-[node name="colorRect" type="ColorRect" parent="titleScreen"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
+[node name="table" type="Sprite2D" parent="office"]
+position = Vector2(0, 571)
+texture = ExtResource("2_gcevb")
+centered = false
 
-[node name="timer" type="Timer" parent="titleScreen"]
-one_shot = true
+[node name="laptop" type="Sprite2D" parent="office" node_paths=PackedStringArray("laptopGUI")]
+position = Vector2(733, 414)
+texture = ExtResource("3_k0cas")
+centered = false
+script = ExtResource("4_ouqs6")
+laptopGUI = NodePath("../../laptopGUI")
+
+[node name="area2d" type="Area2D" parent="office/laptop"]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="office/laptop/area2d"]
+position = Vector2(243, 427)
+shape = SubResource("RectangleShape2D_56dcn")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="drinkStation" parent="." instance=ExtResource("10_dw4sc")]
+
+[node name="frontCounter" parent="." node_paths=PackedStringArray("drinkStation") instance=ExtResource("8_krguc")]
+position = Vector2(0, 3000)
+drinkStation = NodePath("../drinkStation")
 
 [node name="GUI" type="Control" parent="."]
-process_mode = 3
-visible = false
-z_index = 1
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1920.0
+offset_left = 2000.0
+offset_right = 3920.0
 offset_bottom = 1080.0
 mouse_filter = 2
+script = ExtResource("3_uwids")
 
-[node name="ordersMenu" type="Control" parent="GUI" groups=["Pausable"]]
-process_mode = 1
+[node name="areaSwitch" parent="GUI" node_paths=PackedStringArray("gameCamera", "drinkStation", "frontCounter") instance=ExtResource("6_iwp0x")]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -935.0
-offset_top = 100.0
-offset_right = 315.0
-offset_bottom = 250.0
-grow_horizontal = 2
-scale = Vector2(0.64, 0.64)
-size_flags_horizontal = 4
+size_flags_vertical = 0
+gameCamera = NodePath("../../camera2d")
+drinkStation = NodePath("../../drinkStation")
+frontCounter = NodePath("../../frontCounter")
 
-[node name="ordersMenuPanel" type="Panel" parent="GUI/ordersMenu" groups=["Pausable"]]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 150.0
-script = ExtResource("1_e2ppr")
-
-[node name="ordersMenuButton" type="Button" parent="GUI/ordersMenu/ordersMenuPanel" groups=["Pausable"]]
+[node name="pause" type="Button" parent="GUI"]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 2.5
-offset_top = -72.5
-offset_right = 147.5
-offset_bottom = 72.5
-grow_vertical = 2
-theme = ExtResource("2_a3mdc")
-toggle_mode = true
-text = "List"
-text_overrun_behavior = 3
-
-[node name="ordersPanel" type="Panel" parent="GUI/ordersMenu/ordersMenuPanel" groups=["Pausable"]]
-visible = false
-clip_contents = true
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 150.0
-offset_top = -72.5
-offset_right = 1247.5
-offset_bottom = 72.5
-grow_vertical = 2
-
-[node name="ordersScroll" type="ScrollContainer" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel" groups=["Pausable"]]
-layout_mode = 1
-anchors_preset = 15
+anchors_preset = 1
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 2.5
-offset_right = -2.5
-grow_horizontal = 2
-grow_vertical = 2
-horizontal_scroll_mode = 3
-vertical_scroll_mode = 0
-scroll_deadzone = -15
-
-[node name="ordersHbox" type="HBoxContainer" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll" groups=["Pausable"]]
-custom_minimum_size = Vector2(1097.5, 140)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-theme_override_constants/separation = 4
-
-[node name="Button" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button2" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button3" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button4" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button5" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button6" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button7" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button8" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button9" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button10" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button11" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button12" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button13" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button14" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button15" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button16" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button17" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
-
-[node name="Button18" type="Button" parent="GUI/ordersMenu/ordersMenuPanel/ordersPanel/ordersScroll/ordersHbox" groups=["Pausable"]]
-custom_minimum_size = Vector2(140, 140)
-layout_mode = 2
-mouse_filter = 1
-theme = ExtResource("2_a3mdc")
+offset_left = -150.0
+offset_top = 50.0
+offset_right = -75.0
+offset_bottom = 125.0
+grow_horizontal = 0
+theme = ExtResource("11_j0lck")
+text = "||"
 
 [node name="pauseMenu" type="Control" parent="GUI"]
-process_mode = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -270,292 +111,292 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("3_kj610")
 
-[node name="pauseBtn" type="Button" parent="GUI/pauseMenu"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -88.0
-offset_top = 25.0
-offset_right = -25.0
-offset_bottom = 88.0
-grow_horizontal = 0
-theme = ExtResource("2_a3mdc")
-theme_override_font_sizes/font_size = 25
-text = "II"
-
-[node name="pauseMenuDim" type="Panel" parent="GUI/pauseMenu"]
-visible = false
+[node name="outsideButton" type="Button" parent="GUI/pauseMenu"]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_dufu5")
 
-[node name="pauseMenuPanel" type="Panel" parent="GUI/pauseMenu/pauseMenuDim"]
+[node name="panelContainer" type="PanelContainer" parent="GUI/pauseMenu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -525.0
-offset_top = -300.0
-offset_right = 525.0
-offset_bottom = 300.0
+offset_left = -747.0
+offset_top = -349.0
+offset_right = 789.0
+offset_bottom = 449.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_0460d")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/pauseMenu/pauseMenuDim/pauseMenuPanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -225.0
-offset_right = 350.0
-offset_bottom = 225.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 65
-alignment = 1
-
-[node name="resumeBtn" type="Button" parent="GUI/pauseMenu/pauseMenuDim/pauseMenuPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 90)
+[node name="control" type="Control" parent="GUI/pauseMenu/panelContainer"]
 layout_mode = 2
-theme = ExtResource("2_a3mdc")
-text = "Resume"
 
-[node name="settingsBtn" type="Button" parent="GUI/pauseMenu/pauseMenuDim/pauseMenuPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-theme = ExtResource("2_a3mdc")
-text = "Settings"
-
-[node name="Button" type="Button" parent="GUI/pauseMenu/pauseMenuDim/pauseMenuPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-theme = ExtResource("2_a3mdc")
-text = "waaaaa"
-
-[node name="settingsMenuPanel" type="Panel" parent="GUI/pauseMenu/pauseMenuDim"]
-visible = false
+[node name="vBoxContainer" type="VBoxContainer" parent="GUI/pauseMenu/panelContainer/control"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -525.0
-offset_top = -300.0
-offset_right = 525.0
-offset_bottom = 300.0
+offset_left = -717.0
+offset_top = 102.0
+offset_right = 711.0
+offset_bottom = 762.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_0460d")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/pauseMenu/pauseMenuDim/settingsMenuPanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -225.0
-offset_right = 350.0
-offset_bottom = 225.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="resolutionLabel" type="Label" parent="GUI/pauseMenu/pauseMenuDim/settingsMenuPanel/VBoxContainer"]
+[node name="control" type="Control" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Resolution"
-label_settings = SubResource("LabelSettings_uyuev")
-vertical_alignment = 1
+size_flags_vertical = 3
 
-[node name="resolutionSelect" type="OptionButton" parent="GUI/pauseMenu/pauseMenuDim/settingsMenuPanel/VBoxContainer/resolutionLabel"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -15.5
-offset_bottom = 15.5
-grow_horizontal = 0
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-item_count = 3
-selected = 2
-popup/item_0/text = "720x480"
-popup/item_0/id = 0
-popup/item_1/text = "1080x720"
-popup/item_1/id = 1
-popup/item_2/text = "1920x1080"
-popup/item_2/id = 2
-
-[node name="closeSettingsBtn" type="Button" parent="GUI/pauseMenu/pauseMenuDim/settingsMenuPanel"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = -36.0
-offset_right = 50.0
-offset_bottom = -5.0
-grow_vertical = 0
-text = "Back"
-
-[node name="ExampleBalloon" parent="GUI" instance=ExtResource("4_7jats")]
-visible = false
-script = ExtResource("5_1redv")
-
-[node name="frontCounter" type="Node2D" parent="."]
-process_mode = 1
-position = Vector2(0, 3000)
-script = ExtResource("6_1kafq")
-
-[node name="BG" type="Sprite2D" parent="frontCounter"]
-self_modulate = Color(0.85098, 0.576471, 0.658824, 1)
-texture = ExtResource("7_xpdel")
-centered = false
-
-[node name="counter" type="Sprite2D" parent="frontCounter/BG"]
-self_modulate = Color(0.34902, 0.176471, 0.164706, 1)
-position = Vector2(0, 767)
-scale = Vector2(1, 0.289815)
-texture = ExtResource("7_xpdel")
-centered = false
-
-[node name="GUI" type="Control" parent="frontCounter"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-mouse_filter = 2
-
-[node name="buttonToAreaSwitch" type="Button" parent="frontCounter/GUI"]
-self_modulate = Color(1, 1, 1, 0.235294)
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 25.0
-offset_top = -125.0
-offset_right = 125.0
-offset_bottom = -25.0
-grow_vertical = 0
-theme = ExtResource("2_a3mdc")
-text = "V"
-script = ExtResource("8_a2urv")
-switchSceneTo = 4
-
-[node name="drinkStation" parent="." node_paths=PackedStringArray("ingredientContainers", "filterContainers") instance=ExtResource("10_dw4sc")]
-ingredientContainers = [null, null]
-filterContainers = [NodePath("grinder"), null, NodePath("coffeeCan"), NodePath("scale")]
-
-[node name="title" type="Node2D" parent="."]
-process_mode = 1
-visible = false
-position = Vector2(4000, 0)
-
-[node name="GUI" type="Control" parent="title"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-mouse_filter = 2
-
-[node name="BG" type="TextureRect" parent="title/GUI"]
-self_modulate = Color(0.760784, 0.560784, 0.635294, 1)
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-mouse_filter = 2
-texture = ExtResource("11_vbpsp")
-
-[node name="areaSwitches" type="Control" parent="title/GUI"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -300.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
-
-[node name="frontBtn" type="Button" parent="title/GUI/areaSwitches"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -50.0
-offset_right = 200.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_a3mdc")
-text = "frontCounter"
-script = ExtResource("8_a2urv")
-switchSceneTo = 1
-
-[node name="drinkBtn" type="Button" parent="title/GUI/areaSwitches"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -550.0
-offset_top = -50.0
-offset_right = -150.0
-offset_bottom = 50.0
-grow_horizontal = 0
-grow_vertical = 2
-theme = ExtResource("2_a3mdc")
-text = "drinkStation"
-script = ExtResource("8_a2urv")
-switchSceneTo = 2
-
-[node name="areaBtn" type="Button" parent="title/GUI/areaSwitches"]
+[node name="label" type="Label" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer/control"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 150.0
-offset_top = -50.0
-offset_right = 550.0
-offset_bottom = 50.0
+offset_top = -13.0
+offset_right = 45.0
+offset_bottom = 13.0
 grow_vertical = 2
-theme = ExtResource("2_a3mdc")
-text = "areaSwitch"
-script = ExtResource("8_a2urv")
+theme_override_font_sizes/font_size = 31
+text = "Audio"
+vertical_alignment = 1
+
+[node name="label2" type="Label" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer/control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -388.0
+offset_top = -23.5
+offset_right = -300.0
+offset_bottom = 23.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 31
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hSlider" type="HSlider" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer/control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="control2" type="Control" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="label" type="Label" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer/control2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -13.0
+offset_right = 45.0
+offset_bottom = 13.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 31
+text = "Audio"
+vertical_alignment = 1
+
+[node name="label2" type="Label" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer/control2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -388.0
+offset_top = -23.5
+offset_right = -300.0
+offset_bottom = 23.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 31
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hSlider" type="HSlider" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer/control2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="control3" type="Control" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="areaSwitchHold" type="Button" parent="GUI/pauseMenu/panelContainer/control/vBoxContainer/control3"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -37.5
+offset_right = 125.0
+offset_bottom = 37.5
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("11_j0lck")
+toggle_mode = true
+text = "Hold"
+
+[node name="close" type="Button" parent="GUI/pauseMenu"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -218.0
+offset_top = 157.0
+offset_right = -143.0
+offset_bottom = 232.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 41
+text = "X"
+
+[node name="label" type="Label" parent="GUI/pauseMenu"]
+layout_mode = 2
+offset_left = 171.0
+offset_top = 76.0
+offset_right = 977.0
+offset_bottom = 279.0
+theme_override_font_sizes/font_size = 146
+text = "Comfy Cafe"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="laptopGUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 6000.0
+offset_right = 1920.0
+offset_bottom = 7080.0
+mouse_filter = 2
+
+[node name="screenBorder" type="PanelContainer" parent="laptopGUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -770.0
+offset_top = -441.0
+offset_right = 770.0
+offset_bottom = 441.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("11_j0lck")
+theme_override_styles/panel = SubResource("StyleBoxFlat_i8cj3")
+
+[node name="margin" type="MarginContainer" parent="laptopGUI/screenBorder"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="desktopBG" type="TextureRect" parent="laptopGUI/screenBorder/margin"]
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_tkj0g")
+expand_mode = 1
+
+[node name="vBoxContainer" type="VBoxContainer" parent="laptopGUI/screenBorder/margin"]
+layout_mode = 2
+
+[node name="screen" type="Control" parent="laptopGUI/screenBorder/margin/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="marginContainer" type="MarginContainer" parent="laptopGUI/screenBorder/margin/vBoxContainer/screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="gridContainer" type="GridContainer" parent="laptopGUI/screenBorder/margin/vBoxContainer/screen/marginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 9
+
+[node name="button" type="Button" parent="laptopGUI/screenBorder/margin/vBoxContainer/screen/marginContainer/gridContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="button2" type="Button" parent="laptopGUI/screenBorder/margin/vBoxContainer/screen/marginContainer/gridContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="taskbar" type="Control" parent="laptopGUI/screenBorder/margin/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+mouse_filter = 1
+
+[node name="taskbarBG" type="TextureRect" parent="laptopGUI/screenBorder/margin/vBoxContainer/taskbar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_ak51p")
+expand_mode = 1
+
+[node name="power" type="Button" parent="laptopGUI/screenBorder/margin/vBoxContainer/taskbar/taskbarBG"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 78.0
+grow_vertical = 2
+text = "POWER"
 
 [node name="camera2d" type="Camera2D" parent="."]
-offset = Vector2(0, 6000)
+anchor_mode = 0
+process_callback = 0
 
-[connection signal="gui_input" from="titleScreen/textureRect" to="titleScreen" method="_on_texture_rect_gui_input" flags=18]
-[connection signal="timeout" from="titleScreen/timer" to="titleScreen" method="_on_timer_timeout" flags=18]
-[connection signal="pressed" from="GUI/ordersMenu/ordersMenuPanel/ordersMenuButton" to="GUI/ordersMenu/ordersMenuPanel" method="_on_orders_menu_button_pressed"]
-[connection signal="pressed" from="GUI/pauseMenu/pauseBtn" to="GUI/pauseMenu" method="_on_pause_btn_pressed"]
-[connection signal="pressed" from="GUI/pauseMenu/pauseMenuDim/pauseMenuPanel/VBoxContainer/resumeBtn" to="GUI/pauseMenu" method="_on_unpause_btn_pressed"]
-[connection signal="pressed" from="GUI/pauseMenu/pauseMenuDim/pauseMenuPanel/VBoxContainer/settingsBtn" to="GUI/pauseMenu" method="_on_settings_btn_pressed"]
-[connection signal="item_selected" from="GUI/pauseMenu/pauseMenuDim/settingsMenuPanel/VBoxContainer/resolutionLabel/resolutionSelect" to="GUI/pauseMenu" method="_on_resolution_select_item_selected"]
-[connection signal="pressed" from="GUI/pauseMenu/pauseMenuDim/settingsMenuPanel/closeSettingsBtn" to="GUI/pauseMenu" method="_on_close_settings_btn_pressed"]
-[connection signal="pressed" from="frontCounter/GUI/buttonToAreaSwitch" to="frontCounter/GUI/buttonToAreaSwitch" method="_on_pressed" flags=18]
-[connection signal="pressed" from="title/GUI/areaSwitches/frontBtn" to="title/GUI/areaSwitches/frontBtn" method="_on_pressed" flags=18]
-[connection signal="pressed" from="title/GUI/areaSwitches/drinkBtn" to="title/GUI/areaSwitches/drinkBtn" method="_on_pressed" flags=18]
-[connection signal="pressed" from="title/GUI/areaSwitches/areaBtn" to="title/GUI/areaSwitches/areaBtn" method="_on_pressed" flags=18]
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("7_7yhvd")
+
+[connection signal="input_event" from="office/laptop/area2d" to="office/laptop" method="_on_area_2d_input_event"]
+[connection signal="areaSwitched" from="GUI/areaSwitch" to="GUI" method="_on_area_switch_area_switched"]
+[connection signal="areaSwitched" from="GUI/areaSwitch" to="GameManager" method="_on_area_switch_area_switched"]
+[connection signal="pressed" from="GUI/pause" to="GUI/pauseMenu" method="_on_pause_pressed"]
+[connection signal="pressed" from="GUI/pauseMenu/outsideButton" to="GUI/pauseMenu" method="_on_outside_button_pressed"]
+[connection signal="toggled" from="GUI/pauseMenu/panelContainer/control/vBoxContainer/control3/areaSwitchHold" to="GUI/areaSwitch" method="_on_area_switch_hold_toggled"]
+[connection signal="pressed" from="GUI/pauseMenu/close" to="GUI/pauseMenu" method="_on_close_pressed"]
+[connection signal="pressed" from="laptopGUI/screenBorder/margin/vBoxContainer/taskbar/taskbarBG/power" to="office/laptop" method="_on_power_pressed"]
