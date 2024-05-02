@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bfm3kfr3y53j3"]
+[gd_scene load_steps=14 format=3 uid="uid://bfm3kfr3y53j3"]
 
 [ext_resource type="Texture2D" uid="uid://jtnaeayb0dxx" path="res://Assets/Sprites/temp office/temp-office-bg.png" id="1_hjucd"]
 [ext_resource type="Texture2D" uid="uid://dkknge1rtphjy" path="res://Assets/Sprites/temp office/temp-desk.png" id="2_gcevb"]
@@ -10,33 +10,11 @@
 [ext_resource type="Script" path="res://Assets/Scripts/Main/GameManager.gd" id="7_7yhvd"]
 [ext_resource type="PackedScene" uid="uid://cdaw46b4qgdi1" path="res://Assets/Scenes/front_counter.tscn" id="8_krguc"]
 [ext_resource type="PackedScene" uid="uid://d0ml0manfpx0i" path="res://Assets/Scenes/drinkStation.tscn" id="10_dw4sc"]
+[ext_resource type="PackedScene" uid="uid://bo53f5k3lbiho" path="res://Assets/Scenes/laptop_gui.tscn" id="11_0a2bt"]
 [ext_resource type="Theme" uid="uid://bilsq7fjihupe" path="res://Assets/Themes/placeHolderTheme/placeholderTheme.tres" id="11_j0lck"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_56dcn"]
 size = Vector2(427, 290)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i8cj3"]
-bg_color = Color(0.639216, 0.294118, 0.701961, 1)
-
-[sub_resource type="Gradient" id="Gradient_rnoal"]
-offsets = PackedFloat32Array(0, 0.291457, 1)
-colors = PackedColorArray(0.75, 0.63725, 0.585, 1, 0.81, 0.638415, 0.5589, 1, 0.82, 0.328, 0.369, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_tkj0g"]
-gradient = SubResource("Gradient_rnoal")
-width = 244
-height = 179
-fill = 1
-fill_from = Vector2(0.10687, 0)
-fill_to = Vector2(0.770992, 0.941703)
-
-[sub_resource type="Gradient" id="Gradient_mtu4v"]
-offsets = PackedFloat32Array(0, 0.356784, 0.829146)
-colors = PackedColorArray(0, 0, 0, 1, 0.17, 0.17, 0.17, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ak51p"]
-gradient = SubResource("Gradient_mtu4v")
-fill_to = Vector2(0, 1)
 
 [node name="main" type="Node2D"]
 
@@ -81,12 +59,14 @@ offset_bottom = 1080.0
 mouse_filter = 2
 script = ExtResource("3_uwids")
 
-[node name="areaSwitch" parent="GUI" node_paths=PackedStringArray("gameCamera", "drinkStation", "frontCounter") instance=ExtResource("6_iwp0x")]
+[node name="areaSwitch" parent="GUI" node_paths=PackedStringArray("gameCamera", "drinkStation", "frontCounter", "office") instance=ExtResource("6_iwp0x")]
 layout_mode = 1
 size_flags_vertical = 0
+startingScene = "Office"
 gameCamera = NodePath("../../camera2d")
 drinkStation = NodePath("../../drinkStation")
 frontCounter = NodePath("../../frontCounter")
+office = NodePath("../../office")
 
 [node name="pause" type="Button" parent="GUI"]
 layout_mode = 1
@@ -287,103 +267,12 @@ text = "Comfy Cafe"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="laptopGUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
+[node name="laptopGUI" parent="." node_paths=PackedStringArray("websites") instance=ExtResource("11_0a2bt")]
+visible = false
 offset_top = 6000.0
-offset_right = 1920.0
 offset_bottom = 7080.0
-mouse_filter = 2
-
-[node name="screenBorder" type="PanelContainer" parent="laptopGUI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -770.0
-offset_top = -441.0
-offset_right = 770.0
-offset_bottom = 441.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("11_j0lck")
-theme_override_styles/panel = SubResource("StyleBoxFlat_i8cj3")
-
-[node name="margin" type="MarginContainer" parent="laptopGUI/screenBorder"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="desktopBG" type="TextureRect" parent="laptopGUI/screenBorder/margin"]
-layout_mode = 2
-mouse_filter = 2
-texture = SubResource("GradientTexture2D_tkj0g")
-expand_mode = 1
-
-[node name="vBoxContainer" type="VBoxContainer" parent="laptopGUI/screenBorder/margin"]
-layout_mode = 2
-
-[node name="screen" type="Control" parent="laptopGUI/screenBorder/margin/vBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="marginContainer" type="MarginContainer" parent="laptopGUI/screenBorder/margin/vBoxContainer/screen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="gridContainer" type="GridContainer" parent="laptopGUI/screenBorder/margin/vBoxContainer/screen/marginContainer"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
-columns = 9
-
-[node name="button" type="Button" parent="laptopGUI/screenBorder/margin/vBoxContainer/screen/marginContainer/gridContainer"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-
-[node name="button2" type="Button" parent="laptopGUI/screenBorder/margin/vBoxContainer/screen/marginContainer/gridContainer"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-
-[node name="taskbar" type="Control" parent="laptopGUI/screenBorder/margin/vBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-mouse_filter = 1
-
-[node name="taskbarBG" type="TextureRect" parent="laptopGUI/screenBorder/margin/vBoxContainer/taskbar"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_ak51p")
-expand_mode = 1
-
-[node name="power" type="Button" parent="laptopGUI/screenBorder/margin/vBoxContainer/taskbar/taskbarBG"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 78.0
-grow_vertical = 2
-text = "POWER"
+openLaptopOnReady = false
+websites = []
 
 [node name="camera2d" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -399,4 +288,3 @@ script = ExtResource("7_7yhvd")
 [connection signal="pressed" from="GUI/pauseMenu/outsideButton" to="GUI/pauseMenu" method="_on_outside_button_pressed"]
 [connection signal="toggled" from="GUI/pauseMenu/panelContainer/control/vBoxContainer/control3/areaSwitchHold" to="GUI/areaSwitch" method="_on_area_switch_hold_toggled"]
 [connection signal="pressed" from="GUI/pauseMenu/close" to="GUI/pauseMenu" method="_on_close_pressed"]
-[connection signal="pressed" from="laptopGUI/screenBorder/margin/vBoxContainer/taskbar/taskbarBG/power" to="office/laptop" method="_on_power_pressed"]

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="mail_resource" load_steps=2 format=3 uid="uid://ceigff1x8xous"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/mail.gd" id="1_o2iht"]
+
+[resource]
+script = ExtResource("1_o2iht")
+senderName = ""
+subject = ""
+body = ""

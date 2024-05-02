@@ -36,3 +36,7 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 
 func _on_power_pressed():
 	closeLaptop()
+
+
+func _on_outside_button_pressed():
+	closeLaptop()

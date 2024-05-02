@@ -2,10 +2,13 @@ extends Control
 
 signal areaSwitched(areaPosition:Vector2, areaIndex:int)
 
+@export_enum("Front Counter", "Drink Station", "Office") var startingScene:String
+
 @export var isLocked:bool = false
 @export var gameCamera:Camera2D
 @export var drinkStation:Node2D
 @export var frontCounter:Node2D
+@export var office:Node2D
 
 @export var buttons:Array[Button]
 @onready var color_rect_2 = $colorRect2
@@ -18,8 +21,12 @@ var isToggleMode:bool = false
 
 # Closes menu on ready
 func _ready():
-	if frontCounter:
+	if startingScene == "Front Counter":
 		moveToArea(frontCounter.position, 0)
+	elif startingScene == "Drink Station":
+		moveToArea(drinkStation.position, 1)
+	elif startingScene == "Office":
+		moveToArea(office.position, 2)
 	closeMenu()
 
 # Handles locking menu
