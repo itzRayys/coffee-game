@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://hdcoy6p31f18"]
+
+[sub_resource type="Gradient" id="Gradient_yhdrj"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.2584, 0.38, 0.302987, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fgfcn"]
+gradient = SubResource("Gradient_yhdrj")
+width = 1920
+height = 1080
+
+[node name="foodStation" type="Node2D"]
+
+[node name="sprite2d" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_fgfcn")
+centered = false

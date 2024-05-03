@@ -1,11 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bfm3kfr3y53j3"]
+[gd_scene load_steps=11 format=3 uid="uid://bfm3kfr3y53j3"]
 
-[ext_resource type="Texture2D" uid="uid://jtnaeayb0dxx" path="res://Assets/Sprites/temp office/temp-office-bg.png" id="1_hjucd"]
-[ext_resource type="Texture2D" uid="uid://dkknge1rtphjy" path="res://Assets/Sprites/temp office/temp-desk.png" id="2_gcevb"]
-[ext_resource type="Texture2D" uid="uid://cidcl1t0s6lce" path="res://Assets/Sprites/temp office/temp-laptop.png" id="3_k0cas"]
+[ext_resource type="PackedScene" uid="uid://br10p5543k201" path="res://Assets/Scenes/office.tscn" id="1_edch4"]
+[ext_resource type="PackedScene" uid="uid://hdcoy6p31f18" path="res://Assets/Scenes/food_station.tscn" id="3_iwjk5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Main/pauseMenu.gd" id="3_kj610"]
 [ext_resource type="Script" path="res://Assets/Scripts/Main/GUI.gd" id="3_uwids"]
-[ext_resource type="Script" path="res://Assets/Scripts/Office/laptop.gd" id="4_ouqs6"]
 [ext_resource type="PackedScene" uid="uid://c4nwcd8674cnx" path="res://Assets/Scenes/area_switch.tscn" id="6_iwp0x"]
 [ext_resource type="Script" path="res://Assets/Scripts/Main/GameManager.gd" id="7_7yhvd"]
 [ext_resource type="PackedScene" uid="uid://cdaw46b4qgdi1" path="res://Assets/Scenes/front_counter.tscn" id="8_krguc"]
@@ -13,38 +11,15 @@
 [ext_resource type="PackedScene" uid="uid://bo53f5k3lbiho" path="res://Assets/Scenes/laptop_gui.tscn" id="11_0a2bt"]
 [ext_resource type="Theme" uid="uid://bilsq7fjihupe" path="res://Assets/Themes/placeHolderTheme/placeholderTheme.tres" id="11_j0lck"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_56dcn"]
-size = Vector2(427, 290)
-
 [node name="main" type="Node2D"]
 
-[node name="office" type="Node2D" parent="."]
+[node name="office" parent="." instance=ExtResource("1_edch4")]
 position = Vector2(0, 6000)
 
-[node name="BG" type="Sprite2D" parent="office"]
-texture = ExtResource("1_hjucd")
-centered = false
-
-[node name="table" type="Sprite2D" parent="office"]
-position = Vector2(0, 571)
-texture = ExtResource("2_gcevb")
-centered = false
-
-[node name="laptop" type="Sprite2D" parent="office" node_paths=PackedStringArray("laptopGUI")]
-position = Vector2(733, 414)
-texture = ExtResource("3_k0cas")
-centered = false
-script = ExtResource("4_ouqs6")
-laptopGUI = NodePath("../../laptopGUI")
-
-[node name="area2d" type="Area2D" parent="office/laptop"]
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="office/laptop/area2d"]
-position = Vector2(243, 427)
-shape = SubResource("RectangleShape2D_56dcn")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
 [node name="drinkStation" parent="." instance=ExtResource("10_dw4sc")]
+
+[node name="foodStation" parent="." instance=ExtResource("3_iwjk5")]
+position = Vector2(0, 9000)
 
 [node name="frontCounter" parent="." node_paths=PackedStringArray("drinkStation") instance=ExtResource("8_krguc")]
 position = Vector2(0, 3000)
@@ -59,14 +34,13 @@ offset_bottom = 1080.0
 mouse_filter = 2
 script = ExtResource("3_uwids")
 
-[node name="areaSwitch" parent="GUI" node_paths=PackedStringArray("gameCamera", "drinkStation", "frontCounter", "office") instance=ExtResource("6_iwp0x")]
+[node name="areaSwitch" parent="GUI" node_paths=PackedStringArray("gameCamera", "drinkStation", "frontCounter") instance=ExtResource("6_iwp0x")]
 layout_mode = 1
 size_flags_vertical = 0
 startingScene = "Office"
 gameCamera = NodePath("../../camera2d")
 drinkStation = NodePath("../../drinkStation")
 frontCounter = NodePath("../../frontCounter")
-office = NodePath("../../office")
 
 [node name="pause" type="Button" parent="GUI"]
 layout_mode = 1
@@ -267,12 +241,11 @@ text = "Comfy Cafe"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="laptopGUI" parent="." node_paths=PackedStringArray("websites") instance=ExtResource("11_0a2bt")]
+[node name="laptopGUI" parent="." instance=ExtResource("11_0a2bt")]
 visible = false
 offset_top = 6000.0
 offset_bottom = 7080.0
 openLaptopOnReady = false
-websites = []
 
 [node name="camera2d" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -281,7 +254,6 @@ process_callback = 0
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("7_7yhvd")
 
-[connection signal="input_event" from="office/laptop/area2d" to="office/laptop" method="_on_area_2d_input_event"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GUI" method="_on_area_switch_area_switched"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GameManager" method="_on_area_switch_area_switched"]
 [connection signal="pressed" from="GUI/pause" to="GUI/pauseMenu" method="_on_pause_pressed"]

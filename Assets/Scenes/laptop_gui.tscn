@@ -1,8 +1,9 @@
-[gd_scene load_steps=35 format=3 uid="uid://bo53f5k3lbiho"]
+[gd_scene load_steps=49 format=3 uid="uid://bo53f5k3lbiho"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Office/laptopGUI.gd" id="1_m1dgi"]
 [ext_resource type="Theme" uid="uid://bilsq7fjihupe" path="res://Assets/Themes/placeHolderTheme/placeholderTheme.tres" id="1_shgm6"]
 [ext_resource type="Texture2D" uid="uid://dmgu26qdbohij" path="res://Assets/Sprites/cup_temp.png" id="2_vnj2x"]
+[ext_resource type="Script" path="res://Assets/Scripts/Office/laptopBrowser.gd" id="3_juah7"]
 [ext_resource type="Script" path="res://Assets/Scripts/Office/laptopSettings.gd" id="4_inivp"]
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/temp_white.png" id="5_8457g"]
 [ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/temp_stripe.png" id="6_f4pn2"]
@@ -29,6 +30,13 @@ colors = PackedColorArray(0.1775, 0.25, 0.196833, 1, 0.25, 0.25, 0.25, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ety0e"]
 gradient = SubResource("Gradient_vlcae")
 fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_o66qd"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ecgrd"]
+gradient = SubResource("Gradient_o66qd")
+width = 50
+height = 50
 
 [sub_resource type="Gradient" id="Gradient_h16f2"]
 colors = PackedColorArray(0.6141, 0.857812, 0.89, 1, 0.91, 0.91, 0.91, 1)
@@ -92,6 +100,52 @@ colors = PackedColorArray(0, 0, 0, 1, 0.5841, 0.99, 0.66528, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_uis1m"]
 gradient = SubResource("Gradient_4pqqn")
 
+[sub_resource type="Gradient" id="Gradient_axbiw"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.23, 0.09545, 0.0805, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u16t3"]
+gradient = SubResource("Gradient_axbiw")
+width = 514
+height = 359
+
+[sub_resource type="Gradient" id="Gradient_2emjt"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.36, 0.144, 0.2088, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i27k7"]
+gradient = SubResource("Gradient_2emjt")
+width = 40
+height = 40
+
+[sub_resource type="Gradient" id="Gradient_lbgsi"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.59, 0.0708, 0.235213, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dh3dy"]
+gradient = SubResource("Gradient_lbgsi")
+width = 40
+height = 40
+
+[sub_resource type="Gradient" id="Gradient_5lldf"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.4, 0.4, 0.4, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0f8ea"]
+gradient = SubResource("Gradient_5lldf")
+width = 40
+height = 40
+
+[sub_resource type="Gradient" id="Gradient_mjhb4"]
+colors = PackedColorArray(0.65, 0.547625, 0.4745, 1, 0.49, 0.358517, 0.2646, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ikam"]
+gradient = SubResource("Gradient_mjhb4")
+width = 274
+height = 164
+fill = 1
+fill_to = Vector2(0.980916, 0.937395)
+
 [sub_resource type="Gradient" id="Gradient_q7kix"]
 colors = PackedColorArray(0.26466, 0.1518, 0.33, 1, 0.4459, 0.462805, 0.49, 1)
 
@@ -129,7 +183,10 @@ colors = PackedColorArray(0, 0, 0, 1, 0.17, 0.17, 0.17, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_mtu4v")
 fill_to = Vector2(0, 1)
 
-[node name="laptopGUI" type="Control" node_paths=PackedStringArray("settings", "browser", "websites")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_flaye"]
+bg_color = Color(0.454902, 0.211765, 0.501961, 1)
+
+[node name="laptopGUI" type="Control" node_paths=PackedStringArray("settings", "browser")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -138,7 +195,6 @@ mouse_filter = 2
 script = ExtResource("1_m1dgi")
 settings = NodePath("border/margin/vbox/screen/settings")
 browser = NodePath("border/margin/vbox/screen/browser")
-websites = [NodePath("border/margin/vbox/screen/browser/vBoxContainer/websiteArea/ingredients for everyone!!!"), NodePath("border/margin/vbox/screen/browser/vBoxContainer/websiteArea/appliance and furniture"), NodePath("border/margin/vbox/screen/browser/vBoxContainer/websiteArea/iPaint Designzz"), NodePath("border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail")]
 
 [node name="outsideButton" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -218,7 +274,7 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 text = "SETTINGS"
 
-[node name="browser" type="Control" parent="border/margin/vbox/screen"]
+[node name="browser" type="Control" parent="border/margin/vbox/screen" node_paths=PackedStringArray("websites")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -226,6 +282,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_juah7")
+websites = [NodePath("vBoxContainer/websiteArea/ingredients for everyone!!!"), NodePath("vBoxContainer/websiteArea/appliance and furniture"), NodePath("vBoxContainer/websiteArea/iPaint Designzz"), NodePath("vBoxContainer/websiteArea/digi-mail"), NodePath("vBoxContainer/websiteArea/Home")]
 
 [node name="vBoxContainer" type="VBoxContainer" parent="border/margin/vbox/screen/browser"]
 layout_mode = 1
@@ -280,11 +338,24 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "X"
 
+[node name="toHome" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/topbar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 261.0
+offset_top = -20.0
+offset_right = 301.0
+offset_bottom = 20.0
+grow_vertical = 2
+texture_normal = SubResource("GradientTexture2D_ecgrd")
+
 [node name="websiteArea" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ingredients for everyone!!!" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -596,28 +667,375 @@ theme_override_font_sizes/font_size = 21
 text = "99+"
 
 [node name="appliance and furniture" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea"]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="iPaint Designzz" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea"]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="digi-mail" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="textureRect" type="TextureRect" parent="border/margin/vbox/screen"]
-layout_mode = 0
-offset_left = 148.0
-offset_top = 56.0
-offset_right = 188.0
-offset_bottom = 96.0
+[node name="bg" type="TextureRect" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_u16t3")
+
+[node name="pages" type="ItemList" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail"]
+layout_mode = 2
+offset_left = 37.0
+offset_top = 85.0
+offset_right = 272.0
+offset_bottom = 424.0
+allow_search = false
+auto_height = true
+item_count = 1
+item_0/text = "wa"
+
+[node name="main" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail"]
+anchors_preset = 0
+offset_left = 317.0
+offset_top = 85.0
+offset_right = 1287.0
+offset_bottom = 644.0
+
+[node name="colorRect" type="ColorRect" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.337255)
+
+[node name="vBoxContainer" type="VBoxContainer" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="bar" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="mailList" type="VBoxContainer" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.13
+
+[node name="mailBar" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="colorRect" type="ColorRect" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.05
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.588235, 0.588235, 1)
+
+[node name="textureButton" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+texture_normal = SubResource("GradientTexture2D_i27k7")
+texture_pressed = SubResource("GradientTexture2D_dh3dy")
+ignore_texture_size = true
+
+[node name="textureButton2" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 20.0
+grow_vertical = 2
+toggle_mode = true
+texture_normal = SubResource("GradientTexture2D_0f8ea")
+ignore_texture_size = true
+
+[node name="label" type="Label" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = -20.0
+offset_right = 257.0
+offset_bottom = 20.0
+grow_vertical = 2
+text = "SENDERPERSON OKOK:"
+vertical_alignment = 1
+
+[node name="label2" type="Label" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 261.0
+offset_top = -20.0
+offset_right = 449.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.858824, 0.858824, 0.858824, 1)
+text = "This is the subject, what they say and things and okok and more and text okay..."
+vertical_alignment = 1
+
+[node name="mailBar2" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="colorRect" type="ColorRect" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.05
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.588235, 0.588235, 1)
+
+[node name="textureButton" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+texture_normal = SubResource("GradientTexture2D_i27k7")
+texture_pressed = SubResource("GradientTexture2D_dh3dy")
+ignore_texture_size = true
+
+[node name="textureButton2" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 20.0
+grow_vertical = 2
+toggle_mode = true
+texture_normal = SubResource("GradientTexture2D_0f8ea")
+ignore_texture_size = true
+
+[node name="label" type="Label" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = -20.0
+offset_right = 257.0
+offset_bottom = 20.0
+grow_vertical = 2
+text = "SENDERPERSON OKOK:"
+vertical_alignment = 1
+
+[node name="label2" type="Label" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 261.0
+offset_top = -20.0
+offset_right = 449.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.858824, 0.858824, 0.858824, 1)
+text = "This is the subject, what they say and things and okok and more and text okay..."
+vertical_alignment = 1
+
+[node name="mailBar3" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="colorRect" type="ColorRect" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.05
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.588235, 0.588235, 0.588235, 1)
+
+[node name="textureButton" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar3"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+texture_normal = SubResource("GradientTexture2D_i27k7")
+texture_pressed = SubResource("GradientTexture2D_dh3dy")
+ignore_texture_size = true
+
+[node name="textureButton2" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar3"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 20.0
+grow_vertical = 2
+toggle_mode = true
+texture_normal = SubResource("GradientTexture2D_0f8ea")
+ignore_texture_size = true
+
+[node name="label" type="Label" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar3"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = -20.0
+offset_right = 257.0
+offset_bottom = 20.0
+grow_vertical = 2
+text = "SENDERPERSON OKOK:"
+vertical_alignment = 1
+
+[node name="label2" type="Label" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/digi-mail/main/vBoxContainer/mailList/mailBar3"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 261.0
+offset_top = -20.0
+offset_right = 449.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.858824, 0.858824, 0.858824, 1)
+text = "This is the subject, what they say and things and okok and more and text okay..."
+vertical_alignment = 1
+
+[node name="Home" type="Control" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="textureRect" type="TextureRect" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_0ikam")
+
+[node name="websiteSelects" type="HBoxContainer" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -693.0
+offset_top = -397.0
+offset_right = 694.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 24
+
+[node name="website" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home/websiteSelects"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("7_8tbdh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="website2" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home/websiteSelects"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("7_8tbdh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="website3" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home/websiteSelects"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("7_8tbdh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="website4" type="TextureButton" parent="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home/websiteSelects"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("7_8tbdh")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="settings" type="Control" parent="border/margin/vbox/screen"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -724,7 +1142,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.141176, 0.141176, 0.141176, 0.470588)
 
-[node name="button" type="Button" parent="border/margin/vbox/screen/settings"]
+[node name="toHome" type="Button" parent="border/margin/vbox/screen/settings"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -957,12 +1375,42 @@ offset_right = 78.0
 grow_vertical = 2
 text = "POWER"
 
-[connection signal="pressed" from="border/margin/vbox/screen/desktop/iconGrid/webIcon" to="." method="_on_web_icon_pressed"]
+[node name="power2" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -376.0
+offset_top = -85.0
+offset_right = -227.0
+offset_bottom = -27.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.45098, 0.45098, 0.45098, 1)
+theme_override_colors/font_pressed_color = Color(0.94902, 0.27451, 0.333333, 1)
+theme_override_colors/font_hover_color = Color(0.45098, 0.45098, 0.45098, 1)
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_flaye")
+theme_override_styles/hover = SubResource("StyleBoxFlat_flaye")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_flaye")
+toggle_mode = true
+text = "POWER"
+
+[connection signal="pressed" from="outsideButton" to="." method="_on_outside_button_pressed"]
+[connection signal="pressed" from="border/margin/vbox/screen/desktop/iconGrid/webIcon" to="border/margin/vbox/screen/browser" method="_on_web_icon_pressed"]
 [connection signal="pressed" from="border/margin/vbox/screen/desktop/iconGrid/settingsIcon" to="." method="_on_settings_icon_pressed"]
-[connection signal="pressed" from="border/margin/vbox/screen/browser/vBoxContainer/topbar/closeWindow" to="." method="_on_close_window_pressed"]
+[connection signal="pressed" from="border/margin/vbox/screen/browser/vBoxContainer/topbar/closeWindow" to="border/margin/vbox/screen/browser" method="_on_close_window_pressed"]
+[connection signal="pressed" from="border/margin/vbox/screen/browser/vBoxContainer/topbar/toHome" to="border/margin/vbox/screen/browser" method="_on_to_home_pressed"]
+[connection signal="pressed" from="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home/websiteSelects/website" to="border/margin/vbox/screen/browser" method="_on_website_pressed"]
+[connection signal="pressed" from="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home/websiteSelects/website2" to="border/margin/vbox/screen/browser" method="_on_website_2_pressed"]
+[connection signal="pressed" from="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home/websiteSelects/website3" to="border/margin/vbox/screen/browser" method="_on_website_3_pressed"]
+[connection signal="pressed" from="border/margin/vbox/screen/browser/vBoxContainer/websiteArea/Home/websiteSelects/website4" to="border/margin/vbox/screen/browser" method="_on_website_4_pressed"]
 [connection signal="changeBackground" from="border/margin/vbox/screen/settings" to="." method="_on_settings_change_background"]
 [connection signal="pressed" from="border/margin/vbox/screen/settings/vBox/desktopBG/dropdownButton" to="border/margin/vbox/screen/settings" method="_on_dropdown_button_pressed"]
-[connection signal="pressed" from="border/margin/vbox/screen/settings/button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="border/margin/vbox/screen/settings/toHome" to="border/margin/vbox/screen/settings" method="_on_to_home_pressed"]
 [connection signal="pressed" from="border/margin/vbox/screen/settings/outsideButton" to="border/margin/vbox/screen/settings" method="_on_outside_button_pressed"]
 [connection signal="pressed" from="border/margin/vbox/screen/settings/desktopBGSelect/marginContainer/scrollContainer/gridContainer/switchBG" to="border/margin/vbox/screen/settings" method="_on_switch_bg_pressed"]
 [connection signal="pressed" from="border/margin/vbox/screen/settings/desktopBGSelect/marginContainer/scrollContainer/gridContainer/switchBG2" to="border/margin/vbox/screen/settings" method="_on_switch_bg_2_pressed"]
@@ -979,3 +1427,4 @@ text = "POWER"
 [connection signal="pressed" from="border/margin/vbox/screen/settings/desktopBGSelect/marginContainer/scrollContainer/gridContainer/switchBG13" to="border/margin/vbox/screen/settings" method="_on_switch_bg_13_pressed"]
 [connection signal="pressed" from="border/margin/vbox/screen/settings/desktopBGSelect/marginContainer/scrollContainer/gridContainer/switchBG14" to="border/margin/vbox/screen/settings" method="_on_switch_bg_14_pressed"]
 [connection signal="pressed" from="border/margin/vbox/taskbar/taskbarBG/power" to="." method="_on_power_pressed"]
+[connection signal="toggled" from="power2" to="." method="_on_power_2_toggled"]

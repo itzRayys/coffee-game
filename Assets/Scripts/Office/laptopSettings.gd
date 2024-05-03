@@ -6,13 +6,29 @@ signal changeBackground(texture:Texture)
 @onready var desktop_bg_select = $desktopBGSelect
 @onready var outside_button = $outsideButton
 
+var isSettingsOpen:bool = false
 
-func changeBackgroundEmit(index:int):
-	changeBackground.emit(backgrounds[index])
+func _ready():
+	closeMenus()
 
-func closeMenu():
+
+func setSettings(toggle:bool):
+	if !toggle:
+		closeMenus()
+		self.hide()
+		self.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		return
+	self.show()
+	self.mouse_filter = Control.MOUSE_FILTER_STOP
+
+
+func closeMenus():
 	_setBGChangeMenu(false)
 	_setOutsideButton(false)
+
+func _changeBackgroundEmit(index:int):
+	changeBackground.emit(backgrounds[index])
+
 func _setOutsideButton(toggle:bool):
 	if !toggle:
 		outside_button.hide()
@@ -34,33 +50,33 @@ func _setBGChangeMenu(toggle:bool):
 
 # BG Switch
 func _on_switch_bg_pressed():
-	changeBackgroundEmit(0)
+	_changeBackgroundEmit(0)
 func _on_switch_bg_2_pressed():
-	changeBackgroundEmit(1)
+	_changeBackgroundEmit(1)
 func _on_switch_bg_3_pressed():
-	changeBackgroundEmit(2)
+	_changeBackgroundEmit(2)
 func _on_switch_bg_4_pressed():
-	changeBackgroundEmit(3)
+	_changeBackgroundEmit(3)
 func _on_switch_bg_5_pressed():
-	changeBackgroundEmit(4)
+	_changeBackgroundEmit(4)
 func _on_switch_bg_6_pressed():
-	changeBackgroundEmit(5)
+	_changeBackgroundEmit(5)
 func _on_switch_bg_7_pressed():
-	changeBackgroundEmit(6)
+	_changeBackgroundEmit(6)
 func _on_switch_bg_8_pressed():
-	changeBackgroundEmit(7)
+	_changeBackgroundEmit(7)
 func _on_switch_bg_9_pressed():
-	changeBackgroundEmit(8)
+	_changeBackgroundEmit(8)
 func _on_switch_bg_10_pressed():
-	changeBackgroundEmit(9)
+	_changeBackgroundEmit(9)
 func _on_switch_bg_11_pressed():
-	changeBackgroundEmit(10)
+	_changeBackgroundEmit(10)
 func _on_switch_bg_12_pressed():
-	changeBackgroundEmit(11)
+	_changeBackgroundEmit(11)
 func _on_switch_bg_13_pressed():
-	changeBackgroundEmit(12)
+	_changeBackgroundEmit(12)
 func _on_switch_bg_14_pressed():
-	changeBackgroundEmit(13)
+	_changeBackgroundEmit(13)
 
 # Opening / closing
 func _on_dropdown_button_pressed():
@@ -68,4 +84,8 @@ func _on_dropdown_button_pressed():
 
 
 func _on_outside_button_pressed():
-	closeMenu()
+	closeMenus()
+
+
+func _on_to_home_pressed():
+	setSettings(false)

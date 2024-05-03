@@ -35,6 +35,8 @@ func move(marker:Marker2D, callable:Callable):
 	position = marker.global_position
 	saveLocationComponent.saveLocation()
 	saveLocationComponent.movedToNewLocation.connect(callable, CONNECT_ONE_SHOT)
+func connectOnMove(callable:Callable, flag:ConnectFlags):
+	saveLocationComponent.movedToNewLocation.connect(callable, flag)
 
 func updateLabel():
 	label.text = str(ozAmount)

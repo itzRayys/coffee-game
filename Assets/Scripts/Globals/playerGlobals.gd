@@ -1,8 +1,14 @@
 extends Node
 
-var playerMoney: float = 500.00
+var playerName:String
+var playerMoney: float
+
+
+
 
 var day1 = {"int1" : 5}
+
+
 
 
 

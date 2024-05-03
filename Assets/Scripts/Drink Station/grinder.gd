@@ -49,11 +49,11 @@ func disable():
 
 
 # Calls getOz() to dispense to null or heldFilter
-func dispense():
+func _startDispense():
 	print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Grinder] Dispensing grinds...[/color]")
 	isDispensing = true
 	timer.start(dispenseSeconds)
-func finishDispensing():
+func _dispense():
 	var ozAmount = getOz()
 	if heldFilter:
 #	var ozAmount = randf_range(dispenseAmount - 0.3, dispenseAmount + 0.3)
@@ -64,7 +64,8 @@ func finishDispensing():
 func receiveFilter(filter:pfilter):
 	heldFilter = filter
 	filter.move(filterMarker, clearPortafilter)
-	dispense()
+	filter.connectOnMove(clearPortafilter, CONNECT_ONE_SHOT)
+	_startDispense()
 func clearPortafilter():
 	heldFilter = null
 
@@ -113,7 +114,7 @@ func updateLabel():
 
 # Timer
 func _on_timer_timeout():
-	finishDispensing()
+	_dispense()
 
 # Filter
 func _on_area_input_event(viewport, event, shape_idx):
