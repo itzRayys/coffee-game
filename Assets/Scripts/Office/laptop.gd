@@ -21,9 +21,13 @@ func setLaptop(toggle:bool):
 		return
 	openLaptop()
 func openLaptop():
+	if !laptopGUI:
+		return
 	laptopGUI.show()
 	laptopGUI.mouse_filter = Control.MOUSE_FILTER_PASS
 func closeLaptop():
+	if !laptopGUI:
+		return
 	laptopGUI.hide()
 	laptopGUI.mouse_filter = Control.MOUSE_FILTER_IGNORE
 

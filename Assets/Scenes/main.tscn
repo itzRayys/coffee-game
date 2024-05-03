@@ -34,13 +34,14 @@ offset_bottom = 1080.0
 mouse_filter = 2
 script = ExtResource("3_uwids")
 
-[node name="areaSwitch" parent="GUI" node_paths=PackedStringArray("gameCamera", "drinkStation", "frontCounter") instance=ExtResource("6_iwp0x")]
+[node name="areaSwitch" parent="GUI" node_paths=PackedStringArray("gameCamera", "drinkStation", "frontCounter", "office") instance=ExtResource("6_iwp0x")]
 layout_mode = 1
 size_flags_vertical = 0
 startingScene = "Office"
 gameCamera = NodePath("../../camera2d")
 drinkStation = NodePath("../../drinkStation")
 frontCounter = NodePath("../../frontCounter")
+office = NodePath("../../office")
 
 [node name="pause" type="Button" parent="GUI"]
 layout_mode = 1
