@@ -7,16 +7,22 @@ class_name appliance_grinder
 
 # Grinder Settings
 @export_group("Settings")
+@export var instantDispense:bool = false
+@export var dispenseWaitTime:float = 1.5
+@export var dispenseTime:float = 2
+
+@export var dispenseAmount:float = 0.17
 @export var amountMax:float = 200
 @export var amountLeft:float = 200
-@export var dispenseAmount:float = 0.17
-@export var dispenseSeconds:float = 7.5
 
 
 # Internals
 @onready var glow = $slot/glow
 @onready var label = $label
 @onready var timer = $timer
+@onready var dispenseDEBUG = $slot/debug
+@onready var repeat_wait_timer = $repeatWaitTimer
+
 
 var isEnabled:bool = false
 var isDispensing:bool = false
@@ -51,21 +57,27 @@ func disable():
 # Calls getOz() to dispense to null or heldFilter
 func _startDispense():
 	print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Grinder] Dispensing grinds...[/color]")
+	dispenseDEBUG.show()
 	isDispensing = true
-	timer.start(dispenseSeconds)
+	timer.start(dispenseTime)
 func _dispense():
 	var ozAmount = getOz()
 	if heldFilter:
 #	var ozAmount = randf_range(dispenseAmount - 0.3, dispenseAmount + 0.3)
 		heldFilter.addOz(ozAmount)
+		timer.start(dispenseWaitTime)
 	isDispensing = false
+	dispenseDEBUG.hide()
 
 # Filter handling
 func receiveFilter(filter:pfilter):
 	heldFilter = filter
 	filter.move(filterMarker, clearPortafilter)
 	filter.connectOnMove(clearPortafilter, CONNECT_ONE_SHOT)
-	_startDispense()
+	if instantDispense:
+		_startDispense()
+	else:
+		timer.start(dispenseWaitTime)
 func clearPortafilter():
 	heldFilter = null
 
@@ -114,7 +126,11 @@ func updateLabel():
 
 # Timer
 func _on_timer_timeout():
-	_dispense()
+	if isDispensing:
+		_dispense()
+	elif heldFilter:
+		_startDispense()
+	print("ITYTO")
 
 # Filter
 func _on_area_input_event(viewport, event, shape_idx):
@@ -132,3 +148,10 @@ func _on_refill_input_event(viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	refillGrinder()
+
+
+func _on_repeat_wait_timer_timeout():
+	if !heldFilter:
+		return
+	_startDispense()
+	print("repeatTO")

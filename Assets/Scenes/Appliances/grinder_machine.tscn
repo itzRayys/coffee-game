@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dajj1bi6f3nm"]
+[gd_scene load_steps=12 format=3 uid="uid://dajj1bi6f3nm"]
 
 [ext_resource type="Texture2D" uid="uid://cnmift010ifu4" path="res://Assets/Sprites/grinder_temp.png" id="1_ndvs5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/grinder.gd" id="2_bga84"]
@@ -17,6 +17,13 @@ colors = PackedColorArray(0, 0, 0, 1, 0.656, 1, 0.57, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_tedhk"]
 gradient = SubResource("Gradient_ytwml")
+
+[sub_resource type="Gradient" id="Gradient_30noy"]
+offsets = PackedFloat32Array(0, 0.89759, 0.993976)
+colors = PackedColorArray(0, 0, 0, 1, 0.311818, 0.193379, 0.146555, 1, 0.35, 0.217058, 0.1645, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0w44e"]
+gradient = SubResource("Gradient_30noy")
 
 [node name="grinder" type="Sprite2D" node_paths=PackedStringArray("filterMarker")]
 position = Vector2(770, 404)
@@ -64,6 +71,12 @@ script = ExtResource("4_jcd1o")
 [node name="pfilterContainer" type="Node2D" parent="slot"]
 script = ExtResource("5_r15r2")
 
+[node name="debug" type="Sprite2D" parent="slot"]
+visible = false
+position = Vector2(-7, 107)
+scale = Vector2(0.34375, 0.9375)
+texture = SubResource("GradientTexture2D_0w44e")
+
 [node name="label" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
@@ -78,6 +91,10 @@ vertical_alignment = 1
 
 [node name="timer" type="Timer" parent="."]
 
+[node name="repeatWaitTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="input_event" from="slot/area" to="." method="_on_area_input_event"]
 [connection signal="input_event" from="slot/refill" to="." method="_on_refill_input_event"]
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="repeatWaitTimer" to="." method="_on_repeat_wait_timer_timeout"]

@@ -165,3 +165,10 @@ func _on_holding_component_placed():
 	if mugContainersEnabled:
 		toggleMugContainers(false)
 
+
+
+func _on_area_switch_area_switched(_areaPosition, areaIndex):
+	if areaIndex == 1:
+		holdingComponent.setActive(true)
+		return
+	holdingComponent.setActive(false)

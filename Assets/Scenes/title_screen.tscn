@@ -16,6 +16,7 @@ script = ExtResource("2_5k3gk")
 entryScene = "res://Assets/Scenes/main.tscn"
 blackOverlay = NodePath("blackscreen")
 fadeTimer = NodePath("timer")
+loadCheckDelay = 0.2
 
 [node name="comfyCafe!!!!" type="TextureRect" parent="."]
 layout_mode = 1
@@ -111,6 +112,17 @@ size_flags_vertical = 3
 theme_override_font_sizes/font_size = 55
 text = "Close Game"
 
+[node name="progressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -701.5
+offset_top = 57.0
+offset_right = 701.5
+offset_bottom = 134.0
+grow_horizontal = 2
+
 [node name="blackscreen" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
@@ -124,9 +136,12 @@ color = Color(0, 0, 0, 1)
 [node name="timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="loadCheck" type="Timer" parent="."]
+
 [connection signal="gui_input" from="comfyCafe!!!!" to="." method="_on_texture_rect_gui_input" flags=18]
 [connection signal="pressed" from="mainButtons/vBoxContainer/Enter Cafe" to="." method="_on_enter_cafe_pressed"]
 [connection signal="pressed" from="mainButtons/vBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="mainButtons/vBoxContainer/Exit Game" to="." method="_on_exit_game_pressed"]
 [connection signal="gui_input" from="blackscreen" to="." method="_on_blackscreen_gui_input"]
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout" flags=18]
+[connection signal="timeout" from="loadCheck" to="." method="_on_load_check_timeout"]

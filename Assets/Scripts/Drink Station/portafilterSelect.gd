@@ -11,6 +11,7 @@ signal pickupFilter(filter)
 
 @onready var glow = $glow
 
+var isHovering:bool = false
 var isEnabled:bool = false
 var canEnable:bool = false
 
@@ -56,12 +57,21 @@ func clearFilter():
 	heldFilter.saveLocationComponent.returnedToSavedLocation.connect(resetHangingFilter, CONNECT_ONE_SHOT)
 	heldFilter = null
 
+func _unhandled_input(event):
+	if isHovering and event.is_action_released("interact"):
+		if heldFilter:
+			heldFilter.interactableComponent.pickup()
+#	if !event.is_action_pressed("interact") or !isHovering:
+#		return
+#	if heldFilter and !holdingComponent.heldItem:
+#		selectFilter()
+#		get_viewport().set_input_as_handled()
+#	elif !heldFilter and isEnabled:
+#		returnFilter()
+#		get_viewport().set_input_as_handled()
 
-func _on_input_event(viewport:Viewport, event:InputEvent, shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event):
-		return
-	if heldFilter and !holdingComponent.heldItem:
-		selectFilter()
-	elif !heldFilter and isEnabled:
-		returnFilter()
-	viewport.set_input_as_handled()
+
+func _on_mouse_entered():
+	isHovering = true
+func _on_mouse_exited():
+	isHovering = false

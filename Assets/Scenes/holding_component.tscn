@@ -1,21 +1,78 @@
-[gd_scene load_steps=2 format=3 uid="uid://bd85wtg7d1cct"]
+[gd_scene load_steps=6 format=3 uid="uid://bd85wtg7d1cct"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Components/holdingComponent.gd" id="1_kav44"]
 
-[node name="holdingComponent" type="Node2D" node_paths=PackedStringArray("infoContainer", "itemNameLabel", "ingredientNameLabel")]
-script = ExtResource("1_kav44")
-infoContainer = NodePath("vBoxContainer")
-itemNameLabel = NodePath("vBoxContainer/label")
-ingredientNameLabel = NodePath("vBoxContainer/label2")
+[sub_resource type="Gradient" id="Gradient_6gw4v"]
+colors = PackedColorArray(0.33, 0.0363, 0.0363, 1, 1, 0.26, 0.26, 1)
 
-[node name="vBoxContainer" type="VBoxContainer" parent="."]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gl6ak"]
+gradient = SubResource("Gradient_6gw4v")
+width = 34
+height = 34
+fill_from = Vector2(0.258065, 0.857143)
+fill_to = Vector2(0.78341, 0)
+
+[sub_resource type="Gradient" id="Gradient_q4yai"]
+colors = PackedColorArray(0.55, 0.55, 0.55, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7h2yc"]
+gradient = SubResource("Gradient_q4yai")
+width = 34
+height = 34
+fill_from = Vector2(0.258065, 0.857143)
+
+[node name="holdingComponent" type="Node2D" node_paths=PackedStringArray("infoContainer", "itemNameLabel", "ingredientNameLabel", "holdingComponent")]
+script = ExtResource("1_kav44")
+infoContainer = NodePath("control")
+itemNameLabel = NodePath("control/vBoxContainer/label")
+ingredientNameLabel = NodePath("control/vBoxContainer/label2")
+isActive = true
+holdingComponent = NodePath(".")
+
+[node name="timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="control"]
+layout_mode = 0
 offset_right = 98.0
 offset_bottom = 121.0
+mouse_filter = 2
 
-[node name="label" type="Label" parent="vBoxContainer"]
+[node name="label" type="Label" parent="control/vBoxContainer"]
 layout_mode = 2
 text = "text"
 
-[node name="label2" type="Label" parent="vBoxContainer"]
+[node name="label2" type="Label" parent="control/vBoxContainer"]
 layout_mode = 2
 text = "text"
+
+[node name="textureProgressBar" type="TextureProgressBar" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -97.0
+offset_top = -77.0
+offset_right = -63.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+max_value = 1.5
+step = 0.1
+fill_mode = 5
+texture_under = SubResource("GradientTexture2D_gl6ak")
+texture_progress = SubResource("GradientTexture2D_7h2yc")
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

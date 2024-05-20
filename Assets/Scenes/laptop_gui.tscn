@@ -1,8 +1,9 @@
-[gd_scene load_steps=49 format=3 uid="uid://bo53f5k3lbiho"]
+[gd_scene load_steps=48 format=3 uid="uid://bo53f5k3lbiho"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Office/laptopGUI.gd" id="1_m1dgi"]
 [ext_resource type="Theme" uid="uid://bilsq7fjihupe" path="res://Assets/Themes/placeHolderTheme/placeholderTheme.tres" id="1_shgm6"]
 [ext_resource type="Texture2D" uid="uid://dmgu26qdbohij" path="res://Assets/Sprites/cup_temp.png" id="2_vnj2x"]
+[ext_resource type="Texture2D" uid="uid://cawh1vsa4yrrx" path="res://Assets/Resources/Laptop Backgrounds/peach_fade.tres" id="3_imrw5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Office/laptopBrowser.gd" id="3_juah7"]
 [ext_resource type="Script" path="res://Assets/Scripts/Office/laptopSettings.gd" id="4_inivp"]
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/temp_white.png" id="5_8457g"]
@@ -11,18 +12,6 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i8cj3"]
 bg_color = Color(0.639216, 0.294118, 0.701961, 1)
-
-[sub_resource type="Gradient" id="Gradient_rnoal"]
-offsets = PackedFloat32Array(0, 0.291457, 1)
-colors = PackedColorArray(0.75, 0.63725, 0.585, 1, 0.81, 0.638415, 0.5589, 1, 0.82, 0.328, 0.369, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_tkj0g"]
-gradient = SubResource("Gradient_rnoal")
-width = 244
-height = 179
-fill = 1
-fill_from = Vector2(0.10687, 0)
-fill_to = Vector2(0.770992, 0.941703)
 
 [sub_resource type="Gradient" id="Gradient_vlcae"]
 colors = PackedColorArray(0.1775, 0.25, 0.196833, 1, 0.25, 0.25, 0.25, 1)
@@ -232,7 +221,7 @@ theme_override_constants/margin_bottom = 15
 [node name="wallpaper" type="TextureRect" parent="border/margin"]
 layout_mode = 2
 mouse_filter = 2
-texture = SubResource("GradientTexture2D_tkj0g")
+texture = ExtResource("3_imrw5")
 expand_mode = 1
 
 [node name="vbox" type="VBoxContainer" parent="border/margin"]
@@ -1035,7 +1024,6 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="settings" type="Control" parent="border/margin/vbox/screen"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

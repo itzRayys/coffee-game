@@ -1,0 +1,288 @@
+[gd_scene load_steps=13 format=3 uid="uid://dro1tuq363xd3"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Office/achievementsGUI.gd" id="1_qnjgm"]
+[ext_resource type="PackedScene" uid="uid://dieadjeq3daba" path="res://Assets/Scenes/GUI/achievement_container.tscn" id="2_n06oq"]
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/achievementResource.gd" id="2_pavcl"]
+
+[sub_resource type="Resource" id="Resource_lnhck"]
+script = ExtResource("2_pavcl")
+isAchieved = true
+achievementName = "test1"
+achievementDescription = "test111"
+isHidden = false
+achievementHint = "test11111"
+
+[sub_resource type="Gradient" id="Gradient_7q7nu"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d3wtj"]
+gradient = SubResource("Gradient_7q7nu")
+
+[sub_resource type="Resource" id="Resource_ywyaa"]
+script = ExtResource("2_pavcl")
+isAchieved = false
+achievementIcon = SubResource("GradientTexture2D_d3wtj")
+achievementName = "test2"
+achievementDescription = "test22"
+isHidden = false
+achievementHint = ""
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ddue1"]
+
+[sub_resource type="Resource" id="Resource_ag2rn"]
+script = ExtResource("2_pavcl")
+isAchieved = false
+achievementIcon = SubResource("CanvasTexture_ddue1")
+achievementName = "test3"
+achievementDescription = "test33"
+isHidden = true
+achievementHint = "test333"
+
+[sub_resource type="Resource" id="Resource_jofjw"]
+script = ExtResource("2_pavcl")
+isAchieved = true
+achievementName = "test4"
+achievementDescription = "test44"
+isHidden = true
+achievementHint = "test4444"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lj8rl"]
+bg_color = Color(0.231373, 0.231373, 0.231373, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.870588, 0.811765, 0.54902, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_kxewt"]
+size = Vector2(64, 64)
+
+[node name="achievementsGUI" type="Control" node_paths=PackedStringArray("achievementContainers")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("1_qnjgm")
+category1 = Array[ExtResource("2_pavcl")]([SubResource("Resource_lnhck"), SubResource("Resource_ywyaa"), SubResource("Resource_ag2rn"), SubResource("Resource_jofjw")])
+achievementContainers = [NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer"), NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer2"), NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer3"), NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer4"), NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer5"), NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer6"), NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer7"), NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer8"), NodePath("panelContainer/control/marginContainer/scrollAchievements/gridContainer/achievementContainer9")]
+
+[node name="outside" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="panelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -610.0
+offset_top = -338.0
+offset_right = 610.0
+offset_bottom = 338.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lj8rl")
+
+[node name="control" type="Control" parent="panelContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="panelContainer/control"]
+layout_mode = 1
+offset_left = 9.0
+offset_top = -110.0
+offset_right = 590.0
+offset_bottom = 27.0
+theme_override_font_sizes/font_size = 76
+text = "Achievements!!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="marginContainer" type="MarginContainer" parent="panelContainer/control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="scrollCategories" type="ScrollContainer" parent="panelContainer/control/marginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="gridContainer" type="GridContainer" parent="panelContainer/control/marginContainer/scrollCategories"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 75
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="button" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button2" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button3" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button4" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button5" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button6" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button7" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button8" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button9" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="button10" type="Button" parent="panelContainer/control/marginContainer/scrollCategories/gridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 71
+text = "Category 1"
+icon = SubResource("PlaceholderTexture2D_kxewt")
+
+[node name="scrollAchievements" type="ScrollContainer" parent="panelContainer/control/marginContainer"]
+visible = false
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="gridContainer" type="GridContainer" parent="panelContainer/control/marginContainer/scrollAchievements"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 5
+
+[node name="achievementContainer" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="achievementContainer2" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="achievementContainer3" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="achievementContainer4" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" node_paths=PackedStringArray("achievementIcon", "achievementTextLabel") instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+achievementIcon = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/textureRect")
+achievementTextLabel = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/label")
+
+[node name="achievementContainer5" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" node_paths=PackedStringArray("achievementIcon", "achievementTextLabel") instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+achievementIcon = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/textureRect")
+achievementTextLabel = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/label")
+
+[node name="achievementContainer6" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" node_paths=PackedStringArray("achievementIcon", "achievementTextLabel") instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+achievementIcon = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/textureRect")
+achievementTextLabel = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/label")
+
+[node name="achievementContainer7" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" node_paths=PackedStringArray("achievementIcon", "achievementTextLabel") instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+achievementIcon = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/textureRect")
+achievementTextLabel = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/label")
+
+[node name="achievementContainer8" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" node_paths=PackedStringArray("achievementIcon", "achievementTextLabel") instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+achievementIcon = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/textureRect")
+achievementTextLabel = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/label")
+
+[node name="achievementContainer9" parent="panelContainer/control/marginContainer/scrollAchievements/gridContainer" node_paths=PackedStringArray("achievementIcon", "achievementTextLabel") instance=ExtResource("2_n06oq")]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+achievementIcon = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/textureRect")
+achievementTextLabel = NodePath("../achievementContainer/marginContainer/control/hBoxContainer/label")
+
+[node name="back" type="Button" parent="panelContainer/control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -34.0
+offset_right = 28.0
+offset_bottom = 26.0
+grow_vertical = 0
+
+[connection signal="pressed" from="panelContainer/control/marginContainer/scrollCategories/gridContainer/button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="panelContainer/control/back" to="." method="_on_back_pressed"]

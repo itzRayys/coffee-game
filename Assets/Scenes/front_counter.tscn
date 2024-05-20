@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cdaw46b4qgdi1"]
+[gd_scene load_steps=16 format=3 uid="uid://cdaw46b4qgdi1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Main/frontCounter.gd" id="1_nasjd"]
 [ext_resource type="Texture2D" uid="uid://00urhlnaat23" path="res://Assets/Images/temp_white.png" id="2_iohlj"]
@@ -33,6 +33,18 @@ size = Vector2(200, 250)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2kob"]
 size = Vector2(200, 250)
+
+[sub_resource type="Gradient" id="Gradient_l4x1c"]
+offsets = PackedFloat32Array(0, 0.994975)
+colors = PackedColorArray(0.3705, 0.546725, 0.57, 1, 1, 0.82, 0.55, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8dxd7"]
+gradient = SubResource("Gradient_l4x1c")
+width = 229
+height = 164
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cuwtm"]
+size = Vector2(229, 164)
 
 [node name="frontCounter" type="Node2D"]
 process_mode = 1
@@ -93,9 +105,22 @@ position = Vector2(100, 125)
 shape = SubResource("RectangleShape2D_v2kob")
 debug_color = Color(0, 0.596078, 0.701961, 0.00392157)
 
+[node name="achievements" type="Node2D" parent="."]
+position = Vector2(1697, 176)
+
+[node name="sprite2d" type="Sprite2D" parent="achievements"]
+texture = SubResource("GradientTexture2D_8dxd7")
+
+[node name="area2d" type="Area2D" parent="achievements"]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="achievements/area2d"]
+shape = SubResource("RectangleShape2D_cuwtm")
+debug_color = Color(0, 0.596078, 0.701961, 0)
+
 [connection signal="input_event" from="pastryDisplay/shelves/leftDoor/leftArea" to="pastryDisplay" method="_on_left_area_input_event"]
 [connection signal="mouse_entered" from="pastryDisplay/shelves/leftDoor/leftArea" to="pastryDisplay" method="_on_left_area_mouse_entered"]
 [connection signal="mouse_exited" from="pastryDisplay/shelves/leftDoor/leftArea" to="pastryDisplay" method="_on_left_area_mouse_exited"]
 [connection signal="input_event" from="pastryDisplay/shelves/rightDoor/rightArea" to="pastryDisplay" method="_on_right_area_input_event"]
 [connection signal="mouse_entered" from="pastryDisplay/shelves/rightDoor/rightArea" to="pastryDisplay" method="_on_right_area_mouse_entered"]
 [connection signal="mouse_exited" from="pastryDisplay/shelves/rightDoor/rightArea" to="pastryDisplay" method="_on_right_area_mouse_exited"]
+[connection signal="input_event" from="achievements/area2d" to="." method="_on_area_2d_input_event"]

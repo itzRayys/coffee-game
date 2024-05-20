@@ -76,3 +76,7 @@ func _on_outside_button_pressed():
 
 func _on_power_2_toggled(button_pressed):
 	print("toggled")
+
+
+func _on_office_laptop_pressed():
+	openLaptop()

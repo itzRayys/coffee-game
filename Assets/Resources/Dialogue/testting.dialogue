@@ -7,7 +7,24 @@ Nathan: Here are some choices.
 - Second one
 	Nathan: You picked the second one.
 - Start again => this_is_a_node_title
+- Go to second => second_thing
 - End the conversation => END
 Nathan: For more information see the online documentation.
 
 => END
+
+
+~ second_thing
+
+Nathan: okok!! hi!!!
+Nathan: What now?
+- Go back => this_is_a_node_title
+- hi!!
+	Nathan: hi!!
+	=> second_thing
+- restart this talk
+	Nathan: okay!
+	=> second_thing
+- goodbye!!
+	Nathan: bye!!
+	=> END

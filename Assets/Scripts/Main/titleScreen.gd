@@ -6,6 +6,10 @@ signal fadeEnded()
 @export_file("*.tscn") var entryScene
 @export var blackOverlay:ColorRect
 @export var fadeTimer:Timer
+@export var loadCheckDelay:float
+
+@onready var load_check = $loadCheck
+@onready var progress_bar = $progressBar
 
 var loadStatus = 0
 var loadProgress = []
@@ -20,6 +24,8 @@ var isFading:bool = false
 # Enables blackscreen
 func _ready():
 	blackOverlay.show()
+	load_check.wait_time = loadCheckDelay
+	load_check.start(loadCheckDelay)
 	fadeBlackscreen(3)
 	ResourceLoader.load_threaded_request(entryScene)
 
@@ -27,23 +33,26 @@ func _ready():
 func _process(delta):
 	if isFading:
 		fade()
-	loadCheck()
 
 
 func loadCheck():
 	if loadingFinished:
 		return
 	loadStatus = ResourceLoader.load_threaded_get_status(entryScene, loadProgress)
-	print("[TITLE SCREEN] Loading at: ",  str(floor(loadProgress[0] * 100)), "%")
+	progress_bar.value = loadProgress[0] * 100
+	
+	print("[TITLE SCREEN] Loading at: ",  str(floor(loadProgress[0] * 100)), "% ", loadProgress)
 	if loadStatus == 3:
-		print("[TITLE SCREEN] GAME LOADED")
+		print_rich("[color=magenta][TITLE SCREEN] GAME LOADED[/color]")
 		loadedGameScene = ResourceLoader.load_threaded_get(entryScene)
 		loadingFinished = true
+		load_check.stop()
 
 
 func enterCafe():
 	if !loadingFinished:
 		print("[TITLE SCREEN] GAME NOT LOADED YET!!")
+		return
 	canSkip = false
 	fadeBlackscreen(-3)
 	await(fadeEnded)
@@ -105,3 +114,7 @@ func _on_settings_pressed():
 	pass # Replace with function body.
 func _on_exit_game_pressed():
 	pass
+
+
+func _on_load_check_timeout():
+	loadCheck()

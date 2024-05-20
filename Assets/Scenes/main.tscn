@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bfm3kfr3y53j3"]
+[gd_scene load_steps=12 format=3 uid="uid://bfm3kfr3y53j3"]
 
 [ext_resource type="PackedScene" uid="uid://br10p5543k201" path="res://Assets/Scenes/office.tscn" id="1_edch4"]
 [ext_resource type="PackedScene" uid="uid://hdcoy6p31f18" path="res://Assets/Scenes/food_station.tscn" id="3_iwjk5"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cdaw46b4qgdi1" path="res://Assets/Scenes/front_counter.tscn" id="8_krguc"]
 [ext_resource type="PackedScene" uid="uid://d0ml0manfpx0i" path="res://Assets/Scenes/drinkStation.tscn" id="10_dw4sc"]
 [ext_resource type="PackedScene" uid="uid://bo53f5k3lbiho" path="res://Assets/Scenes/laptop_gui.tscn" id="11_0a2bt"]
+[ext_resource type="PackedScene" uid="uid://dro1tuq363xd3" path="res://Assets/Scenes/GUI/achievements_gui.tscn" id="11_5e4f6"]
 [ext_resource type="Theme" uid="uid://bilsq7fjihupe" path="res://Assets/Themes/placeHolderTheme/placeholderTheme.tres" id="11_j0lck"]
 
 [node name="main" type="Node2D"]
@@ -255,6 +256,17 @@ process_callback = 0
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("7_7yhvd")
 
+[node name="achievementsGUI" parent="." instance=ExtResource("11_5e4f6")]
+offset_left = 2000.0
+offset_top = 3000.0
+offset_right = 3920.0
+offset_bottom = 4080.0
+moveOnReady = true
+globalMovePosition = Vector2(0, 3000)
+
+[connection signal="laptopPressed" from="office" to="laptopGUI" method="_on_office_laptop_pressed"]
+[connection signal="achievementsPressed" from="frontCounter" to="achievementsGUI" method="_on_front_counter_achievements_pressed"]
+[connection signal="areaSwitched" from="GUI/areaSwitch" to="drinkStation" method="_on_area_switch_area_switched"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GUI" method="_on_area_switch_area_switched"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GameManager" method="_on_area_switch_area_switched"]
 [connection signal="pressed" from="GUI/pause" to="GUI/pauseMenu" method="_on_pause_pressed"]
