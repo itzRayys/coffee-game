@@ -1,0 +1,138 @@
+[gd_scene load_steps=17 format=3 uid="uid://b8blmtpejw1xq"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/counter.gd" id="1_rth5h"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/interactableComponent.gd" id="1_s5s23"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/holdingComponent.gd" id="2_nmvgb"]
+
+[sub_resource type="Gradient" id="Gradient_ggmds"]
+colors = PackedColorArray(0.17, 0.117243, 0.0867, 1, 0.43, 0.342853, 0.2924, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5qe8x"]
+gradient = SubResource("Gradient_ggmds")
+width = 800
+height = 500
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wythw"]
+size = Vector2(1415, 676)
+
+[sub_resource type="Gradient" id="Gradient_xap7x"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5rxsj"]
+gradient = SubResource("Gradient_xap7x")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_er1jl"]
+size = Vector2(88, 114)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h8phf"]
+radius = 24.0
+height = 76.0
+
+[sub_resource type="Gradient" id="Gradient_cjj0r"]
+colors = PackedColorArray(0.33, 0.0363, 0.0363, 1, 1, 0.26, 0.26, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ggc58"]
+gradient = SubResource("Gradient_cjj0r")
+width = 34
+height = 34
+fill_from = Vector2(0.258065, 0.857143)
+fill_to = Vector2(0.78341, 0)
+
+[sub_resource type="Gradient" id="Gradient_prd1t"]
+colors = PackedColorArray(0.55, 0.55, 0.55, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5vffq"]
+gradient = SubResource("Gradient_prd1t")
+width = 34
+height = 34
+fill_from = Vector2(0.258065, 0.857143)
+
+[sub_resource type="Gradient" id="Gradient_uc38b"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rqh63"]
+gradient = SubResource("Gradient_uc38b")
+
+[node name="testingPickup" type="Node2D"]
+
+[node name="counter" type="Node2D" parent="." node_paths=PackedStringArray("holdingComponent")]
+script = ExtResource("1_rth5h")
+holdingComponent = NodePath("../holdingComponent")
+
+[node name="sprite2d2" type="Sprite2D" parent="counter"]
+position = Vector2(698.5, 329.5)
+scale = Vector2(1.77375, 1.346)
+texture = SubResource("GradientTexture2D_5qe8x")
+
+[node name="positive" type="Area2D" parent="counter"]
+collision_mask = 257
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="counter/positive"]
+position = Vector2(697.5, 328)
+shape = SubResource("RectangleShape2D_wythw")
+debug_color = Color(0, 0.701961, 0.117647, 0.117647)
+
+[node name="sprite2d" type="Sprite2D" parent="counter"]
+position = Vector2(146, 220)
+scale = Vector2(1.40625, 1.75)
+texture = SubResource("GradientTexture2D_5rxsj")
+
+[node name="negative" type="Area2D" parent="counter"]
+position = Vector2(113, 174)
+collision_mask = 256
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="counter/negative"]
+position = Vector2(34, 47)
+shape = SubResource("RectangleShape2D_er1jl")
+
+[node name="holdingComponent" type="Node2D" parent="."]
+script = ExtResource("2_nmvgb")
+
+[node name="interactableExample" type="Node2D" parent="."]
+position = Vector2(821, 377)
+
+[node name="interactableComponent" type="Node2D" parent="interactableExample" node_paths=PackedStringArray("interactable", "holdingComponent")]
+script = ExtResource("1_s5s23")
+interactable = NodePath("..")
+holdingComponent = NodePath("../../holdingComponent")
+pickupDelay = 0.75
+pickupTime = 0.75
+
+[node name="area2d" type="Area2D" parent="interactableExample/interactableComponent"]
+collision_layer = 256
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="interactableExample/interactableComponent/area2d"]
+shape = SubResource("CapsuleShape2D_h8phf")
+debug_color = Color(0.615686, 0.478431, 0.65098, 0.419608)
+
+[node name="timer" type="Timer" parent="interactableExample/interactableComponent"]
+one_shot = true
+
+[node name="textureProgressBar" type="TextureProgressBar" parent="interactableExample/interactableComponent"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = -19.0
+offset_right = -32.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 1.5
+step = 0.1
+fill_mode = 5
+texture_under = SubResource("GradientTexture2D_ggc58")
+texture_progress = SubResource("GradientTexture2D_5vffq")
+
+[node name="sprite2d" type="Sprite2D" parent="interactableExample"]
+position = Vector2(1.95503e-05, 0.500003)
+scale = Vector2(0.781251, 1.17188)
+texture = SubResource("GradientTexture2D_rqh63")
+
+[connection signal="area_entered" from="counter/positive" to="counter" method="_on_positive_area_entered"]
+[connection signal="area_exited" from="counter/positive" to="counter" method="_on_positive_area_exited"]
+[connection signal="input_event" from="counter/positive" to="counter" method="_on_positive_input_event"]
+[connection signal="area_entered" from="counter/negative" to="counter" method="_on_negative_area_entered"]
+[connection signal="area_exited" from="counter/negative" to="counter" method="_on_negative_area_exited"]
+[connection signal="input_event" from="interactableExample/interactableComponent/area2d" to="interactableExample/interactableComponent" method="_on_area_2d_input_event"]
+[connection signal="timeout" from="interactableExample/interactableComponent/timer" to="interactableExample/interactableComponent" method="_on_timer_timeout"]

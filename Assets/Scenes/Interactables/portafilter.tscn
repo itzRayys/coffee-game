@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://codnda2lxchgh"]
+
+[ext_resource type="Texture2D" uid="uid://c76thvdq272c4" path="res://Assets/Sprites/portafilter_temp.png" id="1_8x5py"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/pfilter.gd" id="2_8jyyl"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/saveLocationComponent.gd" id="3_n7xr0"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/interactableComponent.gd" id="4_53hby"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jihod"]
+size = Vector2(85, 96.0001)
+
+[node name="portafilter" type="Sprite2D"]
+position = Vector2(569, 268)
+scale = Vector2(1.39231, 1.68333)
+texture = ExtResource("1_8x5py")
+script = ExtResource("2_8jyyl")
+
+[node name="saveLocationComponent" type="Marker2D" parent="." node_paths=PackedStringArray("mainNode")]
+script = ExtResource("3_n7xr0")
+mainNode = NodePath("..")
+
+[node name="label" type="Label" parent="."]
+offset_left = -18.674
+offset_top = -3.56436
+offset_right = 14.326
+offset_bottom = 22.4356
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="area2d" type="Area2D" parent="."]
+scale = Vector2(0.718231, 0.594061)
+collision_mask = 257
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
+position = Vector2(-1.5, 0.999969)
+shape = SubResource("RectangleShape2D_jihod")
+debug_color = Color(0, 0.596078, 0.701961, 0.0117647)
+
+[node name="interactableComponent" type="Node2D" parent="." node_paths=PackedStringArray("interactable")]
+script = ExtResource("4_53hby")
+interactable = NodePath("..")
+
+[connection signal="input_event" from="area2d" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="area2d" to="interactableComponent" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="area2d" to="interactableComponent" method="_on_area_2d_mouse_exited"]

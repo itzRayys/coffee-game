@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="recipe_step_set" load_steps=4 format=3 uid="uid://k6yqrroyvry6"]
+
+[ext_resource type="Resource" uid="uid://mv7jsl5u0of1" path="res://Assets/Resources/Ingredients/Ingredients/espresso_single.tres" id="1_l3oq3"]
+[ext_resource type="Resource" uid="uid://c1kq4fismca8f" path="res://Assets/Resources/Ingredients/Ingredients/milk_oat.tres" id="2_hjsfv"]
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/recipe_steps_set.gd" id="3_r5hc2"]
+
+[resource]
+script = ExtResource("3_r5hc2")
+isOrdered = true
+ingredients = Array[Resource("res://Assets/Scripts/ResourceScripts/ingredientResource.gd")]([ExtResource("1_l3oq3"), ExtResource("2_hjsfv")])

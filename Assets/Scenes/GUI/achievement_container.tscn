@@ -1,0 +1,116 @@
+[gd_scene load_steps=5 format=3 uid="uid://dieadjeq3daba"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Office/achievementContainer.gd" id="1_lqqw7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gch8n"]
+bg_color = Color(1, 0.972549, 0.439216, 0.639216)
+
+[sub_resource type="Gradient" id="Gradient_1kcnp"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i35cn"]
+gradient = SubResource("Gradient_1kcnp")
+
+[node name="achievementContainer" type="Control" node_paths=PackedStringArray("achievementIcon", "achievementNameLabel", "achievementTextLabel", "achievementGlow")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -354.5
+offset_top = -66.5
+offset_right = 354.5
+offset_bottom = 66.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("1_lqqw7")
+achievementIcon = NodePath("marginContainer/control/hBoxContainer/textureRect")
+achievementNameLabel = NodePath("label2")
+achievementTextLabel = NodePath("marginContainer/control/hBoxContainer/label")
+achievementGlow = NodePath("glow")
+
+[node name="glow" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gch8n")
+
+[node name="panelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 15.0
+offset_right = 15.0
+offset_bottom = 27.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.870588, 0.811765, 0.372549, 1)
+text = "Name of the achievement goes here!!!"
+vertical_alignment = 1
+autowrap_mode = 1
+clip_text = true
+
+[node name="marginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="control" type="Control" parent="marginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="marginContainer/control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="textureRect" type="TextureRect" parent="marginContainer/control/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_i35cn")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="label" type="Label" parent="marginContainer/control/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text placeholder text "
+autowrap_mode = 1
+clip_text = true

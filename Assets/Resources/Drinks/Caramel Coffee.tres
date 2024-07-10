@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="menuItem_Resource" load_steps=2 format=3 uid="uid://ce22bt4uxlpoj"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/menuItem.gd" id="1_om3sm"]
+
+[resource]
+script = ExtResource("1_om3sm")
+menuItemName = "Caramel Coffee"
+baseSellPrice = 225
+unlockPrice = 500
+isUnlocked = true
+isComplete = false

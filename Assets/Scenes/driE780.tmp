@@ -1,0 +1,63 @@
+[gd_scene load_steps=42 format=3 uid="uid://d0ml0manfpx0i"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Main/drinkStation.gd" id="1_s7vgl"]
+[ext_resource type="PackedScene" uid="uid://b40k5floa8yv3" path="res://Assets/Scenes/Appliances/refrigerator.tscn" id="2_l0egd"]
+[ext_resource type="Texture2D" uid="uid://ctyuysku1j4fi" path="res://Assets/Sprites/background_drinkStation_temp.png" id="2_w42l3"]
+[ext_resource type="PackedScene" uid="uid://cxt21b7snyjxu" path="res://Assets/Scenes/Appliances/espresso_machine.tscn" id="3_qo1qy"]
+[ext_resource type="Script" path="res://Assets/Scripts/counter.gd" id="3_ycd1a"]
+[ext_resource type="PackedScene" uid="uid://dajj1bi6f3nm" path="res://Assets/Scenes/Appliances/grinder_machine.tscn" id="4_s16h3"]
+[ext_resource type="PackedScene" uid="uid://y4db3g2d1lnc" path="res://Assets/Scenes/Interactables/coffee_can.tscn" id="5_xpbf4"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="6_fqauh"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/mugSelect.gd" id="10_ks7yf"]
+[ext_resource type="PackedScene" uid="uid://b4urxqgemssf4" path="res://Assets/Scenes/Appliances/scale.tscn" id="10_mo16j"]
+[ext_resource type="Texture2D" uid="uid://b8wdg2pol43el" path="res://Assets/Sprites/mug_temp.png" id="11_lmrnm"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/portafilterSelect.gd" id="13_k8u5v"]
+[ext_resource type="Texture2D" uid="uid://c76thvdq272c4" path="res://Assets/Sprites/portafilter_temp.png" id="14_j1tjj"]
+[ext_resource type="PackedScene" uid="uid://3ilx8vwupag3" path="res://Assets/Scenes/Interactables/mug.tscn" id="14_x84ws"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/pfilter.gd" id="15_8ewtv"]
+[ext_resource type="Texture2D" uid="uid://gnpb4q0tmab5" path="res://Assets/Sprites/portafilter_hanging_temp.png" id="16_d6h6s"]
+[ext_resource type="Texture2D" uid="uid://3bgwnjihkrvh" path="res://Assets/Sprites/spoon_holder_empty_temp.png" id="17_2efk4"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/spoonHolder.gd" id="18_bs1h8"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/saveLocationComponent.gd" id="18_lj250"]
+[ext_resource type="Texture2D" uid="uid://b3vaof2fh6yk2" path="res://Assets/Sprites/spoon_empty_temp.png" id="19_l1fx8"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/spoon.gd" id="20_qbm5x"]
+[ext_resource type="PackedScene" uid="uid://bd85wtg7d1cct" path="res://Assets/Scenes/holding_component.tscn" id="21_4i822"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/drinkSubmit.gd" id="22_7jnac"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/interactableComponent.gd" id="23_3y1f5"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/rinse.gd" id="23_nqr4o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gj8uw"]
+size = Vector2(1919, 490)
+
+[sub_resource type="Gradient" id="Gradient_2v4wr"]
+offsets = PackedFloat32Array(0.138554, 0.222892, 0.373494)
+colors = PackedColorArray(0.72, 0.986, 1, 1, 0.71, 0.71, 0.71, 1, 0.5022, 0.79461, 0.81, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r6n3a"]
+gradient = SubResource("Gradient_2v4wr")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_jk78w"]
+colors = PackedColorArray(0, 0, 0, 1, 0.3, 0.358333, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_exhuu"]
+gradient = SubResource("Gradient_jk78w")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tw5nh"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t4p4v"]
+size = Vector2(396.377, 95.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1dhc"]
+size = Vector2(113, 204)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jihod"]
+size = Vector2(85, 96.0001)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4kq8l"]
+size = Vector2(221.618, 238.375)
+
+[sub_resource type="Gradient" id="Gradient_r4eyu"]
+colors = Pack

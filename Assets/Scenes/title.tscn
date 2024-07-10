@@ -1,22 +1,25 @@
 [gd_scene load_steps=4 format=3 uid="uid://c74gml7scsokp"]
 
-[ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/stripe.png" id="1_skaxr"]
+[ext_resource type="Texture2D" uid="uid://b1y4w3t24thyl" path="res://Assets/Images/temp_stripe.png" id="1_skaxr"]
 [ext_resource type="Theme" uid="uid://d4bloqpj0g77l" path="res://Assets/Themes/placeHolderTheme/temporaryButton.tres" id="2_op50u"]
 [ext_resource type="Script" path="res://Assets/Scripts/areaSwitchButton.gd" id="3_sibuf"]
 
 [node name="title" type="Node2D"]
+process_mode = 1
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 
 [node name="BG" type="TextureRect" parent="GUI"]
 self_modulate = Color(0.760784, 0.560784, 0.635294, 1)
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 texture = ExtResource("1_skaxr")
 
 [node name="areaSwitches" type="Control" parent="GUI"]
@@ -28,6 +31,7 @@ anchor_bottom = 1.0
 offset_top = -300.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="frontBtn" type="Button" parent="GUI/areaSwitches"]
 layout_mode = 1
@@ -45,7 +49,7 @@ grow_vertical = 2
 theme = ExtResource("2_op50u")
 text = "frontCounter"
 script = ExtResource("3_sibuf")
-sceneName = "frontCounter"
+switchSceneTo = 1
 
 [node name="drinkBtn" type="Button" parent="GUI/areaSwitches"]
 layout_mode = 1
@@ -63,7 +67,7 @@ grow_vertical = 2
 theme = ExtResource("2_op50u")
 text = "drinkStation"
 script = ExtResource("3_sibuf")
-sceneName = "drinkStationr"
+switchSceneTo = 2
 
 [node name="areaBtn" type="Button" parent="GUI/areaSwitches"]
 layout_mode = 1
@@ -78,7 +82,6 @@ grow_vertical = 2
 theme = ExtResource("2_op50u")
 text = "areaSwitch"
 script = ExtResource("3_sibuf")
-sceneName = "areaSwitch"
 
 [connection signal="pressed" from="GUI/areaSwitches/frontBtn" to="GUI/areaSwitches/frontBtn" method="_on_pressed"]
 [connection signal="pressed" from="GUI/areaSwitches/drinkBtn" to="GUI/areaSwitches/drinkBtn" method="_on_pressed"]

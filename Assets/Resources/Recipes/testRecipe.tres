@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="recipe_recipe" load_steps=2 format=3 uid="uid://cco011o84pvjm"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/recipe.gd" id="1_4hfrt"]
+
+[resource]
+script = ExtResource("1_4hfrt")
+recipeSteps = Array[Resource("res://Assets/Scripts/ResourceScripts/recipeStepSet.gd")]([null])

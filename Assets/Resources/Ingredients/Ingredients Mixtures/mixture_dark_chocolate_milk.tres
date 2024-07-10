@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ingredient_resource" load_steps=5 format=3 uid="uid://d31njdo60i1di"]
+
+[ext_resource type="Resource" uid="uid://btoj5v3rcs1bc" path="res://Assets/Resources/Ingredients/Ingredients/milk_2%.tres" id="1_3fpl3"]
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/ingredient.gd" id="1_j3nnm"]
+[ext_resource type="Resource" uid="uid://die1wcthalmth" path="res://Assets/Resources/Ingredients/Ingredients/ice.tres" id="2_d6cxq"]
+[ext_resource type="Resource" uid="uid://babjbal6ofvvn" path="res://Assets/Resources/Ingredients/Ingredients/chocolate_shavings_dark.tres" id="3_l65y4"]
+
+[resource]
+script = ExtResource("1_j3nnm")
+ingredientName = "Dark Chocolate Milk"
+ingredientAmount = 0
+isUnlocked = false
+isMixture = true
+mixtureRecipe = Array[ExtResource("1_j3nnm")]([ExtResource("1_3fpl3"), ExtResource("2_d6cxq"), ExtResource("3_l65y4")])

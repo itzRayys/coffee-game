@@ -1,0 +1,153 @@
+[gd_scene load_steps=16 format=3 uid="uid://cxt21b7snyjxu"]
+
+[ext_resource type="Texture2D" uid="uid://njvbt1bpe571" path="res://Assets/Sprites/espresso_machine_temp.png" id="1_rb6is"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/espressoMachineREDO.gd" id="2_iy417"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/espressoMachineSlot.gd" id="3_lqwjn"]
+[ext_resource type="Resource" uid="uid://c7usmgnum15co" path="res://Assets/Resources/Ingredients/Ingredients/espresso.tres" id="4_1dcgt"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="4_uh8ij"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/previewComponent.gd" id="5_p688x"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientDispenserComponent.gd" id="6_uupi5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ilai"]
+size = Vector2(164.097, 71.1947)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsv4l"]
+size = Vector2(161.344, 116.19)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hl31s"]
+radius = 23.1602
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ouqtk"]
+radius = 23.1602
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rivw4"]
+size = Vector2(164.097, 71.1947)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nnp06"]
+size = Vector2(178.965, 120.294)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2a3ob"]
+radius = 23.1602
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kqawr"]
+radius = 23.1602
+
+[node name="espressoMachine" type="Sprite2D" node_paths=PackedStringArray("slots")]
+position = Vector2(1327, 478)
+scale = Vector2(0.908, 0.814667)
+texture = ExtResource("1_rb6is")
+script = ExtResource("2_iy417")
+slots = [NodePath("slot"), NodePath("slot2")]
+
+[node name="slot" type="Node2D" parent="." node_paths=PackedStringArray("machine")]
+script = ExtResource("3_lqwjn")
+machine = NodePath("..")
+
+[node name="filter2" type="Area2D" parent="slot"]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="slot/filter2"]
+position = Vector2(-83.1498, -7.36493)
+shape = SubResource("RectangleShape2D_1ilai")
+debug_color = Color(0, 0.596078, 0.701961, 0.0588235)
+
+[node name="mug2" type="Area2D" parent="slot"]
+
+[node name="area" type="CollisionShape2D" parent="slot/mug2"]
+position = Vector2(-80.1211, 86.7493)
+shape = SubResource("RectangleShape2D_jsv4l")
+debug_color = Color(0, 0.596078, 0.701961, 0.0784314)
+
+[node name="buttons" type="Area2D" parent="slot"]
+
+[node name="single" type="CollisionShape2D" parent="slot/buttons"]
+position = Vector2(-143.172, -77.3322)
+shape = SubResource("CircleShape2D_hl31s")
+debug_color = Color(0.603922, 0.686275, 0.701961, 0.0901961)
+
+[node name="double" type="CollisionShape2D" parent="slot/buttons"]
+position = Vector2(-81.4978, -79.7872)
+shape = SubResource("CircleShape2D_ouqtk")
+debug_color = Color(0.580392, 0.682353, 0.701961, 0.113725)
+
+[node name="filter" type="Marker2D" parent="slot"]
+position = Vector2(-95.8149, -13.5024)
+
+[node name="mug" type="Marker2D" parent="slot"]
+position = Vector2(-92.5111, 110.475)
+
+[node name="glow" type="Sprite2D" parent="slot"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-96.9163, 66.2849)
+scale = Vector2(1.43612, 1.84861)
+texture = ExtResource("4_uh8ij")
+
+[node name="previewComponent" type="Node2D" parent="slot"]
+script = ExtResource("5_p688x")
+
+[node name="ingredientDispenserComponent" type="Node2D" parent="slot"]
+script = ExtResource("6_uupi5")
+ingredientDispensed = ExtResource("4_1dcgt")
+
+[node name="timer" type="Timer" parent="slot"]
+
+[node name="slot2" type="Node2D" parent="." node_paths=PackedStringArray("machine")]
+position = Vector2(185.022, -1.22748)
+script = ExtResource("3_lqwjn")
+machine = NodePath("..")
+
+[node name="filter2" type="Area2D" parent="slot2"]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="slot2/filter2"]
+position = Vector2(-83.1498, -7.36493)
+shape = SubResource("RectangleShape2D_rivw4")
+debug_color = Color(0, 0.596078, 0.701961, 0.0588235)
+
+[node name="mug2" type="Area2D" parent="slot2"]
+position = Vector2(14.3173, 6.13745)
+
+[node name="area" type="CollisionShape2D" parent="slot2/mug2"]
+position = Vector2(-88.9318, 84.6971)
+shape = SubResource("RectangleShape2D_nnp06")
+debug_color = Color(0, 0.596078, 0.701961, 0.0784314)
+
+[node name="buttons" type="Area2D" parent="slot2"]
+
+[node name="single" type="CollisionShape2D" parent="slot2/buttons"]
+position = Vector2(-124.449, -84.6972)
+shape = SubResource("CircleShape2D_2a3ob")
+debug_color = Color(0.603922, 0.686275, 0.701961, 0.0901961)
+
+[node name="double" type="CollisionShape2D" parent="slot2/buttons"]
+position = Vector2(-68.2819, -89.6072)
+shape = SubResource("CircleShape2D_kqawr")
+debug_color = Color(0.580392, 0.682353, 0.701961, 0.113725)
+
+[node name="filter" type="Marker2D" parent="slot2"]
+position = Vector2(-95.8149, -13.5024)
+
+[node name="mug" type="Marker2D" parent="slot2"]
+position = Vector2(-92.5111, 110.475)
+
+[node name="glow" type="Sprite2D" parent="slot2"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-68.2819, 38.0524)
+scale = Vector2(1.43612, 1.84861)
+texture = ExtResource("4_uh8ij")
+
+[node name="previewComponent" type="Node2D" parent="slot2"]
+script = ExtResource("5_p688x")
+
+[node name="ingredientDispenserComponent" type="Node2D" parent="slot2"]
+script = ExtResource("6_uupi5")
+ingredientDispensed = ExtResource("4_1dcgt")
+
+[node name="timer" type="Timer" parent="slot2"]
+
+[connection signal="input_event" from="slot/filter2" to="slot" method="_on_filter_2_input_event"]
+[connection signal="input_event" from="slot/mug2" to="slot" method="_on_mug_2_input_event"]
+[connection signal="input_event" from="slot/buttons" to="slot" method="_on_buttons_input_event"]
+[connection signal="input_event" from="slot2/filter2" to="slot2" method="_on_filter_2_input_event"]
+[connection signal="input_event" from="slot2/mug2" to="slot2" method="_on_mug_2_input_event"]
+[connection signal="input_event" from="slot2/buttons" to="slot2" method="_on_buttons_input_event"]

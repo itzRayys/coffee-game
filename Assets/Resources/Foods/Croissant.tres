@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="menuItem_Resource" load_steps=2 format=3 uid="uid://ce851coqg4dlq"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Resources/menuItem.gd" id="1_1wrth"]
+
+[resource]
+script = ExtResource("1_1wrth")
+menuItemName = "Croissant"
+baseSellPrice = 125
+unlockPrice = 500
+isUnlocked = true
+isComplete = false

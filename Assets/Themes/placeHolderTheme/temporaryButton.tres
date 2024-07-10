@@ -1,8 +1,20 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d4bloqpj0g77l"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://d4bloqpj0g77l"]
 
 [ext_resource type="StyleBox" uid="uid://40ws7ocpeeyw" path="res://Assets/Themes/placeHolderTheme/Styles/button/buttonDisabled.tres" id="1_xldau"]
 [ext_resource type="StyleBox" uid="uid://cax7eild65hcl" path="res://Assets/Themes/placeHolderTheme/Styles/button/buttonHover.tres" id="2_e8vqw"]
 [ext_resource type="StyleBox" uid="uid://dkba03chana0p" path="res://Assets/Themes/placeHolderTheme/Styles/button/buttonNormal.tres" id="3_jrixx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idrsf"]
+bg_color = Color(0.45098, 0.305882, 0.34902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.85098, 0.576471, 0.658824, 1)
+expand_margin_left = 7.0
+expand_margin_top = 7.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
 
 [resource]
 Button/colors/font_color = Color(0.94902, 0.854902, 0.882353, 0.960784)
@@ -18,3 +30,4 @@ Button/styles/disabled = ExtResource("1_xldau")
 Button/styles/hover = ExtResource("2_e8vqw")
 Button/styles/normal = ExtResource("3_jrixx")
 Button/styles/pressed = ExtResource("3_jrixx")
+Panel/styles/panel = SubResource("StyleBoxFlat_idrsf")
