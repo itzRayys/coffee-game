@@ -1,9 +1,9 @@
 extends Sprite2D
 
-@export var holdingComponent:holding_component
 @export var spoon:spoon_spoon
 @export var spoonMarker:Marker2D
 
+var holdingComponent:holding_component
 var isSpoonHeld:bool = false
 
 func pickupSpoon():
@@ -21,6 +21,8 @@ func returnSpoon(needsHandling):
 	isSpoonHeld = false
 	spoon.position = spoonMarker.position
 
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 func _on_area_2d_input_event(viewport, event, shape_idx):
 	if GameGlobals.eventIsInteractCheck(event):
 		if holdingComponent.heldItem != null:

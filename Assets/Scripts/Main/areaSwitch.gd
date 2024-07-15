@@ -82,10 +82,12 @@ func closeMenu():
 func enableButtons():
 	for i in buttons.size():
 		buttons[i].disabled = false
+		buttons[i].mouse_filter = Control.MOUSE_FILTER_STOP
 		buttons[i].show()
 func disableButtons():
 	for i in buttons.size():
 		buttons[i].disabled = true
+		buttons[i].mouse_filter = Control.MOUSE_FILTER_IGNORE
 		buttons[i].hide()
 func setButtonHover(buttonIndex:int, toggle:bool):
 	hoveredButtonIndex = buttonIndex

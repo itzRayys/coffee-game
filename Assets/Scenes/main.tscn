@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bfm3kfr3y53j3"]
+[gd_scene load_steps=13 format=3 uid="uid://bfm3kfr3y53j3"]
 
 [ext_resource type="PackedScene" uid="uid://br10p5543k201" path="res://Assets/Scenes/office.tscn" id="1_edch4"]
 [ext_resource type="PackedScene" uid="uid://hdcoy6p31f18" path="res://Assets/Scenes/food_station.tscn" id="3_iwjk5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Main/pauseMenu.gd" id="3_kj610"]
 [ext_resource type="Script" path="res://Assets/Scripts/Main/GUI.gd" id="3_uwids"]
+[ext_resource type="PackedScene" uid="uid://bd85wtg7d1cct" path="res://Assets/Scenes/holding_component.tscn" id="5_1e4tp"]
 [ext_resource type="PackedScene" uid="uid://c4nwcd8674cnx" path="res://Assets/Scenes/area_switch.tscn" id="6_iwp0x"]
 [ext_resource type="Script" path="res://Assets/Scripts/Main/GameManager.gd" id="7_7yhvd"]
 [ext_resource type="PackedScene" uid="uid://cdaw46b4qgdi1" path="res://Assets/Scenes/front_counter.tscn" id="8_krguc"]
@@ -17,7 +18,8 @@
 [node name="office" parent="." instance=ExtResource("1_edch4")]
 position = Vector2(0, 6000)
 
-[node name="drinkStation" parent="." instance=ExtResource("10_dw4sc")]
+[node name="drinkStation" parent="." node_paths=PackedStringArray("external_holding_component") instance=ExtResource("10_dw4sc")]
+external_holding_component = NodePath("../holdingComponent")
 
 [node name="foodStation" parent="." instance=ExtResource("3_iwjk5")]
 position = Vector2(0, 9000)
@@ -25,6 +27,10 @@ position = Vector2(0, 9000)
 [node name="frontCounter" parent="." node_paths=PackedStringArray("drinkStation") instance=ExtResource("8_krguc")]
 position = Vector2(0, 3000)
 drinkStation = NodePath("../drinkStation")
+
+[node name="holdingComponent" parent="." instance=ExtResource("5_1e4tp")]
+pickupDelay = 0.775
+pickupTime = 0.525
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
@@ -38,7 +44,7 @@ script = ExtResource("3_uwids")
 [node name="areaSwitch" parent="GUI" node_paths=PackedStringArray("gameCamera", "drinkStation", "frontCounter", "office") instance=ExtResource("6_iwp0x")]
 layout_mode = 1
 size_flags_vertical = 0
-startingScene = "Office"
+startingScene = "Front Counter"
 gameCamera = NodePath("../../camera2d")
 drinkStation = NodePath("../../drinkStation")
 frontCounter = NodePath("../../frontCounter")
@@ -266,7 +272,13 @@ globalMovePosition = Vector2(0, 3000)
 
 [connection signal="laptopPressed" from="office" to="laptopGUI" method="_on_office_laptop_pressed"]
 [connection signal="achievementsPressed" from="frontCounter" to="achievementsGUI" method="_on_front_counter_achievements_pressed"]
+[connection signal="dropped" from="holdingComponent" to="drinkStation" method="_on_holding_component_dropped"]
+[connection signal="pickedUpDispenser" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_dispenser"]
+[connection signal="pickedUpFilter" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_filter"]
+[connection signal="pickedUpMug" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_mug"]
+[connection signal="placed" from="holdingComponent" to="drinkStation" method="_on_holding_component_placed"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="drinkStation" method="_on_area_switch_area_switched"]
+[connection signal="areaSwitched" from="GUI/areaSwitch" to="holdingComponent" method="_on_area_switch_area_switched"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GUI" method="_on_area_switch_area_switched"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GameManager" method="_on_area_switch_area_switched"]
 [connection signal="pressed" from="GUI/pause" to="GUI/pauseMenu" method="_on_pause_pressed"]

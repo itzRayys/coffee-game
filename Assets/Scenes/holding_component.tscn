@@ -21,15 +21,15 @@ width = 34
 height = 34
 fill_from = Vector2(0.258065, 0.857143)
 
-[node name="holdingComponent" type="Node2D" node_paths=PackedStringArray("infoContainer", "itemNameLabel", "ingredientNameLabel", "holdingComponent")]
+[node name="holdingComponent" type="Node2D" node_paths=PackedStringArray("infoContainer", "itemNameLabel", "ingredientNameLabel")]
 script = ExtResource("1_kav44")
+isActive = true
 infoContainer = NodePath("control")
 itemNameLabel = NodePath("control/vBoxContainer/label")
 ingredientNameLabel = NodePath("control/vBoxContainer/label2")
-isActive = true
-holdingComponent = NodePath(".")
 
 [node name="timer" type="Timer" parent="."]
+wait_time = 271.239
 one_shot = true
 
 [node name="control" type="Control" parent="."]
@@ -43,8 +43,10 @@ mouse_filter = 2
 
 [node name="vBoxContainer" type="VBoxContainer" parent="control"]
 layout_mode = 0
-offset_right = 98.0
-offset_bottom = 121.0
+offset_left = 35.0
+offset_top = 17.0
+offset_right = 133.0
+offset_bottom = 138.0
 mouse_filter = 2
 
 [node name="label" type="Label" parent="control/vBoxContainer"]
@@ -70,7 +72,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 max_value = 1.5
-step = 0.1
+step = 0.01
 fill_mode = 5
 texture_under = SubResource("GradientTexture2D_gl6ak")
 texture_progress = SubResource("GradientTexture2D_7h2yc")

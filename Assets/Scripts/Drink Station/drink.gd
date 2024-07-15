@@ -3,7 +3,8 @@ class_name drink_drink
 
 signal hoverUpdated(isHover:bool)
 
-@export var holdComponent:hold_component
+## SWITCH FROM HOLD_COMPONENT TO HOLDING_COMPONENT, DOUBLE CHECK ITS USE IN ENTIRE SCRIPT FOR CORRECT VALUES
+@export var holdComponent:holding_component
 
 @export_group("Internals")
 @export var ingredientContainer:ingredient_container_component2
