@@ -1,7 +1,8 @@
 extends Node2D
 class_name ingredient_dispenser
 
-@export var holdComponent:hold_component
+## SWITCH FROM HOLD_COMPONENT TO HOLDING_COMPONENT, DOUBLE CHECK ITS USE IN ENTIRE SCRIPT FOR CORRECT VALUES
+@export var holdComponent:holding_component
 @export var ingredientDispensedOverride:ingredient_resource
 
 @export_group("Internals")

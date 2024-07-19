@@ -3,7 +3,7 @@ class_name espresso_machine
 
 signal slotClicked(slot:espresso_machine_slot)
 
-@export var holdComponent:holding_component
+var holdingComponent:holding_component
 
 @onready var glow1 = $glow
 @onready var glow2 = $glow2
@@ -14,38 +14,39 @@ signal slotClicked(slot:espresso_machine_slot)
 var isPlacing:bool = false
 
 func placeFilter(slot:espresso_machine_slot):
-	if !slot or !holdComponent or !holdComponent.heldItem or !holdComponent.heldItem is pfilter:
+	if !slot or !holdingComponent or !holdingComponent.heldItem or !holdingComponent.heldItem is pfilter:
 		return
-	slot.setPortafilter(holdComponent.heldItem)
+	slot.setPortafilter(holdingComponent.heldItem)
 	disableContainers()
-	holdComponent.place()
+	holdingComponent.place()
 
 func pickupFilter(slot, filter):
-	if !holdComponent or holdComponent.heldItem:
+	if !holdingComponent or holdingComponent.heldItem:
 		return
-	holdComponent.pickup(filter)
+	holdingComponent.pickup(filter)
 
 func placeMug(slot:espresso_machine_slot):
-	if !slot or !holdComponent or !holdComponent.heldItem or !holdComponent.heldItem is mug_mug:
+	if !slot or !holdingComponent or !holdingComponent.heldItem or !holdingComponent.heldItem is mug_mug:
 		return
-	slot.setMug(holdComponent.heldItem)
+	slot.setMug(holdingComponent.heldItem)
 	disableContainers()
-	holdComponent.place()
+	holdingComponent.place()
 
 func pickupMug(slot, mug):
-	if !holdComponent or holdComponent.heldItem:
+	if !holdingComponent or holdingComponent.heldItem:
 		return
-	holdComponent.pickup(mug)
+	holdingComponent.pickup(mug)
 
 
-
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 
 # Sets state of slots to inputted bool
 func setState(toggle:bool):
 	for i in slots.size():
 		if !slots[i].has_method("setState"):
 			return
-		slots[i].setState(toggle, holdComponent.heldItem)
+		slots[i].setState(toggle, holdingComponent.heldItem)
 
 
 
@@ -86,10 +87,3 @@ func disableContainers():
 	for i in slots.size():
 			slots[i].setActive(false)
 
-
-func _on_holding_component_picked_up_filter(filter):
-	toggleContainers(filter)
-func _on_holding_component_picked_up_mug(mug):
-	toggleContainers(mug)
-func _on_holding_component_dropped():
-	disableContainers()

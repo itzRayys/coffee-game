@@ -2,7 +2,7 @@ extends Sprite2D
 class_name appliance_grinder
 
 # Externals
-@export var holdingComponent:holding_component
+var holdingComponent:holding_component
 @export var filterMarker:Marker2D
 
 # Grinder Settings
@@ -53,6 +53,8 @@ func disable():
 	isEnabled = false
 	glow.hide()
 
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 
 # Calls getOz() to dispense to null or heldFilter
 func _startDispense():

@@ -2,7 +2,7 @@ extends Node2D
 
 
 
-@export var holdingComponent:holding_component
+var holdingComponent:holding_component
 @export var rinseDEBUG:Sprite2D
 @onready var marker_2d = $marker2d
 
@@ -10,6 +10,8 @@ var itemHovering
 var isRinsing:bool = false
 
 
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 
 func toggleRinse(toggle:bool):
 	if !toggle:

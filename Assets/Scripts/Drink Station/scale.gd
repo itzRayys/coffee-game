@@ -1,13 +1,14 @@
 extends Sprite2D
 class_name appliance_scale
 
-@export var holdingComponent:holding_component
+var holdingComponent:holding_component
 @export var readTime:float = 3
 
 @onready var timer = $timer
 @onready var label = $label
 @onready var glow = $glow
 @onready var marker = $marker2d
+@onready var containerComponent = $containerComponent
 
 
 var heldFilter:pfilter
@@ -26,6 +27,9 @@ func disable():
 	isEnabled = false
 	glow.hide()
 
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
+	containerComponent.setHoldingComponent(holdComponent)
 
 # Called when receiving filter
 func receiveFilter(filter:pfilter):
@@ -46,6 +50,7 @@ func readWeight(filter:pfilter):
 		return
 	label.text = str(filter.ozAmount, "g")
 	print_rich("[color=gray]", Time.get_datetime_string_from_system(true, true), " [Scale] Filter weighs: ", filter.ozAmount, " [/color]")
+
 
 
 # On read oz timer timeout

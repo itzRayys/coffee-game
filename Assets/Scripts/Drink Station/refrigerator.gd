@@ -1,7 +1,7 @@
 extends Node2D
 class_name appliance_refrigerator
 
-@export var holdingComponent:holding_component
+var holdingComponent:holding_component
 
 @onready var lid = $lid
 
@@ -12,6 +12,8 @@ func _ready():
 
 
 
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 
 
 

@@ -1,7 +1,7 @@
 extends Sprite2D
 class_name coffee_can
 
-@export var holdingComponent:holding_component
+var holdingComponent:holding_component
 
 @onready var glow = $glow
 @onready var marker = $marker2d
@@ -16,6 +16,9 @@ func setState(isActive:bool):
 		return
 	glow.show()
 	isEnabled = true
+
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 
 func receiveFilter(filter:pfilter):
 	heldFilter = filter

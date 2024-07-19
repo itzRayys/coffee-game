@@ -2,7 +2,9 @@ extends Node2D
 class_name blender_blender
 
 @export var blenderBase:blender_base
-@export var holdComponent:hold_component
+
+## SWITCH FROM HOLD_COMPONENT TO HOLDING_COMPONENT, DOUBLE CHECK ITS USE IN ENTIRE SCRIPT FOR CORRECT VALUES
+@export var holdComponent:holding_component
 
 @export_group("Internals")
 @export var ingredientDispenser:ingredient_dispenser_component

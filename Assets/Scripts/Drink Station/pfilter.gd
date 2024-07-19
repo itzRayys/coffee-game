@@ -2,10 +2,12 @@ extends Sprite2D
 class_name pfilter
 
 
-@export var holdingComponent:holding_component
+var holdingComponent:holding_component
 
 @onready var saveLocationComponent = $saveLocationComponent
 @onready var label = $label
+@onready var interactableComponent = $interactableComponent
+
 
 var maxOzAmount:float = 20
 var ozAmount:float = 0
@@ -45,7 +47,7 @@ func connectOnMove(callable:Callable, flag:ConnectFlags):
 	saveLocationComponent.movedToNewLocation.connect(callable, flag)
 func placedOnCounter():
 	saveLocationComponent.saveLocation()
-	
+	interactableComponent.isPickedUp = false
 
 func updateLabel():
 	label.text = str(ozAmount)
@@ -62,16 +64,29 @@ func counterMove(movePosition):
 	global_position = movePosition
 	saveLocationComponent.saveLocation()
 
-func _on_area_2d_input_event(viewport, event, shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event):
-		return
-	if !holdingComponent:
-		return
-	if !holdingComponent.heldItem and canPickup:
-		holdingComponent.pickup(self)
-	elif holdingComponent.heldItem and holdingComponent.heldItem is spoon_spoon:
-		spoonInteraction()
 func spoonInteraction():
 	pass
 
 #on pressed if spoon then pickup/placeOZ elif none then normal pickup/place hc
+
+
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
+	interactableComponent.setHoldingComponent(holdComponent)
+	print("[Portafilter] Holding Component Set!")
+func _toggleModulate(toggle:bool):
+	if !holdingComponent.heldItem:
+		return
+	if !toggle:
+		holdingComponent.heldItem.modulate = Color(1, 1, 1, 1)
+		return
+	holdingComponent.heldItem.modulate = Color(0.5, 0.2, 0.8, 0.8)
+
+
+func _on_interactable_component_able_to_place(toggle):
+	_toggleModulate(toggle)
+
+
+
+func _on_interactable_component_interacted():
+	print("[Portafilter] Interacted!!!!!!!!!!!!!!!!!!!!!")

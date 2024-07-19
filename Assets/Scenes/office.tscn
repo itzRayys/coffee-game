@@ -21,6 +21,20 @@ position = Vector2(0, 571)
 texture = ExtResource("2_0qrgy")
 centered = false
 
+[node name="positive" type="Area2D" parent="table"]
+collision_layer = 257
+
+[node name="collisionPolygon2d" type="CollisionPolygon2D" parent="table/positive"]
+self_modulate = Color(0, 1, 0.235294, 0.0588235)
+polygon = PackedVector2Array(173.855, 0.78, 1733.6, 0, 1920, 282.245, 1920, 510, 0, 510, 0, 325.38)
+
+[node name="negative" type="Area2D" parent="table"]
+collision_layer = 4097
+
+[node name="collisionPolygon2d" type="CollisionPolygon2D" parent="table/negative"]
+self_modulate = Color(0, 1, 0.235294, 0.0588235)
+polygon = PackedVector2Array(803, 135, 1150, 135, 1234, 408, 728, 411)
+
 [node name="laptop" type="Sprite2D" parent="."]
 position = Vector2(733, 414)
 texture = ExtResource("3_kx1ej")

@@ -7,46 +7,50 @@ signal pickedUpMug(mug:mug_mug)
 signal placed()
 signal dropped()
 
-@export var infoContainer:Control
-@export var itemNameLabel:Label
-@export var ingredientNameLabel:Label
 
+@export var isActive:bool = false
+@export var itemFollow:bool = false
+@export var pickupDelay:float = 1.5
+@export var pickupTime:float = 1.5
 
+# Currently held item
+var heldItem
+
+# Selected item for picking up / isDelay for pickupDelay (from counter)
+var selectedItem
+var isPickingUp:bool = false
+
+# For previewing place location ?
 var startPosition:Vector2
 var previewPosition:Vector2
 
-var selectedItem
-@export var pickupDelay:float = 1.5
-@export var pickupTime:float = 1.5
-var itemFollow:bool = false
 
-@export var isActive:bool = false
-# Not really used as of now but set anyways
-var heldItem
+@export_group("Internals")
+@export var infoContainer:Control
+@export var itemNameLabel:Label
+@export var ingredientNameLabel:Label
+@onready var texture_progress_bar = $control/textureProgressBar
+@onready var timer = $timer
 
 
-# Drops item if cancel is pressed
-func _input(event):
-	if !heldItem:
-		return
-	if GameGlobals.eventIsCancelCheck(event):
-		drop()
 
 
 func _ready():
 	texture_progress_bar.hide()
-	texture_progress_bar.value = pickupTime
 	texture_progress_bar.max_value = pickupTime
-	isDelay = false
+	texture_progress_bar.value = pickupTime
+	timer.wait_time = pickupTime
+	isPickingUp = false
 
 
 # Moves info label with mouse
+# Updates pickup texture timer
 func _process(_delta):
 	if !isActive:
 		return
 	if itemFollow and heldItem:
 		heldItem.position = get_global_mouse_position()
-	elif isDelay and !heldItem:
+	elif isPickingUp and !heldItem:
 		texture_progress_bar.set_value_no_signal(timer.time_left)
 	infoContainer.global_position = get_global_mouse_position()
 
@@ -76,10 +80,7 @@ func setItemFollow(toggle:bool):
 # Called by pickup and selects with an inputted item to be picked up
 # Be sure to connect a function to Signal dropped() for further item handling as a ONE_SHOT
 func pickup(item):
-	isDelay = false
-	timer.stop()
-	texture_progress_bar.hide()
-	texture_progress_bar.value = pickupTime
+	stopPickUp()
 	setItemFollow(true)
 	heldItem = item
 	if item.has_method("pickedUp"):
@@ -98,17 +99,21 @@ func pickup(item):
 	updateInfoLabel(item.name, ingredientName)
 	startPosition = item.position
 
+# Places item
 func place():
 	if heldItem == null:
 		return
+	setItemFollow(false)
 	heldItem = null
 	updateInfoLabel(null, null)
 	placed.emit()
 	print_rich("[color=magenta]", Time.get_datetime_string_from_system(true, true), " [Holding Component] Held item updated to: ", null, " [/color]")
-# Called by self to drop item
+
+# Drops item
 func drop():
 	if heldItem == null:
 		return
+	setItemFollow(false)
 	heldItem = null
 	updateInfoLabel(null, null)
 	dropped.emit()
@@ -121,86 +126,23 @@ func updateInfoLabel(itemName, ingredientName):
 	itemNameLabel.text = str(itemName)
 	ingredientNameLabel.text = str(ingredientName)
 
+# Selects item to be picked up
+func selectItem(interactable):
+	selectedItem = interactable
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@export var interactable:Node2D
-@export var holdingComponent:holding_component
-@onready var texture_progress_bar = $control/textureProgressBar
-
-@onready var timer = $timer
-
-var isDelay:bool = false
-var interactablePressed:bool = false
-
-
-func interact():
-	pass
-func startDelay():
-	timer.start(pickupDelay)
-
-
-func startPress(interactable:interactable_component, item):
-	timer.start(pickupDelay)
-	selectedItem = item
-	interactablePressed = true
-func stopPress() -> int:
-	interactablePressed = false
-	timer.stop()
-	if !isDelay and !heldItem:
-		print("[Holding Component] Action = 0")
-		interact()
-		_resetPickupThings()
-		return 0
-	elif !heldItem and texture_progress_bar.value < texture_progress_bar.max_value and texture_progress_bar.value > 0:
-		print("[Holding Component] Action = 02")
-		interact()
-		_resetPickupThings()
-		return 0
-	elif !heldItem:
-		print("[Holding Component] Action = 03")
-		pickup(selectedItem)
-		_resetPickupThings()
-		return 1
-	_resetPickupThings()
-	print("[Holding Component] Action = 04")
-	return 1
-
-func _resetPickupThings():
-	texture_progress_bar.value = pickupTime
-	isDelay = false
-	texture_progress_bar.hide()
-
-func _startPickup():
+# Starts pickup visual
+func startPickup(location):
 	texture_progress_bar.show()
-	timer.start(-pickupTime)
-func _on_timer_timeout():
-	if !isDelay and !heldItem:
-		isDelay = true
-		_startPickup()
-	elif isDelay:
-		print("[Holding Component] OK")
-		pickup(selectedItem)
+	timer.start(pickupTime)
+	isPickingUp = true
+
+# Stops pickup Visual
+func stopPickUp():
+	timer.stop()
+	isPickingUp = false
+	_resetPickupThings()
+
+# Resets pickup visual
+func _resetPickupThings():
+	texture_progress_bar.value = -pickupTime
+	texture_progress_bar.hide()

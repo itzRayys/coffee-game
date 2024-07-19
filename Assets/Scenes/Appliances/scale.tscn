@@ -1,17 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4urxqgemssf4"]
+[gd_scene load_steps=6 format=3 uid="uid://b4urxqgemssf4"]
 
 [ext_resource type="Texture2D" uid="uid://xmjov08es0pt" path="res://Assets/Sprites/scale_temp.png" id="1_s1aqt"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/scale.gd" id="2_x02wd"]
 [ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="3_w1svr"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/containerComponent.gd" id="4_lj6l0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fco73"]
 size = Vector2(232, 161)
 
-[node name="scale" type="Sprite2D" node_paths=PackedStringArray("holdingComponent")]
+[node name="scale" type="Sprite2D"]
 position = Vector2(768, 759)
 texture = ExtResource("1_s1aqt")
 script = ExtResource("2_x02wd")
-holdingComponent = NodePath("")
 readTime = 0.33
 
 [node name="timer" type="Timer" parent="."]
@@ -32,9 +32,9 @@ text = "000000"
 horizontal_alignment = 2
 vertical_alignment = 3
 
-[node name="area2d" type="Area2D" parent="."]
+[node name="interact" type="Area2D" parent="."]
 
-[node name="collisionShape2d" type="CollisionShape2D" parent="area2d"]
+[node name="collisionShape2d" type="CollisionShape2D" parent="interact"]
 position = Vector2(1, -0.5)
 shape = SubResource("RectangleShape2D_fco73")
 debug_color = Color(0, 0.596078, 0.701961, 0.0235294)
@@ -49,5 +49,9 @@ texture = ExtResource("3_w1svr")
 [node name="marker2d" type="Marker2D" parent="."]
 position = Vector2(-25, 8)
 
+[node name="containerComponent" type="Node2D" parent="."]
+script = ExtResource("4_lj6l0")
+
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
-[connection signal="input_event" from="area2d" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="interact" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="interact" to="containerComponent" method="_on_interact_input_event"]

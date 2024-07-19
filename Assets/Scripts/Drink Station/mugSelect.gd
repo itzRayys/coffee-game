@@ -2,7 +2,7 @@ extends Area2D
 
 signal mugSelected(Mug:mug_mug)
 
-@export var holdingComponent:holding_component
+var holdingComponent:holding_component
 
 @export_group("Mug 1")
 @export var heldMug:mug_mug
@@ -15,6 +15,8 @@ var isEnabled:bool = false
 var canEnable:bool = false
 
 
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 
 func setState(toggle:bool):
 	if heldMug or !toggle:

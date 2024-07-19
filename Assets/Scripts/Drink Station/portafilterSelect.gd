@@ -2,7 +2,7 @@ extends Area2D
 
 signal pickupFilter(filter)
 
-@export var holdingComponent:holding_component
+var holdingComponent:holding_component
 
 @export_group("Filter 1")
 @export var heldFilter:pfilter
@@ -16,6 +16,8 @@ var isEnabled:bool = false
 var canEnable:bool = false
 
 
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 func setState(toggle:bool):
 	if heldFilter or !toggle:
 		disable()
