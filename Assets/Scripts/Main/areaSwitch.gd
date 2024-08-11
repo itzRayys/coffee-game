@@ -77,6 +77,7 @@ func closeMenu():
 	color_rect_2.hide()
 	color_rect_2.mouse_filter = MOUSE_FILTER_IGNORE
 	disableButtons()
+	open_menu.release_focus()
 
 # Handles button states
 func enableButtons():

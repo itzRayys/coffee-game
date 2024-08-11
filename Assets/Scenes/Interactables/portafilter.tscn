@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://codnda2lxchgh"]
+[gd_scene load_steps=8 format=3 uid="uid://codnda2lxchgh"]
 
 [ext_resource type="Texture2D" uid="uid://c76thvdq272c4" path="res://Assets/Sprites/portafilter_temp.png" id="1_8x5py"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/pfilter.gd" id="2_8jyyl"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/saveLocationComponent.gd" id="3_n7xr0"]
-[ext_resource type="Script" path="res://Assets/Scripts/Components/interactableComponent.gd" id="4_53hby"]
+[ext_resource type="PackedScene" uid="uid://ccc0dpjqtb71s" path="res://Assets/Scenes/Interactables/interactable_component.tscn" id="4_tabx1"]
+[ext_resource type="Texture2D" uid="uid://gnpb4q0tmab5" path="res://Assets/Sprites/portafilter_hanging_temp.png" id="5_m6u0h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jihod"]
 size = Vector2(83, 98.9999)
@@ -12,6 +13,7 @@ size = Vector2(83, 98.9999)
 size = Vector2(58.1767, 10.099)
 
 [node name="portafilter" type="Sprite2D"]
+self_modulate = Color(1, 1, 1, 0)
 position = Vector2(569, 268)
 scale = Vector2(1.39231, 1.68333)
 texture = ExtResource("1_8x5py")
@@ -29,12 +31,14 @@ offset_bottom = 22.4356
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="interact_area" type="Area2D" parent="."]
 scale = Vector2(0.718231, 0.594061)
 
-[node name="collisionShape2d" type="CollisionShape2D" parent="interact_area"]
+[node name="interact" type="CollisionShape2D" parent="interact_area"]
 position = Vector2(-2.5, -0.5)
+scale = Vector2(1.195, 1.755)
 shape = SubResource("RectangleShape2D_jihod")
 debug_color = Color(0, 0.596078, 0.701961, 0.0117647)
 
@@ -47,27 +51,27 @@ position = Vector2(-1.79556, 2.07921)
 shape = SubResource("RectangleShape2D_iu2xb")
 debug_color = Color(0, 0.596078, 0.701961, 0)
 
-[node name="interactableComponent" type="Node2D" parent="." node_paths=PackedStringArray("hitbox_area", "saveLocation", "interactable", "interact_area")]
-script = ExtResource("4_53hby")
+[node name="interactableComponent" parent="." node_paths=PackedStringArray("hitbox_area", "saveLocation", "interactable", "interact_area") instance=ExtResource("4_tabx1")]
 hitbox_area = NodePath("../hitbox_area")
 saveLocation = NodePath("../saveLocationComponent")
 interactable = NodePath("..")
 interact_area = NodePath("../interact_area")
 
-[node name="startPickup" type="Timer" parent="interactableComponent"]
-one_shot = true
+[node name="hanging" type="Sprite2D" parent="."]
+position = Vector2(-0.71823, 7.15256e-07)
+scale = Vector2(1.03867, 0.871289)
+texture = ExtResource("5_m6u0h")
 
-[node name="autoPickup" type="Timer" parent="interactableComponent"]
-one_shot = true
-
-[node name="interactCooldown" type="Timer" parent="interactableComponent"]
+[node name="placed" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("1_8x5py")
 
 [connection signal="mouse_entered" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_entered"]
 [connection signal="mouse_exited" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_exited"]
 [connection signal="area_entered" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_entered"]
 [connection signal="area_exited" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_exited"]
 [connection signal="ableToPlace" from="interactableComponent" to="." method="_on_interactable_component_able_to_place"]
+[connection signal="dropped" from="interactableComponent" to="." method="_on_interactable_component_dropped"]
 [connection signal="interacted" from="interactableComponent" to="." method="_on_interactable_component_interacted"]
-[connection signal="timeout" from="interactableComponent/startPickup" to="interactableComponent" method="_on_start_pickup_timeout"]
-[connection signal="timeout" from="interactableComponent/autoPickup" to="interactableComponent" method="_on_auto_pickup_timeout"]
-[connection signal="timeout" from="interactableComponent/interactCooldown" to="interactableComponent" method="_on_interact_cooldown_timeout"]
+[connection signal="pickedUp" from="interactableComponent" to="." method="_on_interactable_component_picked_up"]
+[connection signal="placed" from="interactableComponent" to="." method="_on_interactable_component_placed"]

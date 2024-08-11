@@ -13,7 +13,6 @@ signal ingredientAdded()
 @export var whitelistedIngredients:Array[ingredient_resource]
 
 @export_group("Internals")
-@export var pickupComponent:pickup_component
 @export var heldIngredientsPreview:Label
 @export var dispenserPosition:Marker2D
 

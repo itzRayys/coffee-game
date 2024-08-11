@@ -5,6 +5,10 @@ class_name interactable_component
 signal ableToPlace(toggle:bool)
 signal interacted()
 
+signal pickedUp()
+signal placed()
+signal dropped()
+
 
 @export_group("Pickup")
 @export var canPickup:bool = true
@@ -45,7 +49,7 @@ func _unhandled_input(event):
 		if isHovering and !isPickedUp and !holdingComponent.heldItem:
 			_startPress()
 		elif isHovering and isPickedUp and canPlace and event.is_action_pressed("interact"):
-			_place(interactable)
+			_place()
 	elif event.is_action_released("interact") and isHovering and !isPickedUp and !holdingComponent.heldItem:
 		interact()
 		_stopPress()
@@ -72,16 +76,16 @@ func pickup():
 	holdingComponent.pickup(interactable)
 	holdingComponent.setItemFollow(true)
 	_areaCheck()
+	pickedUp.emit()
 
 # Places interactable
-func _place(item):
-	if !item.has_method("placedOnCounter"):
-		return
+func _place():
 	ableToPlace.emit(false)
-	item.placedOnCounter()
+	saveLocation.saveLocation()
 	holdingComponent.place()
 	interact_cooldown.start(interactDelay)
 	isPickedUp = false
+	placed.emit()
 
 # Drops item (returns to previous location)
 func _drop():
@@ -90,6 +94,7 @@ func _drop():
 	holdingComponent.drop()
 	saveLocation.resetLocation()
 	interact_cooldown.start(interactDelay)
+	dropped.emit()
 
 # Interacts with interactable (when it is placed)
 func interact():

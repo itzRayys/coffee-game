@@ -8,6 +8,8 @@ signal fadeEnded()
 @export var fadeTimer:Timer
 @export var loadCheckDelay:float
 
+@export var buttons:Array[Button]
+
 @onready var load_check = $loadCheck
 @onready var progress_bar = $progressBar
 
@@ -54,6 +56,7 @@ func enterCafe():
 		print("[TITLE SCREEN] GAME NOT LOADED YET!!")
 		return
 	canSkip = false
+	buttons[0].release_focus()
 	fadeBlackscreen(-3)
 	await(fadeEnded)
 	get_tree().change_scene_to_packed(loadedGameScene)

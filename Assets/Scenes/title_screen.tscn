@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/Main/titleScreen.gd" id="2_5k3gk"]
 [ext_resource type="Texture2D" uid="uid://dwucn2msgpmkb" path="res://Assets/Images/title.png" id="3_xujx4"]
 
-[node name="titleScreen" type="Control" node_paths=PackedStringArray("blackOverlay", "fadeTimer")]
+[node name="titleScreen" type="Control" node_paths=PackedStringArray("blackOverlay", "fadeTimer", "buttons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,7 @@ entryScene = "res://Assets/Scenes/main.tscn"
 blackOverlay = NodePath("blackscreen")
 fadeTimer = NodePath("timer")
 loadCheckDelay = 0.2
+buttons = [NodePath("mainButtons/vBoxContainer/Enter Cafe"), NodePath("mainButtons/vBoxContainer/Settings"), NodePath("mainButtons/vBoxContainer/Exit Game")]
 
 [node name="comfyCafe!!!!" type="TextureRect" parent="."]
 layout_mode = 1
