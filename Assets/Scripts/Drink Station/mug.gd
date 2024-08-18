@@ -3,7 +3,9 @@ class_name mug_mug
 
 @onready var ingredientContainer:ingredient_container_component2 = $ingredientContainerComponent2
 @export var saveLocationComponent:save_location_component
+@onready var interactableComponent = $interactableComponent
 
+var holdingComponent:holding_component
 var espressoAmount:int = 0
 var ozAverage:float = 0
 
@@ -23,3 +25,9 @@ func move(inputPosition:Vector2, callable:Callable):
 	position = inputPosition
 	saveLocationComponent.saveLocation()
 	saveLocationComponent.movedToNewLocation.connect(callable, CONNECT_ONE_SHOT)
+
+# Sets holding component
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
+	interactableComponent.setHoldingComponent(holdComponent)
+	print("[Portafilter] Holding Component Set!")

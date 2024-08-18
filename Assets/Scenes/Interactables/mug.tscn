@@ -1,11 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://3ilx8vwupag3"]
+[gd_scene load_steps=8 format=3 uid="uid://3ilx8vwupag3"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/mug.gd" id="1_dwllx"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientContainerComponent2.gd" id="1_ql4ko"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/saveLocationComponent.gd" id="3_m1nxq"]
+[ext_resource type="PackedScene" uid="uid://ccc0dpjqtb71s" path="res://Assets/Scenes/Interactables/interactable_component.tscn" id="4_10pvl"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3jmse"]
 load_path = "res://.godot/imported/mug_temp.png-f2763d28226113fa41e894ef661710ae.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fsxpk"]
+size = Vector2(142.989, 35.747)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qpa8l"]
+size = Vector2(155.501, 150.138)
 
 [node name="mug" type="Sprite2D" node_paths=PackedStringArray("saveLocationComponent")]
 position = Vector2(912, 766)
@@ -20,3 +27,29 @@ script = ExtResource("1_ql4ko")
 [node name="saveLocationComponent" type="Marker2D" parent="." node_paths=PackedStringArray("mainNode")]
 script = ExtResource("3_m1nxq")
 mainNode = NodePath("..")
+
+[node name="hitbox_area" type="Area2D" parent="."]
+collision_mask = 4353
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="hitbox_area"]
+position = Vector2(0, 48.2585)
+shape = SubResource("RectangleShape2D_fsxpk")
+debug_color = Color(0, 0.701961, 0.278431, 0)
+
+[node name="interact_area" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="interact_area"]
+position = Vector2(0.893677, -7.14954)
+shape = SubResource("RectangleShape2D_qpa8l")
+debug_color = Color(0, 0.596078, 0.701961, 0.0235294)
+
+[node name="interactableComponent" parent="." node_paths=PackedStringArray("hitbox_area", "saveLocation", "interactable", "interact_area") instance=ExtResource("4_10pvl")]
+hitbox_area = NodePath("../hitbox_area")
+saveLocation = NodePath("../saveLocationComponent")
+interactable = NodePath("..")
+interact_area = NodePath("../interact_area")
+
+[connection signal="area_entered" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_entered"]
+[connection signal="area_exited" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_exited"]
+[connection signal="mouse_entered" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_entered"]
+[connection signal="mouse_exited" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_exited"]

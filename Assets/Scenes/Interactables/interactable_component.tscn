@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccc0dpjqtb71s"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Components/interactableComponent.gd" id="1_1jtsq"]
+
+[node name="interactableComponent" type="Node2D" node_paths=PackedStringArray("hitbox_area", "saveLocation", "interactable", "interact_area")]
+script = ExtResource("1_1jtsq")
+hitbox_area = NodePath("")
+saveLocation = NodePath("")
+interactable = NodePath("")
+interact_area = NodePath("")
+
+[node name="startPickup" type="Timer" parent="."]
+one_shot = true
+
+[node name="autoPickup" type="Timer" parent="."]
+one_shot = true
+
+[node name="interactCooldown" type="Timer" parent="."]
+
+[connection signal="timeout" from="startPickup" to="." method="_on_start_pickup_timeout"]
+[connection signal="timeout" from="autoPickup" to="." method="_on_auto_pickup_timeout"]
+[connection signal="timeout" from="interactCooldown" to="." method="_on_interact_cooldown_timeout"]

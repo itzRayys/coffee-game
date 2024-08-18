@@ -6,16 +6,42 @@ signal itemPickedUp(item)
 signal itemReturned(item)
 signal itemRemoved(item)
 
-var hasItem:bool = false
-var isPickedUp:bool = false
-var holdingComponent:holding_component
-
 @export var interactArea:Area2D
+@export var acceptsPortafilters:bool = false
+@export var acceptsCups:bool = false
+
+var interactable:Node2D
+var canPickup:bool = true
+var isPickedUp:bool = false
+
+var holdingComponent:holding_component
+var interactableComponent:interactable_component
+
 
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 
+func receiveItem(item:Node2D):
+	interactable = item
+	interactableComponent = item.interactableComponent
+	receivedItem.emit(item)
 
+# Connect a function to item's pickedUp()
+func connectOnPickedUp(function:Callable, method:ConnectFlags):
+	interactableComponent.pickedUp.connect(function, method)
+
+# Connect a function to item's dropped()
+func connectOnDropped(function:Callable, method:ConnectFlags):
+	interactableComponent.dropped.connect(function, method)
+
+# Connect a function to item's placed()
+func connectOnPlaced(function:Callable, method:ConnectFlags):
+	interactableComponent.placed.connect(function, method)
 
 func _on_interact_input_event(viewport, event, shape_idx):
-	pass
+	if !GameGlobals.eventIsInteractCheck(event):
+		return
+	if holdingComponent.heldItem is pfilter and !interactable:
+		receiveItem(holdingComponent.heldItem)
+	if canPickup:
+		interactable.pickup
