@@ -41,13 +41,12 @@ var isOnCooldown:bool = false
 @onready var auto_pickup = $autoPickup
 @onready var interact_cooldown = $interactCooldown
 
-## CONTINUE HERE, ADD A TOGGLE FOR INTERACTABLE OVERALL, DISABLE WHEN PFILTER IS HUNG
 
 
 # Works with holding component to call pickup / place / interact
 func _unhandled_input(event):
 	if event.is_action_pressed("interact"):
-		if isHovering and !isPickedUp and !holdingComponent.heldItem:
+		if isHovering and !isPickedUp and !holdingComponent.heldItem and canPickup:
 			_startPress()
 		elif isHovering and isPickedUp and canPlace and event.is_action_pressed("interact"):
 			_place()

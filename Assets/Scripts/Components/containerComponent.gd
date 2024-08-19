@@ -16,6 +16,7 @@ var isPickedUp:bool = false
 
 var holdingComponent:holding_component
 var interactableComponent:interactable_component
+var saveLocationComponent:save_location_component
 
 
 func setHoldingComponent(holdComponent:holding_component):
@@ -24,7 +25,12 @@ func setHoldingComponent(holdComponent:holding_component):
 func receiveItem(item:Node2D):
 	interactable = item
 	interactableComponent = item.interactableComponent
+	saveLocationComponent = item.saveLocationComponent
+	saveLocationComponent.movedToNewLocation.connect(removeItem, CONNECT_ONE_SHOT)
 	receivedItem.emit(item)
+
+func removeItem():
+	interactable = null
 
 # Connect a function to item's pickedUp()
 func connectOnPickedUp(function:Callable, method:ConnectFlags):
@@ -43,5 +49,5 @@ func _on_interact_input_event(viewport, event, shape_idx):
 		return
 	if holdingComponent.heldItem is pfilter and !interactable:
 		receiveItem(holdingComponent.heldItem)
-	if canPickup:
+	elif interactable and canPickup:
 		interactable.pickup

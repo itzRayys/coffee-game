@@ -17,11 +17,16 @@ var canEnable:bool = false
 func _ready():
 	if !heldFilter:
 		return
+	print("ok")
 	returnFilter(heldFilter)
 
 func _unhandled_input(event):
-	if event.is_action_pressed("interact") and heldFilter and isHovering and !holdingComponent.heldItem:
-		selectFilter()
+	if event.is_action_pressed("interact") and isHovering:
+		if heldFilter and !holdingComponent.heldItem:
+			selectFilter()
+		elif !heldFilter and holdingComponent.heldItem is pfilter:
+			returnFilter(holdingComponent.heldItem)
+			holdingComponent.place()
 
 # Sets enabled or disabled
 func setState(toggle:bool):
@@ -44,19 +49,22 @@ func disable():
 func selectFilter():
 	if !heldFilter:
 		return
-	holdingComponent.pickup(heldFilter)
+	heldFilter.interactableComponent.pickup()
 
 # Return filter to hanging
 func returnFilter(filter:pfilter):
-	if heldFilter:
+	if !heldFilter:
 		return
 	filter.position = filterMarker.position
 	filter.toggleHang(true)
 	filter.isHanging = true
-	filter.saveLocationComponent.movedToNewLocation.connect(clearFilter(), CONNECT_ONE_SHOT)
+	filter.interactableComponent.canPickup = false
+	print(filter.interactableComponent.canPickup)
+	filter.saveLocationComponent.movedToNewLocation.connect(clearFilter, CONNECT_ONE_SHOT)
 
 # Clears heldFilter
 func clearFilter():
+	heldFilter.interactableComponent.canPickup = true
 	heldFilter = null
 
 func setHoldingComponent(holdComponent:holding_component):

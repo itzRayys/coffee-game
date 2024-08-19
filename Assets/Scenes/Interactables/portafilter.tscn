@@ -12,12 +12,17 @@ size = Vector2(83, 98.9999)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iu2xb"]
 size = Vector2(58.1767, 10.099)
 
-[node name="portafilter" type="Sprite2D"]
+[node name="portafilter" type="Sprite2D" node_paths=PackedStringArray("saveLocationComponent", "interactableComponent", "hanging", "placed", "interactShape")]
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(569, 268)
 scale = Vector2(1.39231, 1.68333)
 texture = ExtResource("1_8x5py")
 script = ExtResource("2_8jyyl")
+saveLocationComponent = NodePath("saveLocationComponent")
+interactableComponent = NodePath("interactableComponent")
+hanging = NodePath("hanging")
+placed = NodePath("placed")
+interactShape = NodePath("interact_area/interact")
 
 [node name="saveLocationComponent" type="Marker2D" parent="." node_paths=PackedStringArray("mainNode")]
 script = ExtResource("3_n7xr0")

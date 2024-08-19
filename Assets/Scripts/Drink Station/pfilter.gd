@@ -6,12 +6,12 @@ var holdingComponent:holding_component
 
 @export var isHanging:bool = true
 
-@onready var saveLocationComponent = $saveLocationComponent
+@export var saveLocationComponent:save_location_component
 @onready var label = $label
-@onready var interactableComponent = $interactableComponent
-@onready var hanging = $hanging
-@onready var placed = $placed
-@onready var interactShape = $interact_area/interact
+@export var interactableComponent:interactable_component
+@export var hanging:Sprite2D
+@export var placed:Sprite2D
+@export var interactShape:CollisionShape2D
 
 
 var maxOzAmount:float = 20

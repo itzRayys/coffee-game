@@ -89,7 +89,7 @@ process_mode = 1
 script = ExtResource("1_s7vgl")
 _printContainerStates = false
 espressoMachine = NodePath("espressoMachine")
-_holdingComponent_connections = [NodePath("espressoMachine"), NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("rinse"), NodePath("refrigerator"), NodePath("mugs/mugSelect"), NodePath("portafilters/portafilterSelect"), NodePath("portafilters/portafilter"), NodePath("portafilters/spoonHolder"), NodePath("drinkSubmit"), NodePath("mugs/mug3"), NodePath("portafilters/portafilterSelect2"), NodePath("portafilters/portafilter2")]
+_holdingComponent_connections = [NodePath("espressoMachine"), NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("rinse"), NodePath("refrigerator"), NodePath("mugs/mugSelect"), NodePath("portafilters/portafilterSelect"), NodePath("portafilters/portafilterSelect2"), NodePath("portafilters/portafilter"), NodePath("portafilters/portafilter2"), NodePath("portafilters/spoonHolder"), NodePath("drinkSubmit"), NodePath("mugs/mug3")]
 filterContainers = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("portafilters/portafilterSelect"), NodePath("espressoMachine"), NodePath("portafilters/portafilterSelect2")]
 mugContainers = [NodePath("drinkSubmit")]
 
