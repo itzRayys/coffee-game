@@ -2,6 +2,7 @@ extends Node2D
 class_name container_component
 
 signal receivedItem(item)
+signal itemRemoved()
 
 @export var marker:Marker2D
 @export var interactArea:Area2D
@@ -47,6 +48,7 @@ func _placeItem(item:Node2D):
 # Remove item and set info as null
 func removeItem():
 	interactableComponent.canPickup = true
+	itemRemoved.emit()
 	_setInfo(null)
 
 # Checks bools to see if item is allowed
@@ -69,6 +71,17 @@ func connectOnDropped(function:Callable, method:ConnectFlags):
 func connectOnPlaced(function:Callable, method:ConnectFlags):
 	interactableComponent.placed.connect(function, method)
 
+# Connect a function to item's pickedUp()
+func disconnectOnPickedUp(function:Callable):
+	interactableComponent.pickedUp.disconnect(function)
+	
+# Connect a function to item's dropped()
+func disconnectOnDropped(function:Callable):
+	interactableComponent.dropped.disconnect(function)
+
+# Connect a function to item's placed()
+func disconnectOnPlaced(function:Callable):
+	interactableComponent.placed.disconnect(function)
 # Receive item or pickup
 func _on_interact_input_event(viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
