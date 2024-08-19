@@ -2,9 +2,6 @@ extends Node2D
 class_name container_component
 
 signal receivedItem(item)
-signal itemPickedUp(item)
-signal itemReturned(item)
-signal itemRemoved(item)
 
 @export var marker:Marker2D
 @export var interactArea:Area2D

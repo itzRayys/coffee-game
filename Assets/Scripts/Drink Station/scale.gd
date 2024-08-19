@@ -34,11 +34,10 @@ func setHoldingComponent(holdComponent:holding_component):
 func receiveFilter(filter:pfilter):
 	heldFilter = filter
 	timer.start(readTime)
+	containerComponent.connectOnPlaced(clearFilter, CONNECT_ONE_SHOT)
 
 # Stops timer and sets to null
 func clearFilter():
-	if !heldFilter:
-		return
 	heldFilter = null
 	timer.stop()
 	readWeight(null)
