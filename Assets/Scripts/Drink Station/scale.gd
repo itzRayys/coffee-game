@@ -34,6 +34,7 @@ func setHoldingComponent(holdComponent:holding_component):
 func receiveFilter(filter:pfilter):
 	heldFilter = filter
 	timer.start(readTime)
+	containerComponent.connectOnPlaced(clearFilter, CONNECT_ONE_SHOT)
 	containerComponent.connectOnPickedUp(clearWeight, CONNECT_DEFERRED)
 	containerComponent.connectOnDropped(reread, CONNECT_DEFERRED)
 

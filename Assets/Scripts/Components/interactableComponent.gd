@@ -81,11 +81,11 @@ func pickup():
 # Places interactable
 func _place():
 	ableToPlace.emit(false)
+	placed.emit()
 	saveLocation.saveLocation()
 	holdingComponent.place()
 	interact_cooldown.start(interactDelay)
 	isPickedUp = false
-	placed.emit()
 
 # Drops item (returns to previous location)
 func _drop():

@@ -47,8 +47,8 @@ func _placeItem(item:Node2D):
 
 # Remove item and set info as null
 func removeItem():
-	interactableComponent.canPickup = true
 	itemRemoved.emit()
+	interactableComponent.canPickup = true
 	_setInfo(null)
 
 # Checks bools to see if item is allowed
@@ -74,7 +74,7 @@ func connectOnPlaced(function:Callable, method:ConnectFlags):
 # Connect a function to item's pickedUp()
 func disconnectOnPickedUp(function:Callable):
 	interactableComponent.pickedUp.disconnect(function)
-	
+
 # Connect a function to item's dropped()
 func disconnectOnDropped(function:Callable):
 	interactableComponent.dropped.disconnect(function)
@@ -82,6 +82,7 @@ func disconnectOnDropped(function:Callable):
 # Connect a function to item's placed()
 func disconnectOnPlaced(function:Callable):
 	interactableComponent.placed.disconnect(function)
+
 # Receive item or pickup
 func _on_interact_input_event(viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
