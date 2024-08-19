@@ -7,7 +7,6 @@ var holdingComponent:holding_component
 @onready var timer = $timer
 @onready var label = $label
 @onready var glow = $glow
-@onready var marker = $marker2d
 @onready var containerComponent = $containerComponent
 
 
@@ -31,17 +30,19 @@ func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 	containerComponent.setHoldingComponent(holdComponent)
 
-# Called when receiving filter
+# Sets filter and starts timer 
 func receiveFilter(filter:pfilter):
 	heldFilter = filter
-	filter.move(marker, clearFilter)
 	timer.start(readTime)
 
+# Stops timer and sets to null
 func clearFilter():
 	if !heldFilter:
 		return
 	heldFilter = null
+	timer.stop()
 	readWeight(null)
+
 # Called when timer finishes
 func readWeight(filter:pfilter):
 	if !filter:
@@ -55,16 +56,13 @@ func readWeight(filter:pfilter):
 
 # On read oz timer timeout
 func _on_timer_timeout():
+	if !containerComponent.interactable:
+		return
 	readWeight(heldFilter)
 
-# On click
-func _on_area_2d_input_event(viewport, event, shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event):
-		return
-	elif !holdingComponent:
-		return
-	if !isEnabled and heldFilter:
-		holdingComponent.pickup(heldFilter)
-	elif isEnabled and holdingComponent.heldItem and holdingComponent.heldItem is pfilter:
-		receiveFilter(holdingComponent.heldItem)
-		holdingComponent.place()
+
+func _on_container_component_received_item(item):
+	receiveFilter(item)
+
+func _on_container_component_item_removed(item):
+	clearFilter()

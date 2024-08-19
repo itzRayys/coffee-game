@@ -14,12 +14,13 @@ size = Vector2(142.989, 35.747)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qpa8l"]
 size = Vector2(155.501, 150.138)
 
-[node name="mug" type="Sprite2D" node_paths=PackedStringArray("saveLocationComponent")]
+[node name="mug" type="Sprite2D" node_paths=PackedStringArray("saveLocationComponent", "interactableComponent")]
 position = Vector2(912, 766)
 scale = Vector2(0.559483, 0.559483)
 texture = SubResource("CompressedTexture2D_3jmse")
 script = ExtResource("1_dwllx")
 saveLocationComponent = NodePath("saveLocationComponent")
+interactableComponent = NodePath("interactableComponent")
 
 [node name="ingredientContainerComponent2" type="Node2D" parent="."]
 script = ExtResource("1_ql4ko")

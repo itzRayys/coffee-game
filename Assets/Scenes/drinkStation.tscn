@@ -267,9 +267,11 @@ scale = Vector2(1.008, 1.468)
 texture = ExtResource("6_fqauh")
 
 [node name="portafilter" parent="portafilters" instance=ExtResource("16_1hpvy")]
+z_index = 1
 position = Vector2(455, 271)
 
 [node name="portafilter2" parent="portafilters" instance=ExtResource("16_1hpvy")]
+z_index = 1
 position = Vector2(561, 300)
 
 [node name="spoonHolder" type="Sprite2D" parent="portafilters" node_paths=PackedStringArray("spoon", "spoonMarker")]

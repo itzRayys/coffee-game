@@ -3,7 +3,7 @@ class_name mug_mug
 
 @onready var ingredientContainer:ingredient_container_component2 = $ingredientContainerComponent2
 @export var saveLocationComponent:save_location_component
-@onready var interactableComponent = $interactableComponent
+@export var interactableComponent:interactable_component
 
 var holdingComponent:holding_component
 var espressoAmount:int = 0

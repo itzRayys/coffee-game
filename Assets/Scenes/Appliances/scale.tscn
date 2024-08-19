@@ -49,9 +49,14 @@ texture = ExtResource("3_w1svr")
 [node name="marker2d" type="Marker2D" parent="."]
 position = Vector2(-25, 8)
 
-[node name="containerComponent" type="Node2D" parent="."]
+[node name="containerComponent" type="Node2D" parent="." node_paths=PackedStringArray("marker", "interactArea")]
 script = ExtResource("4_lj6l0")
+marker = NodePath("../marker2d")
+interactArea = NodePath("../interact")
+acceptsPortafilters = true
 
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 [connection signal="input_event" from="interact" to="." method="_on_area_2d_input_event"]
 [connection signal="input_event" from="interact" to="containerComponent" method="_on_interact_input_event"]
+[connection signal="itemRemoved" from="containerComponent" to="." method="_on_container_component_item_removed"]
+[connection signal="receivedItem" from="containerComponent" to="." method="_on_container_component_received_item"]
