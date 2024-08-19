@@ -4,9 +4,7 @@ signal pickupFilter(filter)
 
 var holdingComponent:holding_component
 
-@export_group("Filter 1")
 @export var heldFilter:pfilter
-@export var filterHanging:Sprite2D
 @export var filterMarker:Marker2D
 
 @onready var glow = $glow
@@ -15,9 +13,17 @@ var isHovering:bool = false
 var isEnabled:bool = false
 var canEnable:bool = false
 
+# Get held filter's interactable component
+func _ready():
+	if !heldFilter:
+		return
+	returnFilter(heldFilter)
 
-func setHoldingComponent(holdComponent:holding_component):
-	holdingComponent = holdComponent
+func _unhandled_input(event):
+	if event.is_action_pressed("interact") and heldFilter and isHovering and !holdingComponent.heldItem:
+		selectFilter()
+
+# Sets enabled or disabled
 func setState(toggle:bool):
 	if heldFilter or !toggle:
 		disable()
@@ -34,44 +40,27 @@ func disable():
 	isEnabled = false
 	glow.hide()
 
+# Picks up filter
 func selectFilter():
 	if !heldFilter:
 		return
 	holdingComponent.pickup(heldFilter)
-	filterHanging.hide()
-	heldFilter.show()
 
-func returnFilter():
+# Return filter to hanging
+func returnFilter(filter:pfilter):
 	if heldFilter:
 		return
-	heldFilter.position = filterMarker.position
-	filterHanging.show()
-	heldFilter.hide()
+	filter.position = filterMarker.position
+	filter.toggleHang(true)
+	filter.isHanging = true
+	filter.saveLocationComponent.movedToNewLocation.connect(clearFilter(), CONNECT_ONE_SHOT)
 
-func toggleAllowEnable(toggle:bool):
-	canEnable = toggle
-
-func resetHangingFilter():
-	filterHanging.show()
-	heldFilter.hide()
-
+# Clears heldFilter
 func clearFilter():
-	heldFilter.saveLocationComponent.returnedToSavedLocation.connect(resetHangingFilter, CONNECT_ONE_SHOT)
 	heldFilter = null
 
-func _unhandled_input(event):
-	if isHovering and event.is_action_released("interact"):
-		if heldFilter:
-			heldFilter.interactableComponent.pickup()
-#	if !event.is_action_pressed("interact") or !isHovering:
-#		return
-#	if heldFilter and !holdingComponent.heldItem:
-#		selectFilter()
-#		get_viewport().set_input_as_handled()
-#	elif !heldFilter and isEnabled:
-#		returnFilter()
-#		get_viewport().set_input_as_handled()
-
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
 
 func _on_mouse_entered():
 	isHovering = true

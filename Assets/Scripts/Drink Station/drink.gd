@@ -9,7 +9,6 @@ signal hoverUpdated(isHover:bool)
 @export_group("Internals")
 @export var ingredientContainer:ingredient_container_component2
 @export var visualComponent:visual_component
-@export var pickupComponent:pickup_component
 
 var isHovering:bool = false
 var previewing:bool = false
@@ -17,8 +16,6 @@ var previewing:bool = false
 func _input(event):
 	if !event.is_action_pressed("interact") or !isHovering:
 		return
-	if !holdComponent.itemHeld and pickupComponent:
-		pickupComponent.pickup(holdComponent)
 
 # Logic when hovering drink
 func onHover():

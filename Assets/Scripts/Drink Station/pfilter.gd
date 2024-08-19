@@ -80,7 +80,7 @@ func move(marker:Marker2D, callable:Callable):
 func connectOnMove(callable:Callable, flag:ConnectFlags):
 	saveLocationComponent.movedToNewLocation.connect(callable, flag)
 
-
+# Toggle hanging sprite
 func toggleHang(toggle:bool):
 	if toggle:
 		placed.hide()
@@ -96,7 +96,6 @@ func toggleHang(toggle:bool):
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 	interactableComponent.setHoldingComponent(holdComponent)
-	print("[Portafilter] Holding Component Set!")
 
 # Visual - turns purple
 func _toggleModulate(toggle:bool):
@@ -105,27 +104,28 @@ func _toggleModulate(toggle:bool):
 	if !toggle:
 		holdingComponent.heldItem.modulate = Color(1, 1, 1, 1)
 		return
-	holdingComponent.heldItem.modulate = Color(0.5, 0.2, 0.8, 0.8)
+	holdingComponent.heldItem.modulate = Color(0.8, 0.2, 0.2, 0.8)
 
 
 # Toggle visual
 func _on_interactable_component_able_to_place(toggle):
-	_toggleModulate(toggle)
+	_toggleModulate(!toggle)
 
 # Interacted
 func _on_interactable_component_interacted():
 	print("[Portafilter] Interacted!!!!!!!!!!!!!!!!!!!!!")
 
-
+# Rehang on dropped if hung
 func _on_interactable_component_dropped():
 	if isHanging:
 		toggleHang(true)
 
-
+# Change sprite when picked up from hanging to normal
 func _on_interactable_component_picked_up():
 	if isHanging:
 		toggleHang(false)
 
+# Set isHanging false on move
 func _on_interactable_component_placed():
 	if isHanging:
 		isHanging = false

@@ -41,6 +41,7 @@ var isOnCooldown:bool = false
 @onready var auto_pickup = $autoPickup
 @onready var interact_cooldown = $interactCooldown
 
+## CONTINUE HERE, ADD A TOGGLE FOR INTERACTABLE OVERALL, DISABLE WHEN PFILTER IS HUNG
 
 
 # Works with holding component to call pickup / place / interact
@@ -64,12 +65,12 @@ func setHoldingComponent(holdComponent:holding_component):
 	start_pickup.wait_time = pickupDelay
 	pickupTime = holdComponent.pickupTime
 	auto_pickup.wait_time = pickupTime
-	print("[Interactable Component] Holding Component Set!", pickupDelay, pickupTime)
+	print_rich("[color=orange]", Time.get_datetime_string_from_system(true, true), " [Interactable Component] {0} Holding Component Set![/color]".format([interactable.name]))
 
 
 # Picks up interactable
 func pickup():
-	print("[Interactable Component] {0} picked up!".format([interactable.name]))
+	print_rich("[color=orange]", Time.get_datetime_string_from_system(true, true), " [Interactable Component] {0} picked up![/color]".format([interactable.name]))
 	isPickedUp = true
 	isOnCooldown = true
 	interact_cooldown.stop()

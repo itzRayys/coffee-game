@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://d0ml0manfpx0i"]
+[gd_scene load_steps=42 format=3 uid="uid://d0ml0manfpx0i"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Main/drinkStation.gd" id="1_s7vgl"]
 [ext_resource type="PackedScene" uid="uid://b40k5floa8yv3" path="res://Assets/Scenes/Appliances/refrigerator.tscn" id="2_l0egd"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/portafilterSelect.gd" id="13_k8u5v"]
 [ext_resource type="PackedScene" uid="uid://3ilx8vwupag3" path="res://Assets/Scenes/Interactables/mug.tscn" id="14_x84ws"]
 [ext_resource type="PackedScene" uid="uid://codnda2lxchgh" path="res://Assets/Scenes/Interactables/portafilter.tscn" id="16_1hpvy"]
+[ext_resource type="Texture2D" uid="uid://gnpb4q0tmab5" path="res://Assets/Sprites/portafilter_hanging_temp.png" id="16_d6h6s"]
 [ext_resource type="Texture2D" uid="uid://3bgwnjihkrvh" path="res://Assets/Sprites/spoon_holder_empty_temp.png" id="17_2efk4"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/spoonHolder.gd" id="18_bs1h8"]
 [ext_resource type="Texture2D" uid="uid://b3vaof2fh6yk2" path="res://Assets/Sprites/spoon_empty_temp.png" id="19_l1fx8"]
@@ -89,8 +90,8 @@ process_mode = 1
 script = ExtResource("1_s7vgl")
 _printContainerStates = false
 espressoMachine = NodePath("espressoMachine")
-_holdingComponent_connections = [NodePath("espressoMachine"), NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("rinse"), NodePath("refrigerator"), NodePath("mugs/mugSelect"), NodePath("portafilters/portafilterSelect"), NodePath("portafilters/portafilter"), NodePath("portafilters/spoonHolder"), NodePath("drinkSubmit"), NodePath("mugs/mug3"), NodePath("portafilters/portafilterSelect2"), NodePath("portafilters/portafilter2")]
-filterContainers = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("portafilters/portafilterSelect"), NodePath("espressoMachine"), NodePath("portafilters/portafilterSelect2")]
+_holdingComponent_connections = [NodePath("espressoMachine"), NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("rinse"), NodePath("refrigerator"), NodePath("mugs/mugSelect"), NodePath("portafilters/portafilterSelect"), NodePath("portafilters/portafilter"), NodePath("portafilters/spoonHolder"), NodePath("drinkSubmit"), NodePath("portafilters/portafilter2"), NodePath("mugs/mug3")]
+filterContainers = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("portafilters/portafilterSelect"), NodePath("espressoMachine")]
 mugContainers = [NodePath("drinkSubmit")]
 
 [node name="bg" type="Sprite2D" parent="."]
@@ -225,9 +226,9 @@ position = Vector2(1390, 681)
 
 [node name="portafilters" type="Node2D" parent="."]
 
-[node name="portafilterSelect" type="Area2D" parent="portafilters" node_paths=PackedStringArray("heldFilter", "filterMarker")]
+[node name="portafilterSelect" type="Area2D" parent="portafilters" node_paths=PackedStringArray("filterHanging", "filterMarker")]
 script = ExtResource("13_k8u5v")
-heldFilter = NodePath("../portafilter")
+filterHanging = NodePath("../portafilterHanging")
 filterMarker = NodePath("marker2d")
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="portafilters/portafilterSelect"]
@@ -245,26 +246,11 @@ position = Vector2(456, 272)
 scale = Vector2(1.008, 1.468)
 texture = ExtResource("6_fqauh")
 
-[node name="portafilterSelect2" type="Area2D" parent="portafilters" node_paths=PackedStringArray("heldFilter", "filterMarker")]
-position = Vector2(108, 31)
-script = ExtResource("13_k8u5v")
-heldFilter = NodePath("../portafilter2")
-filterMarker = NodePath("../portafilterSelect/marker2d")
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="portafilters/portafilterSelect2"]
-position = Vector2(453, 273.5)
-shape = SubResource("RectangleShape2D_y1dhc")
-debug_color = Color(0, 0.596078, 0.701961, 0.0235294)
-
-[node name="marker2d" type="Marker2D" parent="portafilters/portafilterSelect2"]
-position = Vector2(460, 274)
-
-[node name="glow" type="Sprite2D" parent="portafilters/portafilterSelect2"]
+[node name="portafilterHanging" type="Sprite2D" parent="portafilters"]
 visible = false
-self_modulate = Color(0.729412, 0.835294, 1, 0.211765)
-position = Vector2(456, 272)
-scale = Vector2(1.008, 1.468)
-texture = ExtResource("6_fqauh")
+position = Vector2(453, 277)
+scale = Vector2(1.51538, 1.51538)
+texture = ExtResource("16_d6h6s")
 
 [node name="portafilter" parent="portafilters" instance=ExtResource("16_1hpvy")]
 position = Vector2(455, 271)
@@ -333,7 +319,5 @@ texture = SubResource("GradientTexture2D_fefls")
 [connection signal="input_event" from="mugs/mugSelect" to="mugs/mugSelect" method="_on_input_event" flags=18]
 [connection signal="mouse_entered" from="portafilters/portafilterSelect" to="portafilters/portafilterSelect" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="portafilters/portafilterSelect" to="portafilters/portafilterSelect" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="portafilters/portafilterSelect2" to="portafilters/portafilterSelect2" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="portafilters/portafilterSelect2" to="portafilters/portafilterSelect2" method="_on_mouse_exited"]
 [connection signal="input_event" from="portafilters/spoonHolder/area2d" to="portafilters/spoonHolder" method="_on_area_2d_input_event"]
 [connection signal="input_event" from="drinkSubmit/trayMat" to="drinkSubmit" method="_on_area_2d_input_event"]

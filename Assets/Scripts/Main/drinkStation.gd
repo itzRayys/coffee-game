@@ -74,6 +74,8 @@ func setMugContainers(toggle:bool):
 			return
 		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": SET![/color]")
 		filterContainers[i].setState(toggle)
+	if !toggle:
+		espressoMachine.toggleContainers(null)
 
 
 func _set_holdingComponent_connections(holdingComponent:holding_component):

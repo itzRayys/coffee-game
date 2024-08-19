@@ -8,7 +8,6 @@ class_name blender_blender
 
 @export_group("Internals")
 @export var ingredientDispenser:ingredient_dispenser_component
-@export var pickupComponent:pickup_component
 @export var visualComponent:visual_component
 @export var ingredientContainer:ingredient_container_component2
 
@@ -21,9 +20,6 @@ var previewing:bool = false
 func _input(event):
 	if !event.is_action_pressed("interact") or !isHovering:
 		return
-	if !holdComponent.itemHeld and pickupComponent:
-		print("pickup blender")
-		pickupComponent.pickup(holdComponent)
 	if holdComponent.itemHeld and ingredientContainer.isEnabled:
 		ingredientContainer.receiveIngredient(holdComponent.itemIngredientDispensed)
 
