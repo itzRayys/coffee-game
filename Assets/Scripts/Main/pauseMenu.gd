@@ -11,11 +11,11 @@ func _ready():
 func setPaused(toggle:bool):
 	if !toggle:
 		self.hide()
-		mouse_filter = 0
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		isPaused = false
 		return
 	self.show()
-	mouse_filter = 1
+	mouse_filter = Control.MOUSE_FILTER_PASS
 	isPaused = true
 
 

@@ -81,14 +81,14 @@ func setMugContainers(toggle:bool):
 func _set_holdingComponent_connections(holdingComponent:holding_component):
 	for i in _holdingComponent_connections.size():
 		if _holdingComponent_connections[i].has_method("setHoldingComponent"):
-			_holdingComponent_connections[i].setHoldingComponent(external_holding_component)
+			_holdingComponent_connections[i].setHoldingComponent(holdingComponent)
 		else:
 			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] {0} doesn't have method 'setHoldingComponent'... Skipping![/color]".format([_holdingComponent_connections[i].name]))
 	print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] Internal holdingComponent connections set![/color]")
 # Go through each node in drink station scene and replace @onready holdingComponent to a method setHoldingComponent(holdingComponent:hc)
 
 # holding_component Signal calls
-func _on_holding_component_picked_up_dispenser(ingredient):
+func _on_holding_component_picked_up_dispenser(_ingredient):
 	pass # Replace with function body.
 
 func _on_holding_component_picked_up_filter(filter):

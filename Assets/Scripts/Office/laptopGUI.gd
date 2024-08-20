@@ -74,7 +74,7 @@ func _on_settings_icon_pressed():
 func _on_outside_button_pressed():
 	leaveLaptop()
 
-func _on_power_2_toggled(button_pressed):
+func _on_power_2_toggled(_button_pressed):
 	print("toggled")
 
 

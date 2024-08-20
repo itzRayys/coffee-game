@@ -180,7 +180,7 @@ func _on_input_event(_viewport, event, shape_idx):
 	interact(shape_idx)
 
 
-func _on_filter_2_input_event(viewport, event, shape_idx):
+func _on_filter_2_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event) or !machine:
 		return
 	if !isEnabled and heldPortafilter:
@@ -190,7 +190,7 @@ func _on_filter_2_input_event(viewport, event, shape_idx):
 		machine.placeFilter(self)
 
 
-func _on_mug_2_input_event(viewport, event, shape_idx):
+func _on_mug_2_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	if !isEnabled and heldMug or heldMug2:
@@ -203,7 +203,7 @@ func _on_mug_2_input_event(viewport, event, shape_idx):
 		machine.placeMug(self)
 
 
-func _on_buttons_input_event(viewport, event, shape_idx):
+func _on_buttons_input_event(_viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	buttonPress(shape_idx)

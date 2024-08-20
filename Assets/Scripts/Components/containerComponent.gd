@@ -85,7 +85,7 @@ func disconnectOnPlaced(function:Callable):
 	interactableComponent.placed.disconnect(function)
 
 # Receive item or pickup
-func _on_interact_input_event(viewport, event, shape_idx):
+func _on_interact_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	if !interactable and isItemWhitelisted(holdingComponent.heldItem):

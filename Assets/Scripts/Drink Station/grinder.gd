@@ -135,7 +135,7 @@ func _on_timer_timeout():
 	print("ITYTO")
 
 # Filter
-func _on_area_input_event(viewport, event, shape_idx):
+func _on_area_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event) or !holdingComponent:
 		return
 	if heldFilter and !holdingComponent.heldItem:
@@ -146,7 +146,7 @@ func _on_area_input_event(viewport, event, shape_idx):
 		holdingComponent.place()
 		return
 
-func _on_refill_input_event(viewport, event, shape_idx):
+func _on_refill_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	refillGrinder()

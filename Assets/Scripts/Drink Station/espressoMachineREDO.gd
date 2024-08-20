@@ -5,8 +5,6 @@ signal slotClicked(slot:espresso_machine_slot)
 
 var holdingComponent:holding_component
 
-@onready var glow1 = $glow
-@onready var glow2 = $glow2
 
 @export_group("Slots")
 @export var slots:Array[espresso_machine_slot]
@@ -20,7 +18,7 @@ func placeFilter(slot:espresso_machine_slot):
 	disableContainers()
 	holdingComponent.place()
 
-func pickupFilter(slot, filter):
+func pickupFilter(_slot, filter):
 	if !holdingComponent or holdingComponent.heldItem:
 		return
 	holdingComponent.pickup(filter)
@@ -32,7 +30,7 @@ func placeMug(slot:espresso_machine_slot):
 	disableContainers()
 	holdingComponent.place()
 
-func pickupMug(slot, mug):
+func pickupMug(_slot, mug):
 	if !holdingComponent or holdingComponent.heldItem:
 		return
 	holdingComponent.pickup(mug)

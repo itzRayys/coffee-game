@@ -32,7 +32,7 @@ func _ready():
 	ResourceLoader.load_threaded_request(entryScene)
 
 # Fades blackscreen alpha with timer
-func _process(delta):
+func _process(_delta):
 	if isFading:
 		fade()
 
@@ -74,7 +74,7 @@ func skipSplash():
 func endFade():
 	isFading = false
 	blackOverlay.self_modulate.a = 0
-	blackOverlay.mouse_filter = 2
+	blackOverlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fadeEnded.emit()
 func fade():
 	if reverseFade:
@@ -83,7 +83,7 @@ func fade():
 	else:
 		blackOverlay.self_modulate.a = fadeTimer.time_left / fadeTime
 func fadeBlackscreen(time):
-	blackOverlay.mouse_filter = 0
+	blackOverlay.mouse_filter = Control.MOUSE_FILTER_STOP
 	fadeTime = time
 	if time == 0:
 		return
@@ -121,3 +121,5 @@ func _on_exit_game_pressed():
 
 func _on_load_check_timeout():
 	loadCheck()
+
+

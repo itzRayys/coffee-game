@@ -76,5 +76,5 @@ func _on_timer_timeout():
 func _on_container_component_received_item(item):
 	receiveFilter(item)
 
-func _on_container_component_item_removed(item):
+func _on_container_component_item_removed(_item):
 	clearFilter()

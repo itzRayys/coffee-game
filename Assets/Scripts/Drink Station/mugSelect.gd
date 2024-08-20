@@ -9,7 +9,6 @@ var holdingComponent:holding_component
 @export var heldMug2:mug_mug
 @export var mugMarker:Marker2D
 
-@onready var glow = $glow
 
 var isEnabled:bool = false
 var canEnable:bool = false
@@ -29,10 +28,8 @@ func enable():
 		disable()
 		return
 	isEnabled = true
-	glow.show()
 func disable():
 	isEnabled = false
-	glow.hide()
 
 func selectMug():
 	if !heldMug and !heldMug2:
@@ -55,7 +52,7 @@ func toggleAllowEnable(toggle:bool):
 	canEnable = toggle
 
 
-func _on_input_event(viewport:Viewport, event:InputEvent, shape_idx):
+func _on_input_event(viewport:Viewport, event:InputEvent, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	if heldMug or heldMug2 and !holdingComponent.heldItem:

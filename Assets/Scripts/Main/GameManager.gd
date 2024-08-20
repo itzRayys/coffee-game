@@ -4,7 +4,7 @@ extends Node
 @export_enum("Front Counter", "Drink Station", "Office") var currentArea:int
 
 
-func onAreaSwitch(areaIndex):
+func onAreaSwitch(_areaIndex):
 	pass
 
 

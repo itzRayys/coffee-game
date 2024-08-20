@@ -3,7 +3,7 @@ class_name visual_component
 
 @export var glowSprite:Sprite2D
 
-func dispensePreview(previewValues:Dictionary):
+func dispensePreview(_previewValues:Dictionary):
 	pass
 
 func updateVisuals(isHeld:bool, isHovering:bool):

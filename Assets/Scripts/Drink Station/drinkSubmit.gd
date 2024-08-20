@@ -7,7 +7,7 @@ var holdingComponent:holding_component
 var isEnabled:bool = false
 
 
-func submitDrink(drink:drink_drink):
+func submitDrink(_drink:drink_drink):
 	pass
 
 # Called when mug picked up
@@ -28,13 +28,13 @@ func disable():
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 
-func _on_area_2d_input_event(viewport, event, shape_idx):
+func _on_area_2d_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event) or !holdingComponent or !holdingComponent.heldItem:
 		return
 	if holdingComponent.heldItem is drink_drink:
 		submitDrink(holdingComponent.heldItem)
 
-func _on_tray_1_input_event(viewport, event, shape_idx):
+func _on_tray_1_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 

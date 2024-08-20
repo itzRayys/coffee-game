@@ -42,7 +42,7 @@ func setClosed(id:int):
 
 
 
-func _on_left_area_input_event(viewport, event, shape_idx):
+func _on_left_area_input_event(viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	if door1Open:
@@ -56,7 +56,7 @@ func _on_left_area_mouse_exited():
 
 
 
-func _on_right_area_input_event(viewport, event, shape_idx):
+func _on_right_area_input_event(_viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	if door2Open:

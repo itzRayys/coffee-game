@@ -131,7 +131,7 @@ func selectItem(interactable):
 	selectedItem = interactable
 
 # Starts pickup visual
-func startPickup(location):
+func startPickup(_location):
 	texture_progress_bar.show()
 	timer.start(pickupTime)
 	isPickingUp = true
