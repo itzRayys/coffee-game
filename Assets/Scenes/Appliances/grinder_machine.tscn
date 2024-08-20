@@ -1,22 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://dajj1bi6f3nm"]
+[gd_scene load_steps=9 format=3 uid="uid://dajj1bi6f3nm"]
 
 [ext_resource type="Texture2D" uid="uid://cnmift010ifu4" path="res://Assets/Sprites/grinder_temp.png" id="1_ndvs5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/grinder.gd" id="2_bga84"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/containerComponent.gd" id="3_18ld3"]
 [ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="3_ehx0j"]
-[ext_resource type="Script" path="res://Assets/Scripts/Components/previewComponent.gd" id="4_jcd1o"]
-[ext_resource type="Script" path="res://Assets/Scripts/Components/pfilterContainer.gd" id="5_r15r2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rvnwg"]
 size = Vector2(223, 132)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ahc8x"]
 size = Vector2(20.5334, 21.1379)
-
-[sub_resource type="Gradient" id="Gradient_ytwml"]
-colors = PackedColorArray(0, 0, 0, 1, 0.656, 1, 0.57, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_tedhk"]
-gradient = SubResource("Gradient_ytwml")
 
 [sub_resource type="Gradient" id="Gradient_30noy"]
 offsets = PackedFloat32Array(0, 0.89759, 0.993976)
@@ -25,53 +18,51 @@ colors = PackedColorArray(0, 0, 0, 1, 0.311818, 0.193379, 0.146555, 1, 0.35, 0.2
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0w44e"]
 gradient = SubResource("Gradient_30noy")
 
-[node name="grinder" type="Sprite2D" node_paths=PackedStringArray("filterMarker")]
+[node name="grinder" type="Sprite2D" node_paths=PackedStringArray("filterMarker", "glow", "label", "timer", "dispenseDEBUG", "repeat_wait_timer", "containerComponent")]
 position = Vector2(770, 404)
 texture = ExtResource("1_ndvs5")
 script = ExtResource("2_bga84")
-filterMarker = NodePath("slot/marker2d")
+filterMarker = NodePath("marker2d")
+glow = NodePath("glow")
+label = NodePath("label")
+timer = NodePath("timer")
+dispenseDEBUG = NodePath("debug")
+repeat_wait_timer = NodePath("repeatWaitTimer")
+containerComponent = NodePath("containerComponent")
 
-[node name="slot" type="Node2D" parent="."]
+[node name="containerComponent" type="Node2D" parent="." node_paths=PackedStringArray("marker", "interactArea")]
+script = ExtResource("3_18ld3")
+marker = NodePath("../marker2d")
+interactArea = NodePath("../interact")
+acceptsPortafilters = true
 
-[node name="area" type="Area2D" parent="slot"]
+[node name="marker2d" type="Marker2D" parent="."]
+position = Vector2(1, 192)
+
+[node name="interact" type="Area2D" parent="."]
 position = Vector2(4.495, 157.08)
 
-[node name="area" type="CollisionShape2D" parent="slot/area"]
+[node name="area" type="CollisionShape2D" parent="interact"]
 position = Vector2(-6.495, 4.91998)
 shape = SubResource("RectangleShape2D_rvnwg")
 debug_color = Color(0.317647, 0.611765, 0.403922, 0.0431373)
 
-[node name="refill" type="Area2D" parent="slot"]
+[node name="refill" type="Area2D" parent="."]
 position = Vector2(-10, -159)
 scale = Vector2(7.40503, 6.3746)
 
-[node name="collisionShape2d" type="CollisionShape2D" parent="slot/refill"]
+[node name="collisionShape2d" type="CollisionShape2D" parent="refill"]
 position = Vector2(0.273483, 0.686005)
 shape = SubResource("RectangleShape2D_ahc8x")
 
-[node name="sprite2d" type="Sprite2D" parent="slot"]
-visible = false
-position = Vector2(-14.5, -20.5)
-scale = Vector2(0.546875, 0.359375)
-texture = SubResource("GradientTexture2D_tedhk")
-
-[node name="glow" type="Sprite2D" parent="slot"]
+[node name="glow" type="Sprite2D" parent="."]
 visible = false
 self_modulate = Color(1, 0.658824, 0.74902, 0.509804)
 position = Vector2(8.00006, 70)
 scale = Vector2(2.32922, 2.69836)
 texture = ExtResource("3_ehx0j")
 
-[node name="marker2d" type="Marker2D" parent="slot"]
-position = Vector2(1, 192)
-
-[node name="previewComponent" type="Node2D" parent="slot"]
-script = ExtResource("4_jcd1o")
-
-[node name="pfilterContainer" type="Node2D" parent="slot"]
-script = ExtResource("5_r15r2")
-
-[node name="debug" type="Sprite2D" parent="slot"]
+[node name="debug" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(-7, 107)
 scale = Vector2(0.34375, 0.9375)
@@ -94,7 +85,9 @@ vertical_alignment = 1
 [node name="repeatWaitTimer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="input_event" from="slot/area" to="." method="_on_area_input_event"]
-[connection signal="input_event" from="slot/refill" to="." method="_on_refill_input_event"]
+[connection signal="itemRemoved" from="containerComponent" to="." method="_on_container_component_item_removed"]
+[connection signal="receivedItem" from="containerComponent" to="." method="_on_container_component_received_item"]
+[connection signal="input_event" from="interact" to="containerComponent" method="_on_interact_input_event"]
+[connection signal="input_event" from="refill" to="." method="_on_refill_input_event"]
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="repeatWaitTimer" to="." method="_on_repeat_wait_timer_timeout"]

@@ -15,13 +15,13 @@ var holdingComponent:holding_component
 @export var amountMax:float = 200
 @export var amountLeft:float = 200
 
-
-# Internals
-@onready var glow = $slot/glow
-@onready var label = $label
-@onready var timer = $timer
-@onready var dispenseDEBUG = $slot/debug
-@onready var repeat_wait_timer = $repeatWaitTimer
+@export_group("Internals")
+@export var glow:Sprite2D
+@export var label:Label
+@export var timer:Timer
+@export var dispenseDEBUG:Sprite2D
+@export var repeat_wait_timer:Timer
+@export var containerComponent:container_component
 
 
 var isEnabled:bool = false
@@ -41,7 +41,7 @@ func _ready():
 
 # Sets state
 func setState(isActive:bool):
-	if !isActive or heldFilter != null:
+	if !isActive or heldFilter:
 		disable()
 		return
 	else:
@@ -53,8 +53,10 @@ func disable():
 	isEnabled = false
 	glow.hide()
 
+# Set holding component
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
+	containerComponent.setHoldingComponent(holdComponent)
 
 # Calls getOz() to dispense to null or heldFilter
 func _startDispense():
@@ -62,6 +64,8 @@ func _startDispense():
 	dispenseDEBUG.show()
 	isDispensing = true
 	timer.start(dispenseTime)
+
+# Dispense oz
 func _dispense():
 	var ozAmount = getOz()
 	if heldFilter:
@@ -74,22 +78,36 @@ func _dispense():
 # Filter handling
 func receiveFilter(filter:pfilter):
 	heldFilter = filter
-	filter.move(filterMarker, clearPortafilter)
-	filter.connectOnMove(clearPortafilter, CONNECT_ONE_SHOT)
 	if instantDispense:
 		_startDispense()
 	else:
 		timer.start(dispenseWaitTime)
-func clearPortafilter():
-	heldFilter = null
+	
+	containerComponent.connectOnPlaced(clearFilter, CONNECT_ONE_SHOT)
+	containerComponent.connectOnPickedUp(_stopDispense, CONNECT_DEFERRED)
+	containerComponent.connectOnDropped(_startDispense, CONNECT_DEFERRED)
 
+# Stops timer and sets to null and disconnects connections
+func clearFilter():
+	heldFilter = null
+	_stopDispense()
+	containerComponent.disconnectOnPickedUp(_stopDispense)
+	containerComponent.disconnectOnDropped(_startDispense)
+	
+
+func _stopDispense():
+	repeat_wait_timer.stop()
+	timer.stop()
+	isDispensing = false
+	dispenseDEBUG.hide()
 
 # Oz handling
 func getOz() -> float:
 	if amountLeft >= dispenseAmount:
-		amountLeft -= dispenseAmount
+		var amount = snappedf(randf_range(dispenseAmount - .1, dispenseAmount + .1), 0.1)
+		amountLeft -= amount
 		updateLabel()
-		return dispenseAmount
+		return amount
 	if amountLeft == 0:
 		return 0
 	else:
@@ -134,26 +152,23 @@ func _on_timer_timeout():
 		_startDispense()
 	print("ITYTO")
 
-# Filter
-func _on_area_input_event(_viewport, event, _shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event) or !holdingComponent:
-		return
-	if heldFilter and !holdingComponent.heldItem:
-		holdingComponent.pickup(heldFilter)
-		return
-	elif !heldFilter and isEnabled and holdingComponent.heldItem and holdingComponent.heldItem is pfilter:
-		receiveFilter(holdingComponent.heldItem)
-		holdingComponent.place()
-		return
 
 func _on_refill_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	refillGrinder()
 
-
+# Start dispense
 func _on_repeat_wait_timer_timeout():
 	if !heldFilter:
 		return
 	_startDispense()
 	print("repeatTO")
+
+# Receive filter
+func _on_container_component_received_item(item):
+	receiveFilter(item)
+
+# Clear filter
+func _on_container_component_item_removed(_item):
+	clearFilter()
