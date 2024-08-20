@@ -97,7 +97,7 @@ func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 	interactableComponent.setHoldingComponent(holdComponent)
 
-# Visual - turns purple
+# Visual
 func _toggleModulate(toggle:bool):
 	if !holdingComponent.heldItem:
 		return

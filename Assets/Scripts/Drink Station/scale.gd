@@ -30,15 +30,16 @@ func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 	containerComponent.setHoldingComponent(holdComponent)
 
-# Sets filter and starts timer 
+# Sets filter and starts timer and connects functions
 func receiveFilter(filter:pfilter):
 	heldFilter = filter
 	timer.start(readTime)
 	containerComponent.connectOnPlaced(clearFilter, CONNECT_ONE_SHOT)
 	containerComponent.connectOnPickedUp(clearWeight, CONNECT_DEFERRED)
-	containerComponent.connectOnDropped(reread, CONNECT_DEFERRED)
+	containerComponent.connectOnDropped(startReadTimer, CONNECT_DEFERRED)
 
-func reread():
+# Start read timer
+func startReadTimer():
 	timer.start(readTime)
 
 # Clears weight
@@ -46,7 +47,7 @@ func clearWeight():
 	timer.stop()
 	readWeight(null)
 
-# Stops timer and sets to null
+# Stops timer and sets to null and disconnects connections
 func clearFilter():
 	heldFilter = null
 	clearWeight()

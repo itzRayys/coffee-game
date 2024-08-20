@@ -129,6 +129,8 @@ func _startPickingUp():
 	holdingComponent.startPickup(interactable.global_position)
 
 func _stopPickingUp():
+	if !holdingComponent:
+		return
 	isPickingUp = false
 	holdingComponent.stopPickUp()
 

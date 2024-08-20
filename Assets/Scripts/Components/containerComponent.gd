@@ -49,6 +49,7 @@ func _placeItem(item:Node2D):
 func removeItem():
 	itemRemoved.emit()
 	interactableComponent.canPickup = true
+	print('removed item')
 	_setInfo(null)
 
 # Checks bools to see if item is allowed
@@ -87,7 +88,7 @@ func disconnectOnPlaced(function:Callable):
 func _on_interact_input_event(viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
-	if isItemWhitelisted(holdingComponent.heldItem) and !interactable:
+	if !interactable and isItemWhitelisted(holdingComponent.heldItem):
 		receiveItem(holdingComponent.heldItem)
 	elif interactable and canPickup:
 		interactableComponent.pickup()

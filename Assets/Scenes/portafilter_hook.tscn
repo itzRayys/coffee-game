@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://bk1aif7ngi36i"]
+
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="1_pupx5"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/portafilterHook.gd" id="1_qqitk"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/containerComponent.gd" id="2_l2p81"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxkrb"]
+size = Vector2(63, 123)
+
+[node name="portafilterHook" type="Node2D" node_paths=PackedStringArray("filterMarker", "containerComponent")]
+script = ExtResource("1_qqitk")
+filterMarker = NodePath("marker2d")
+containerComponent = NodePath("containerComponent")
+
+[node name="interact" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="interact"]
+position = Vector2(-0.5, 26.5)
+shape = SubResource("RectangleShape2D_kxkrb")
+debug_color = Color(0, 0.596078, 0.701961, 0.00784314)
+
+[node name="marker2d" type="Marker2D" parent="."]
+
+[node name="glow" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(0.729412, 0.835294, 1, 0.211765)
+position = Vector2(-1, 30)
+scale = Vector2(1.008, 1.468)
+texture = ExtResource("1_pupx5")
+
+[node name="containerComponent" type="Node2D" parent="." node_paths=PackedStringArray("marker", "interactArea")]
+script = ExtResource("2_l2p81")
+marker = NodePath("../marker2d")
+interactArea = NodePath("../interact")
+acceptsPortafilters = true
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="input_event" from="interact" to="containerComponent" method="_on_interact_input_event"]
+[connection signal="itemRemoved" from="containerComponent" to="." method="_on_container_component_item_removed"]
+[connection signal="receivedItem" from="containerComponent" to="." method="_on_container_component_received_item"]
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
