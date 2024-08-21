@@ -127,5 +127,6 @@ func _on_interactable_component_picked_up():
 
 # Set isHanging false on move
 func _on_interactable_component_placed():
+	_toggleModulate(false)
 	if isHanging:
 		isHanging = false

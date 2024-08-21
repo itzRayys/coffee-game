@@ -54,6 +54,7 @@ scale = Vector2(7.40503, 6.3746)
 [node name="collisionShape2d" type="CollisionShape2D" parent="refill"]
 position = Vector2(0.273483, 0.686005)
 shape = SubResource("RectangleShape2D_ahc8x")
+debug_color = Color(0, 0.596078, 0.701961, 0)
 
 [node name="glow" type="Sprite2D" parent="."]
 visible = false

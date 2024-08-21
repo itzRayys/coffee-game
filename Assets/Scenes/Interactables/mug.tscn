@@ -54,3 +54,5 @@ interact_area = NodePath("../interact_area")
 [connection signal="area_exited" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_exited"]
 [connection signal="mouse_entered" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_entered"]
 [connection signal="mouse_exited" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_exited"]
+[connection signal="ableToPlace" from="interactableComponent" to="." method="_on_interactable_component_able_to_place"]
+[connection signal="placed" from="interactableComponent" to="." method="_on_interactable_component_placed"]

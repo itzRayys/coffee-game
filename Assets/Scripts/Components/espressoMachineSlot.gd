@@ -11,20 +11,26 @@ signal mainButton(mug1:mug_mug, mug2:mug_mug)
 @export var mugOffset1:Vector2 = Vector2(-25, 5)
 @export var mugOffset2:Vector2 = Vector2(25, -5)
 
+@export var containers:Array[container_component]
+
+@export var glow:Sprite2D
+@export var glow2:Sprite2D
 
 @onready var portafilterMarker:Marker2D = $filter
 @onready var mugMarker:Marker2D = $mug
-@onready var glow:Sprite2D = $glow
 @onready var preview:preview_component = $previewComponent
 @onready var ingredientDispenser:ingredient_dispenser_component = $ingredientDispenserComponent
 @onready var timer = $timer
 @onready var ingredient_dispenser_component = $ingredientDispenserComponent
 
+var holdingComponent:holding_component
+var canDispense:bool = false
+
 var isMugContainerEnabled:bool = false
 var isHolding:bool = false
 var isEnabled:bool = false
 
-var heldPortafilter:pfilter
+var heldFilter:pfilter
 var heldMug:mug_mug
 var heldMug2:mug_mug
 
@@ -56,13 +62,13 @@ func interact(shapeIndex):
 
 
 func buttonPress(shapeIndex):
-	if !heldPortafilter or !heldMug and !heldMug2:
+	if !heldFilter or !heldMug and !heldMug2:
 		return
 	
 	if shapeIndex == 0:
-		dispense(singleAmount, heldPortafilter.getOzAmount())
+		dispense(singleAmount, heldFilter.getOzAmount())
 	elif shapeIndex == 1:
-		dispense(doubleAmount, heldPortafilter.getOzAmount())
+		dispense(doubleAmount, heldFilter.getOzAmount())
 
 # Dispenses espresso to mugs
 func dispense(amount, oz):
@@ -96,37 +102,39 @@ func mugCount() -> int:
 		returnNum += 1
 	return returnNum
 
-# Sets portafilter
-func setPortafilter(portafilter:pfilter):
-	if heldPortafilter != null:
+# Sets filter and connects functions
+func receiveFilter(filter:pfilter):
+	if heldFilter:
 		return
-	heldPortafilter = portafilter
-	portafilter.move(portafilterMarker, removePortafilter)
+	heldFilter = filter
+	containers[0].connectOnPlaced(clearFilter, CONNECT_ONE_SHOT)
+	containers[0].connectOnPickedUp(setCannotDispense, CONNECT_DEFERRED)
+	containers[0].connectOnDropped(setCanDispense, CONNECT_DEFERRED)
+
+# Disconnects connections and calls setCannotDispense()
+func clearFilter():
+	heldFilter = null
+	setCannotDispense()
+	containers[0].disconnectOnPickedUp(setCannotDispense)
+	containers[0].disconnectOnDropped(setCanDispense)
+
+
+
+# Sets can dispense
+func setCanDispense():
+	canDispense = true
+func setCannotDispense():
+	canDispense = false
 
 # Sets mug
-func setMug(mug:mug_mug):
-	if heldMug == null:
+func receiveMug(mug:mug_mug):
+	if !heldMug:
 		heldMug = mug
-		mug.move(mugMarker.global_position + mugOffset1, removeMug)
-		return
-	elif heldMug2 == null:
-		heldMug2 = mug
-		mug.move(mugMarker.global_position + mugOffset2, removeMug)
-		return
-
-# Updates positions of mugs
-func updatePositions():
-	if !heldMug and !heldMug2:
 		return
 	elif !heldMug2:
-		heldMug.position = mugMarker.position
-	else:
-		heldMug.position = mugMarker.position - Vector2(-25, 0)
-		heldMug2.position = mugMarker.position - Vector2(25, 0)
+		heldMug2 = mug
+		return
 
-# Sets heldPortafilter to null
-func removePortafilter():
-	heldPortafilter = null
 
 # Sets heldMug to null
 func removeMug():
@@ -137,20 +145,20 @@ func removeMug():
 
 func togglePreview(item):
 	if item is pfilter:
-		if heldPortafilter != null:
+		if heldFilter != null:
 			return
 		else:
 			preview.setGlow(glow, true)
 
 # Returns true if slots are full
 func mugCheck() -> bool:
-	if heldMug != null and heldMug2 != null:
+	if heldMug and heldMug2:
 		return true
 	return false
 
 # Returns true if slot is full
 func filterCheck() -> bool:
-	if heldPortafilter != null:
+	if heldFilter:
 		return true
 	return false
 
@@ -168,42 +176,51 @@ func setState(toggle:bool, item):
 		isEnabled = false
 		glow.hide()
 		return
-	if item is mug_mug and !mugCheck() or item is pfilter and !filterCheck():
+	if item is pfilter and !filterCheck():
 		isEnabled = true
 		glow.show()
+	if item is mug_mug and !mugCheck():
+		isEnabled = true
+		glow2.show()
 
-
-func _on_input_event(_viewport, event, shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event):
-		return
-	print("222222")
-	interact(shape_idx)
-
-
-func _on_filter_2_input_event(_viewport, event, _shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event) or !machine:
-		return
-	if !isEnabled and heldPortafilter:
-		machine.pickupFilter(self, heldPortafilter)
-		return
-	elif isEnabled and !heldPortafilter:
-		machine.placeFilter(self)
-
-
-func _on_mug_2_input_event(_viewport, event, _shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event):
-		return
-	if !isEnabled and heldMug or heldMug2:
-		if heldMug2:
-			machine.pickupMug(self, heldMug2)
-			return
-		machine.pickupMug(self, heldMug)
-		return
-	elif isEnabled and !heldMug or !heldMug2:
-		machine.placeMug(self)
 
 
 func _on_buttons_input_event(_viewport, event, shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
 	buttonPress(shape_idx)
+
+
+
+
+
+
+func setHoldingComponent(holdComponent:holding_component):
+	holdingComponent = holdComponent
+	for i in containers.size():
+		containers[i].setHoldingComponent(holdComponent)
+
+
+
+
+func _on_container_component_received_item(item):
+	receiveFilter(item)
+
+func _on_container_component_item_removed(_item):
+	clearFilter()
+
+
+
+func _on_container_component_2_received_item(item):
+	heldMug = item
+
+func _on_container_component_2_item_removed():
+	heldMug = null
+
+
+
+func _on_container_component_3_received_item(item):
+	heldMug2 = item
+
+func _on_container_component_3_item_removed():
+	heldMug2 = null
