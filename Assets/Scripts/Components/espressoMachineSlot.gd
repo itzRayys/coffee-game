@@ -157,6 +157,7 @@ func setActive(toggle:bool):
 		return
 	isEnabled = false
 	glow.hide()
+
 # Called by machine to set glow and place state
 func setState(toggle:bool, item):
 	if !toggle or !item:
@@ -168,7 +169,7 @@ func setState(toggle:bool, item):
 		glow.show()
 	if item is mug_mug and !mugCheck():
 		isEnabled = true
-		glow2.show()
+		glow.show()
 
 
 

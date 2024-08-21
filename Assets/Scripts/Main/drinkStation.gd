@@ -73,7 +73,7 @@ func setMugContainers(toggle:bool):
 			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE METHOD 'ENABLE/DISABLE'**[/color]")
 			return
 		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": SET![/color]")
-		filterContainers[i].setState(toggle)
+		mugContainers[i].setState(toggle)
 
 
 func _set_holdingComponent_connections(holdingComponent:holding_component):
