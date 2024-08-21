@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dajj1bi6f3nm"]
+[gd_scene load_steps=10 format=3 uid="uid://dajj1bi6f3nm"]
 
 [ext_resource type="Texture2D" uid="uid://cnmift010ifu4" path="res://Assets/Sprites/grinder_temp.png" id="1_ndvs5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/grinder.gd" id="2_bga84"]
@@ -17,6 +17,9 @@ colors = PackedColorArray(0, 0, 0, 1, 0.311818, 0.193379, 0.146555, 1, 0.35, 0.2
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0w44e"]
 gradient = SubResource("Gradient_30noy")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f4lmi"]
+size = Vector2(216.5, 109.5)
 
 [node name="grinder" type="Sprite2D" node_paths=PackedStringArray("filterMarker", "glow", "label", "timer", "dispenseDEBUG", "repeat_wait_timer", "containerComponent")]
 position = Vector2(770, 404)
@@ -85,6 +88,14 @@ vertical_alignment = 1
 
 [node name="repeatWaitTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="negative" type="Area2D" parent="."]
+collision_layer = 4097
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="negative"]
+position = Vector2(-1.75, 167.75)
+shape = SubResource("RectangleShape2D_f4lmi")
+debug_color = Color(0.701961, 0, 0.0117647, 0)
 
 [connection signal="itemRemoved" from="containerComponent" to="." method="_on_container_component_item_removed"]
 [connection signal="receivedItem" from="containerComponent" to="." method="_on_container_component_received_item"]

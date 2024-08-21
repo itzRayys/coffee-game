@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://d0ml0manfpx0i"]
+[gd_scene load_steps=32 format=3 uid="uid://d0ml0manfpx0i"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Main/drinkStation.gd" id="1_s7vgl"]
 [ext_resource type="PackedScene" uid="uid://b40k5floa8yv3" path="res://Assets/Scenes/Appliances/refrigerator.tscn" id="2_l0egd"]
@@ -21,23 +21,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gj8uw"]
 size = Vector2(1919, 490)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3l76"]
-size = Vector2(300, 33)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_y74kk"]
-size = Vector2(224, 117)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ow20"]
 size = Vector2(118, 67)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbfbx"]
-size = Vector2(417, 105.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1s4pd"]
-size = Vector2(235.5, 162.75)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4jf41"]
-size = Vector2(158.75, 130.375)
 
 [sub_resource type="Gradient" id="Gradient_2v4wr"]
 offsets = PackedFloat32Array(0.138554, 0.222892, 0.373494)
@@ -101,24 +86,7 @@ collision_layer = 257
 [node name="collisionShape2d" type="CollisionShape2D" parent="counter/positive"]
 position = Vector2(47.5, -8)
 shape = SubResource("RectangleShape2D_gj8uw")
-debug_color = Color(0, 0.596078, 0.701961, 0.00392157)
-
-[node name="positive2" type="Area2D" parent="counter"]
-position = Vector2(913, 782)
-collision_layer = 257
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="counter/positive2"]
-position = Vector2(322, -416.5)
-shape = SubResource("RectangleShape2D_j3l76")
-debug_color = Color(0, 0.596078, 0.701961, 0.00392157)
-
-[node name="negative" type="Area2D" parent="counter"]
-collision_layer = 4097
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="counter/negative"]
-position = Vector2(767, 573.5)
-shape = SubResource("RectangleShape2D_y74kk")
-debug_color = Color(0.811765, 0.176471, 0.176471, 0.027451)
+debug_color = Color(0, 0.701961, 0.0823529, 0.00392157)
 
 [node name="negative2" type="Area2D" parent="counter"]
 collision_layer = 4097
@@ -128,35 +96,11 @@ position = Vector2(959, 612.5)
 shape = SubResource("RectangleShape2D_4ow20")
 debug_color = Color(0.811765, 0.176471, 0.176471, 0.027451)
 
-[node name="negative3" type="Area2D" parent="counter"]
-collision_layer = 4097
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="counter/negative3"]
-position = Vector2(1253.5, 576.75)
-shape = SubResource("RectangleShape2D_dbfbx")
-debug_color = Color(0.811765, 0.176471, 0.176471, 0.027451)
-
-[node name="negative4" type="Area2D" parent="counter"]
-collision_layer = 4097
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="counter/negative4"]
-position = Vector2(767.25, 757.625)
-shape = SubResource("RectangleShape2D_1s4pd")
-debug_color = Color(0.811765, 0.176471, 0.176471, 0.027451)
-
-[node name="negative5" type="Area2D" parent="counter"]
-collision_layer = 4097
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="counter/negative5"]
-position = Vector2(756.375, 933.813)
-shape = SubResource("RectangleShape2D_4jf41")
-debug_color = Color(0.811765, 0.176471, 0.176471, 0.027451)
-
 [node name="grinder" parent="." instance=ExtResource("4_s16h3")]
 dispenseAmount = 0.325
 
 [node name="espressoMachine" parent="." instance=ExtResource("3_qo1qy")]
-position = Vector2(1247, 483)
+position = Vector2(1244, 446.563)
 
 [node name="coffeeCan" parent="." instance=ExtResource("5_xpbf4")]
 position = Vector2(756, 933)
@@ -192,16 +136,16 @@ position = Vector2(383, 879)
 [node name="mugs" type="Node2D" parent="."]
 
 [node name="mug" parent="mugs" instance=ExtResource("14_x84ws")]
-position = Vector2(1380, 334)
+position = Vector2(1377, 297.563)
 
 [node name="mug3" parent="mugs" instance=ExtResource("14_x84ws")]
-position = Vector2(1264, 342)
+position = Vector2(1261, 305.563)
 
 [node name="mug2" parent="mugs" instance=ExtResource("14_x84ws")]
-position = Vector2(1159, 336)
+position = Vector2(1156, 299.563)
 
 [node name="mug4" parent="mugs" instance=ExtResource("14_x84ws")]
-position = Vector2(1085, 347)
+position = Vector2(1082, 310.563)
 
 [node name="portafilters" type="Node2D" parent="."]
 

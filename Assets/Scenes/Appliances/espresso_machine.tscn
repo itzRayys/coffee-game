@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxt21b7snyjxu"]
+[gd_scene load_steps=6 format=3 uid="uid://cxt21b7snyjxu"]
 
 [ext_resource type="Texture2D" uid="uid://njvbt1bpe571" path="res://Assets/Sprites/espresso_machine_temp.png" id="1_rb6is"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/espressoMachine.gd" id="2_u7ell"]
 [ext_resource type="PackedScene" uid="uid://l68yr3b45i1e" path="res://Assets/Scenes/Appliances/espresso_machine_slot.tscn" id="3_ort1u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ttv2b"]
+size = Vector2(356.828, 20.8674)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1e372"]
+size = Vector2(434.471, 79.7872)
 
 [node name="espressoMachine" type="Sprite2D" node_paths=PackedStringArray("slots")]
 position = Vector2(1327, 478)
@@ -17,3 +23,19 @@ machine = NodePath("..")
 [node name="slot2" parent="." node_paths=PackedStringArray("machine") instance=ExtResource("3_ort1u")]
 position = Vector2(181.718, -6.13745)
 machine = NodePath("..")
+
+[node name="positive" type="Area2D" parent="."]
+collision_layer = 257
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="positive"]
+position = Vector2(-20.9252, -144.231)
+shape = SubResource("RectangleShape2D_ttv2b")
+debug_color = Color(0, 0.701961, 0.141176, 0)
+
+[node name="negative" type="Area2D" parent="."]
+collision_layer = 4097
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="negative"]
+position = Vector2(1.37671, 140.548)
+shape = SubResource("RectangleShape2D_1e372")
+debug_color = Color(0.701961, 0, 0.0117647, 0)
