@@ -11,6 +11,7 @@ var holdingComponent:holding_component
 
 var isPlacing:bool = false
 
+
 func placeFilter(slot:espresso_machine_slot):
 	if !slot or !holdingComponent or !holdingComponent.heldItem or !holdingComponent.heldItem is pfilter:
 		return

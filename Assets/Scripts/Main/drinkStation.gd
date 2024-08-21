@@ -89,10 +89,10 @@ func _set_holdingComponent_connections(holdingComponent:holding_component):
 func _on_holding_component_picked_up_dispenser(_ingredient):
 	pass # Replace with function body.
 
-func _on_holding_component_picked_up_filter(filter):
+func _on_holding_component_picked_up_filter(_filter):
 	setFilterContainers(true)
 
-func _on_holding_component_picked_up_mug(mug):
+func _on_holding_component_picked_up_mug(_mug):
 	setMugContainers(true)
 
 func _on_holding_component_dropped():

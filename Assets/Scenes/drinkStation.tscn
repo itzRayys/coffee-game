@@ -22,7 +22,7 @@
 size = Vector2(1919, 490)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j3l76"]
-size = Vector2(396.5, 48)
+size = Vector2(300, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y74kk"]
 size = Vector2(224, 117)
@@ -82,7 +82,7 @@ gradient = SubResource("Gradient_el257")
 process_mode = 1
 script = ExtResource("1_s7vgl")
 _printContainerStates = false
-_holdingComponent_connections = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("rinse"), NodePath("refrigerator"), NodePath("portafilters/portafilter"), NodePath("portafilters/portafilter2"), NodePath("portafilters/spoonHolder"), NodePath("drinkSubmit"), NodePath("mugs/mug3"), NodePath("portafilters/portafilterHook"), NodePath("portafilters/portafilterHook2"), NodePath("espressoMachine"), NodePath("mugs/mug2"), NodePath("mugs/mug")]
+_holdingComponent_connections = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("rinse"), NodePath("refrigerator"), NodePath("portafilters/portafilter"), NodePath("portafilters/portafilter2"), NodePath("portafilters/spoonHolder"), NodePath("drinkSubmit"), NodePath("mugs/mug3"), NodePath("portafilters/portafilterHook"), NodePath("portafilters/portafilterHook2"), NodePath("espressoMachine"), NodePath("mugs/mug2"), NodePath("mugs/mug"), NodePath("mugs/mug4")]
 filterContainers = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("portafilters/portafilterHook"), NodePath("portafilters/portafilterHook2"), NodePath("espressoMachine")]
 mugContainers = [NodePath("drinkSubmit"), NodePath("espressoMachine")]
 
@@ -108,7 +108,7 @@ position = Vector2(913, 782)
 collision_layer = 257
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="counter/positive2"]
-position = Vector2(319.75, -416)
+position = Vector2(322, -416.5)
 shape = SubResource("RectangleShape2D_j3l76")
 debug_color = Color(0, 0.596078, 0.701961, 0.00392157)
 
@@ -192,13 +192,16 @@ position = Vector2(383, 879)
 [node name="mugs" type="Node2D" parent="."]
 
 [node name="mug" parent="mugs" instance=ExtResource("14_x84ws")]
-position = Vector2(1351, 339)
+position = Vector2(1380, 334)
 
 [node name="mug3" parent="mugs" instance=ExtResource("14_x84ws")]
-position = Vector2(1247, 343)
+position = Vector2(1264, 342)
 
 [node name="mug2" parent="mugs" instance=ExtResource("14_x84ws")]
-position = Vector2(1132, 338)
+position = Vector2(1159, 336)
+
+[node name="mug4" parent="mugs" instance=ExtResource("14_x84ws")]
+position = Vector2(1085, 347)
 
 [node name="portafilters" type="Node2D" parent="."]
 

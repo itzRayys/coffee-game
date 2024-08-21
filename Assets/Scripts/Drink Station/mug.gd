@@ -48,3 +48,4 @@ func _on_interactable_component_able_to_place(toggle):
 
 func _on_interactable_component_placed():
 	_toggleModulate(false)
+

@@ -16,17 +16,11 @@ signal mainButton(mug1:mug_mug, mug2:mug_mug)
 @export var glow:Sprite2D
 @export var glow2:Sprite2D
 
-@onready var portafilterMarker:Marker2D = $filter
-@onready var mugMarker:Marker2D = $mug
-@onready var preview:preview_component = $previewComponent
-@onready var ingredientDispenser:ingredient_dispenser_component = $ingredientDispenserComponent
 @onready var timer = $timer
-@onready var ingredient_dispenser_component = $ingredientDispenserComponent
 
 var holdingComponent:holding_component
 var canDispense:bool = false
 
-var isMugContainerEnabled:bool = false
 var isHolding:bool = false
 var isEnabled:bool = false
 
@@ -143,13 +137,6 @@ func removeMug():
 		return
 	heldMug = null
 
-func togglePreview(item):
-	if item is pfilter:
-		if heldFilter != null:
-			return
-		else:
-			preview.setGlow(glow, true)
-
 # Returns true if slots are full
 func mugCheck() -> bool:
 	if heldMug and heldMug2:
@@ -197,7 +184,9 @@ func _on_buttons_input_event(_viewport, event, shape_idx):
 
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
+	print("[Espresso Machine Slot] Holding Component Set!")
 	for i in containers.size():
+		print("[Espresso Machine Slot] Container Holding Component Set!")
 		containers[i].setHoldingComponent(holdComponent)
 
 

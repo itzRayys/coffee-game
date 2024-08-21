@@ -1,0 +1,127 @@
+[gd_scene load_steps=11 format=3 uid="uid://l68yr3b45i1e"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Components/espressoMachineSlot.gd" id="1_m7a8h"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/containerComponent.gd" id="2_ij3ry"]
+[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="3_j54py"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/previewComponent.gd" id="4_w2orx"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientDispenserComponent.gd" id="5_2y6xr"]
+[ext_resource type="Resource" uid="uid://c7usmgnum15co" path="res://Assets/Resources/Ingredients/Ingredients/espresso.tres" id="6_fwn2m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ilai"]
+size = Vector2(164.097, 71.1947)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsv4l"]
+size = Vector2(161.344, 116.19)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hl31s"]
+radius = 23.1602
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ouqtk"]
+radius = 23.1602
+
+[node name="slot" type="Node2D" node_paths=PackedStringArray("containers", "glow", "glow2")]
+script = ExtResource("1_m7a8h")
+containers = [NodePath("containerComponent"), NodePath("containerComponent2"), NodePath("containerComponent3")]
+glow = NodePath("containerComponent/glow")
+glow2 = NodePath("containerComponent2/glow")
+
+[node name="containerComponent" type="Node2D" parent="." node_paths=PackedStringArray("marker", "interactArea")]
+script = ExtResource("2_ij3ry")
+marker = NodePath("filter")
+interactArea = NodePath("interact")
+acceptsPortafilters = true
+
+[node name="interact" type="Area2D" parent="containerComponent"]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="containerComponent/interact"]
+position = Vector2(-83.1498, -7.36493)
+shape = SubResource("RectangleShape2D_1ilai")
+debug_color = Color(0, 0.596078, 0.701961, 0.0588235)
+
+[node name="glow" type="Sprite2D" parent="containerComponent"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-96.9163, 66.2849)
+scale = Vector2(1.43612, 1.84861)
+texture = ExtResource("3_j54py")
+
+[node name="filter" type="Marker2D" parent="containerComponent"]
+position = Vector2(-93.6123, -3.68251)
+
+[node name="containerComponent2" type="Node2D" parent="." node_paths=PackedStringArray("marker", "interactArea")]
+script = ExtResource("2_ij3ry")
+marker = NodePath("mug")
+interactArea = NodePath("../containerComponent3/interact")
+acceptsCups = true
+
+[node name="interact" type="Area2D" parent="containerComponent2"]
+
+[node name="area" type="CollisionShape2D" parent="containerComponent2/interact"]
+position = Vector2(-80.1211, 86.7493)
+shape = SubResource("RectangleShape2D_jsv4l")
+debug_color = Color(0, 0.596078, 0.701961, 0)
+
+[node name="glow" type="Sprite2D" parent="containerComponent2"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-96.9163, 66.2849)
+scale = Vector2(1.43612, 1.84861)
+texture = ExtResource("3_j54py")
+
+[node name="mug" type="Marker2D" parent="containerComponent2"]
+position = Vector2(-120.044, 108.02)
+
+[node name="containerComponent3" type="Node2D" parent="." node_paths=PackedStringArray("marker", "interactArea")]
+script = ExtResource("2_ij3ry")
+marker = NodePath("mug2")
+interactArea = NodePath("interact")
+acceptsCups = true
+
+[node name="interact" type="Area2D" parent="containerComponent3"]
+
+[node name="area" type="CollisionShape2D" parent="containerComponent3/interact"]
+position = Vector2(-80.1211, 86.7493)
+shape = SubResource("RectangleShape2D_jsv4l")
+debug_color = Color(0, 0.596078, 0.701961, 0.0784314)
+
+[node name="glow" type="Sprite2D" parent="containerComponent3"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.34902)
+position = Vector2(-96.9163, 66.2849)
+scale = Vector2(1.43612, 1.84861)
+texture = ExtResource("3_j54py")
+
+[node name="mug2" type="Marker2D" parent="containerComponent3"]
+position = Vector2(-29.7357, 99.4271)
+
+[node name="buttons" type="Area2D" parent="."]
+
+[node name="single" type="CollisionShape2D" parent="buttons"]
+position = Vector2(-143.172, -77.3322)
+shape = SubResource("CircleShape2D_hl31s")
+debug_color = Color(0.603922, 0.686275, 0.701961, 0.0901961)
+
+[node name="double" type="CollisionShape2D" parent="buttons"]
+position = Vector2(-81.4978, -79.7872)
+shape = SubResource("CircleShape2D_ouqtk")
+debug_color = Color(0.580392, 0.682353, 0.701961, 0.113725)
+
+[node name="previewComponent" type="Node2D" parent="."]
+script = ExtResource("4_w2orx")
+
+[node name="ingredientDispenserComponent" type="Node2D" parent="."]
+script = ExtResource("5_2y6xr")
+ingredientDispensed = ExtResource("6_fwn2m")
+
+[node name="timer" type="Timer" parent="."]
+
+[connection signal="itemRemoved" from="containerComponent" to="." method="_on_container_component_item_removed"]
+[connection signal="receivedItem" from="containerComponent" to="." method="_on_container_component_received_item"]
+[connection signal="input_event" from="containerComponent/interact" to="containerComponent" method="_on_interact_input_event"]
+[connection signal="itemRemoved" from="containerComponent2" to="." method="_on_container_component_2_item_removed"]
+[connection signal="receivedItem" from="containerComponent2" to="." method="_on_container_component_2_received_item"]
+[connection signal="input_event" from="containerComponent2/interact" to="containerComponent2" method="_on_interact_input_event"]
+[connection signal="itemRemoved" from="containerComponent3" to="." method="_on_container_component_3_item_removed"]
+[connection signal="receivedItem" from="containerComponent3" to="." method="_on_container_component_3_received_item"]
+[connection signal="input_event" from="containerComponent3/interact" to="containerComponent3" method="_on_interact_input_event"]
+[connection signal="input_event" from="buttons" to="." method="_on_buttons_input_event"]

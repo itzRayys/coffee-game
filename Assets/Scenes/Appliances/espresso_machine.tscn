@@ -1,137 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://cxt21b7snyjxu"]
+[gd_scene load_steps=4 format=3 uid="uid://cxt21b7snyjxu"]
 
 [ext_resource type="Texture2D" uid="uid://njvbt1bpe571" path="res://Assets/Sprites/espresso_machine_temp.png" id="1_rb6is"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/espressoMachine.gd" id="2_u7ell"]
-[ext_resource type="Script" path="res://Assets/Scripts/Components/espressoMachineSlot.gd" id="3_lqwjn"]
-[ext_resource type="Resource" uid="uid://c7usmgnum15co" path="res://Assets/Resources/Ingredients/Ingredients/espresso.tres" id="4_1dcgt"]
-[ext_resource type="Script" path="res://Assets/Scripts/Components/containerComponent.gd" id="4_rqhu4"]
-[ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="4_uh8ij"]
-[ext_resource type="Script" path="res://Assets/Scripts/Components/previewComponent.gd" id="5_p688x"]
-[ext_resource type="Script" path="res://Assets/Scripts/Components/ingredientDispenserComponent.gd" id="6_uupi5"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ilai"]
-size = Vector2(164.097, 71.1947)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsv4l"]
-size = Vector2(161.344, 116.19)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_hl31s"]
-radius = 23.1602
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ouqtk"]
-radius = 23.1602
+[ext_resource type="PackedScene" uid="uid://l68yr3b45i1e" path="res://Assets/Scenes/Appliances/espresso_machine_slot.tscn" id="3_ort1u"]
 
 [node name="espressoMachine" type="Sprite2D" node_paths=PackedStringArray("slots")]
 position = Vector2(1327, 478)
 scale = Vector2(0.908, 0.814667)
 texture = ExtResource("1_rb6is")
 script = ExtResource("2_u7ell")
-slots = [NodePath("slot")]
+slots = [NodePath("slot"), NodePath("slot2")]
 
-[node name="slot" type="Node2D" parent="." node_paths=PackedStringArray("machine", "containers", "glow", "glow2")]
-script = ExtResource("3_lqwjn")
+[node name="slot" parent="." node_paths=PackedStringArray("machine") instance=ExtResource("3_ort1u")]
 machine = NodePath("..")
-containers = [NodePath("containerComponent"), NodePath("containerComponent2"), NodePath("containerComponent3")]
-glow = NodePath("containerComponent/glow")
-glow2 = NodePath("containerComponent2/glow")
 
-[node name="containerComponent" type="Node2D" parent="slot" node_paths=PackedStringArray("marker", "interactArea")]
-script = ExtResource("4_rqhu4")
-marker = NodePath("filter")
-interactArea = NodePath("interact")
-acceptsPortafilters = true
-
-[node name="interact" type="Area2D" parent="slot/containerComponent"]
-
-[node name="collisionShape2d" type="CollisionShape2D" parent="slot/containerComponent/interact"]
-position = Vector2(-83.1498, -7.36493)
-shape = SubResource("RectangleShape2D_1ilai")
-debug_color = Color(0, 0.596078, 0.701961, 0.0588235)
-
-[node name="glow" type="Sprite2D" parent="slot/containerComponent"]
-visible = false
-self_modulate = Color(1, 1, 1, 0.34902)
-position = Vector2(-96.9163, 66.2849)
-scale = Vector2(1.43612, 1.84861)
-texture = ExtResource("4_uh8ij")
-
-[node name="filter" type="Marker2D" parent="slot/containerComponent"]
-position = Vector2(-95.8148, -13.5024)
-
-[node name="containerComponent2" type="Node2D" parent="slot" node_paths=PackedStringArray("marker", "interactArea")]
-script = ExtResource("4_rqhu4")
-marker = NodePath("mug")
-interactArea = NodePath("interact")
-acceptsCups = true
-
-[node name="interact" type="Area2D" parent="slot/containerComponent2"]
-
-[node name="area" type="CollisionShape2D" parent="slot/containerComponent2/interact"]
-position = Vector2(-80.1211, 86.7493)
-shape = SubResource("RectangleShape2D_jsv4l")
-debug_color = Color(0, 0.596078, 0.701961, 0)
-
-[node name="glow" type="Sprite2D" parent="slot/containerComponent2"]
-visible = false
-self_modulate = Color(1, 1, 1, 0.34902)
-position = Vector2(-96.9163, 66.2849)
-scale = Vector2(1.43612, 1.84861)
-texture = ExtResource("4_uh8ij")
-
-[node name="mug" type="Marker2D" parent="slot/containerComponent2"]
-position = Vector2(-120.044, 108.02)
-
-[node name="containerComponent3" type="Node2D" parent="slot" node_paths=PackedStringArray("marker", "interactArea")]
-script = ExtResource("4_rqhu4")
-marker = NodePath("../containerComponent2/mug")
-interactArea = NodePath("interact")
-acceptsCups = true
-
-[node name="interact" type="Area2D" parent="slot/containerComponent3"]
-
-[node name="area" type="CollisionShape2D" parent="slot/containerComponent3/interact"]
-position = Vector2(-80.1211, 86.7493)
-shape = SubResource("RectangleShape2D_jsv4l")
-debug_color = Color(0, 0.596078, 0.701961, 0.0784314)
-
-[node name="glow" type="Sprite2D" parent="slot/containerComponent3"]
-visible = false
-self_modulate = Color(1, 1, 1, 0.34902)
-position = Vector2(-96.9163, 66.2849)
-scale = Vector2(1.43612, 1.84861)
-texture = ExtResource("4_uh8ij")
-
-[node name="mug2" type="Marker2D" parent="slot/containerComponent3"]
-position = Vector2(-42.9515, 90.8346)
-
-[node name="buttons" type="Area2D" parent="slot"]
-
-[node name="single" type="CollisionShape2D" parent="slot/buttons"]
-position = Vector2(-143.172, -77.3322)
-shape = SubResource("CircleShape2D_hl31s")
-debug_color = Color(0.603922, 0.686275, 0.701961, 0.0901961)
-
-[node name="double" type="CollisionShape2D" parent="slot/buttons"]
-position = Vector2(-81.4978, -79.7872)
-shape = SubResource("CircleShape2D_ouqtk")
-debug_color = Color(0.580392, 0.682353, 0.701961, 0.113725)
-
-[node name="previewComponent" type="Node2D" parent="slot"]
-script = ExtResource("5_p688x")
-
-[node name="ingredientDispenserComponent" type="Node2D" parent="slot"]
-script = ExtResource("6_uupi5")
-ingredientDispensed = ExtResource("4_1dcgt")
-
-[node name="timer" type="Timer" parent="slot"]
-
-[connection signal="itemRemoved" from="slot/containerComponent" to="slot" method="_on_container_component_item_removed"]
-[connection signal="receivedItem" from="slot/containerComponent" to="slot" method="_on_container_component_received_item"]
-[connection signal="input_event" from="slot/containerComponent/interact" to="slot/containerComponent" method="_on_interact_input_event"]
-[connection signal="itemRemoved" from="slot/containerComponent2" to="slot" method="_on_container_component_2_item_removed"]
-[connection signal="receivedItem" from="slot/containerComponent2" to="slot" method="_on_container_component_2_received_item"]
-[connection signal="input_event" from="slot/containerComponent2/interact" to="slot/containerComponent2" method="_on_interact_input_event"]
-[connection signal="itemRemoved" from="slot/containerComponent3" to="slot" method="_on_container_component_3_item_removed"]
-[connection signal="receivedItem" from="slot/containerComponent3" to="slot" method="_on_container_component_3_received_item"]
-[connection signal="input_event" from="slot/containerComponent3/interact" to="slot/containerComponent3" method="_on_interact_input_event"]
-[connection signal="input_event" from="slot/buttons" to="slot" method="_on_buttons_input_event"]
+[node name="slot2" parent="." node_paths=PackedStringArray("machine") instance=ExtResource("3_ort1u")]
+position = Vector2(181.718, -6.13745)
+machine = NodePath("..")
