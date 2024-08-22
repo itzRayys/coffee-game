@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://l68yr3b45i1e"]
+[gd_scene load_steps=13 format=3 uid="uid://l68yr3b45i1e"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Components/espressoMachineSlot.gd" id="1_m7a8h"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/containerComponent.gd" id="2_ij3ry"]
@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://c7usmgnum15co" path="res://Assets/Resources/Ingredients/Ingredients/espresso.tres" id="6_fwn2m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ilai"]
-size = Vector2(164.097, 71.1947)
+size = Vector2(162, 71.1947)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsv4l"]
 size = Vector2(161.344, 116.19)
@@ -19,11 +19,20 @@ radius = 23.1602
 [sub_resource type="CircleShape2D" id="CircleShape2D_ouqtk"]
 radius = 23.1602
 
-[node name="slot" type="Node2D" node_paths=PackedStringArray("containers", "glow", "glow2")]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lmeeu"]
+size = Vector2(25, 25)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wuewa"]
+size = Vector2(50, 100)
+
+[node name="slot" type="Node2D" node_paths=PackedStringArray("glow", "glow2", "dispensing", "timer", "containers")]
 script = ExtResource("1_m7a8h")
-containers = [NodePath("containerComponent"), NodePath("containerComponent2"), NodePath("containerComponent3")]
+dispenseTime = 7.385
 glow = NodePath("containerComponent/glow")
 glow2 = NodePath("containerComponent2/glow")
+dispensing = NodePath("dispensing")
+timer = NodePath("timer")
+containers = [NodePath("containerComponent"), NodePath("containerComponent2"), NodePath("containerComponent3")]
 
 [node name="containerComponent" type="Node2D" parent="." node_paths=PackedStringArray("marker", "interactArea")]
 script = ExtResource("2_ij3ry")
@@ -34,9 +43,9 @@ acceptsPortafilters = true
 [node name="interact" type="Area2D" parent="containerComponent"]
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="containerComponent/interact"]
-position = Vector2(-83.1498, -7.36493)
+position = Vector2(-80, -7.36493)
 shape = SubResource("RectangleShape2D_1ilai")
-debug_color = Color(0, 0.596078, 0.701961, 0.0588235)
+debug_color = Color(0.701961, 0, 0.584314, 0)
 
 [node name="glow" type="Sprite2D" parent="containerComponent"]
 visible = false
@@ -59,7 +68,7 @@ acceptsCups = true
 [node name="area" type="CollisionShape2D" parent="containerComponent2/interact"]
 position = Vector2(-80.1211, 86.7493)
 shape = SubResource("RectangleShape2D_jsv4l")
-debug_color = Color(0, 0.596078, 0.701961, 0)
+debug_color = Color(0.666667, 0, 0.701961, 0)
 
 [node name="glow" type="Sprite2D" parent="containerComponent2"]
 visible = false
@@ -82,7 +91,7 @@ acceptsCups = true
 [node name="area" type="CollisionShape2D" parent="containerComponent3/interact"]
 position = Vector2(-80.1211, 86.7493)
 shape = SubResource("RectangleShape2D_jsv4l")
-debug_color = Color(0, 0.596078, 0.701961, 0.0784314)
+debug_color = Color(0.701961, 0, 0.701961, 0.0196078)
 
 [node name="mug2" type="Marker2D" parent="containerComponent3"]
 position = Vector2(-29.7357, 99.4271)
@@ -90,14 +99,22 @@ position = Vector2(-29.7357, 99.4271)
 [node name="buttons" type="Area2D" parent="."]
 
 [node name="single" type="CollisionShape2D" parent="buttons"]
-position = Vector2(-143.172, -77.3322)
+position = Vector2(-125, -81)
 shape = SubResource("CircleShape2D_hl31s")
 debug_color = Color(0.603922, 0.686275, 0.701961, 0.0901961)
 
 [node name="double" type="CollisionShape2D" parent="buttons"]
-position = Vector2(-81.4978, -79.7872)
+position = Vector2(-37, -82)
 shape = SubResource("CircleShape2D_ouqtk")
 debug_color = Color(0.580392, 0.682353, 0.701961, 0.113725)
+
+[node name="sprite2d" type="Sprite2D" parent="buttons"]
+position = Vector2(-124, -81)
+texture = SubResource("PlaceholderTexture2D_lmeeu")
+
+[node name="sprite2d2" type="Sprite2D" parent="buttons"]
+position = Vector2(-37, -82)
+texture = SubResource("PlaceholderTexture2D_lmeeu")
 
 [node name="previewComponent" type="Node2D" parent="."]
 script = ExtResource("4_w2orx")
@@ -107,6 +124,13 @@ script = ExtResource("5_2y6xr")
 ingredientDispensed = ExtResource("6_fwn2m")
 
 [node name="timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="dispensing" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.188235, 0.0156863, 0.0156863, 1)
+position = Vector2(-77, 51)
+texture = SubResource("PlaceholderTexture2D_wuewa")
 
 [connection signal="itemRemoved" from="containerComponent" to="." method="_on_container_component_item_removed"]
 [connection signal="receivedItem" from="containerComponent" to="." method="_on_container_component_received_item"]
@@ -118,3 +142,4 @@ ingredientDispensed = ExtResource("6_fwn2m")
 [connection signal="receivedItem" from="containerComponent3" to="." method="_on_container_component_3_received_item"]
 [connection signal="input_event" from="containerComponent3/interact" to="containerComponent3" method="_on_interact_input_event"]
 [connection signal="input_event" from="buttons" to="." method="_on_buttons_input_event"]
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

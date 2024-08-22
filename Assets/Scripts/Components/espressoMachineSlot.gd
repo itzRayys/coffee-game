@@ -5,18 +5,18 @@ signal filterClick(slot:espresso_machine_slot)
 signal mainButton(mug1:mug_mug, mug2:mug_mug)
 
 @export var machine:espresso_machine
+@export var dispenseTime:float = 3
 @export var singleAmount:int = 2
 @export var doubleAmount:int = 4
+var amountToDispense:int
 
-@export var mugOffset1:Vector2 = Vector2(-25, 5)
-@export var mugOffset2:Vector2 = Vector2(25, -5)
-
-@export var containers:Array[container_component]
-
+@export_group("Internals")
 @export var glow:Sprite2D
 @export var glow2:Sprite2D
+@export var dispensing:Sprite2D
+@export var timer:Timer
 
-@onready var timer = $timer
+@export var containers:Array[container_component]
 
 var holdingComponent:holding_component
 var canDispense:bool = false
@@ -28,55 +28,39 @@ var heldFilter:pfilter
 var heldMug:mug_mug
 var heldMug2:mug_mug
 
-# Signal connection
-func interact(shapeIndex):
-	# Filter Area
-	if shapeIndex == 1:
-		print(1)
-		return
-	# Mug Area
-	if shapeIndex == 0:
-		print(0)
-		mainButton.emit(heldMug, heldMug2)
-		return
-	
-	if isHolding:
-		return
-	# Single Button
-	elif shapeIndex == 2:
-		print(2)
-#		dispense(singleAmount, heldPortafilter.getOzAmount())
-		return
-	
-	# Double Button
-	elif shapeIndex == 3:
-		print(3)
-#		dispense(doubleAmount, heldPortafilter.getOzAmount())
-		return
 
-
-func buttonPress(shapeIndex):
-	if !heldFilter or !heldMug and !heldMug2:
+func startDispense(amount:int):
+	if heldFilter.getIsUsed():
+		print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Espresso Slot] Grinds already used! [/color]")
 		return
-	
-	if shapeIndex == 0:
-		dispense(singleAmount, heldFilter.getOzAmount())
-	elif shapeIndex == 1:
-		dispense(doubleAmount, heldFilter.getOzAmount())
+	amountToDispense = amount
+	dispensing.show()
+	for i in containers.size():
+		containers[i].canPickup = false
+	timer.start(dispenseTime)
 
 # Dispenses espresso to mugs
 func dispense(amount, oz):
 	if mugCount() == 0:
 		print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Espresso Slot] Tried dispensing but no mugs found! [/color]")
+		heldFilter.setIsUsed(true)
 		return
 	elif mugCount() == 2:
 		heldMug.addEspresso(amount / 2, oz)
 		heldMug2.addEspresso(amount / 2, oz)
+		heldFilter.setIsUsed(true)
 		return
 	var mug = getMug()
 	if !mug:
 		print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Espresso Slot] Tried dispensing to single mug, but mug not found! [/color]")
 	mug.addEspresso(amount, oz)
+	heldFilter.setIsUsed(true)
+
+func stopDispense():
+	amountToDispense = 0
+	dispensing.hide()
+	for i in containers.size():
+		containers[i].canPickup = true
 
 # Returns mug if only holding one
 func getMug() -> mug_mug:
@@ -86,15 +70,6 @@ func getMug() -> mug_mug:
 	if heldMug:
 		return heldMug
 	return heldMug2
-
-# Returns number of mugs held
-func mugCount() -> int:
-	var returnNum:int = 0
-	if heldMug:
-		returnNum += 1
-	if heldMug2:
-		returnNum += 1
-	return returnNum
 
 # Sets filter and connects functions
 func receiveFilter(filter:pfilter):
@@ -112,30 +87,20 @@ func clearFilter():
 	containers[0].disconnectOnPickedUp(setCannotDispense)
 	containers[0].disconnectOnDropped(setCanDispense)
 
-
-
 # Sets can dispense
 func setCanDispense():
 	canDispense = true
 func setCannotDispense():
 	canDispense = false
 
-# Sets mug
-func receiveMug(mug:mug_mug):
-	if !heldMug:
-		heldMug = mug
-		return
-	elif !heldMug2:
-		heldMug2 = mug
-		return
-
-
-# Sets heldMug to null
-func removeMug():
+# Returns number of mugs held
+func mugCount() -> int:
+	var returnNum:int = 0
+	if heldMug:
+		returnNum += 1
 	if heldMug2:
-		heldMug2 = null
-		return
-	heldMug = null
+		returnNum += 1
+	return returnNum
 
 # Returns true if slots are full
 func mugCheck() -> bool:
@@ -148,15 +113,6 @@ func filterCheck() -> bool:
 	if heldFilter:
 		return true
 	return false
-
-# Called by machine to toggle glow and isEnabled
-func setActive(toggle:bool):
-	if toggle:
-		isEnabled = true
-		glow.show()
-		return
-	isEnabled = false
-	glow.hide()
 
 # Called by machine to set glow and place state
 func setState(toggle:bool, item):
@@ -171,18 +127,7 @@ func setState(toggle:bool, item):
 		isEnabled = true
 		glow.show()
 
-
-
-func _on_buttons_input_event(_viewport, event, shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event):
-		return
-	buttonPress(shape_idx)
-
-
-
-
-
-
+# Sets holding component
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 	print("[Espresso Machine Slot] Holding Component Set!")
@@ -190,27 +135,42 @@ func setHoldingComponent(holdComponent:holding_component):
 		print("[Espresso Machine Slot] Container Holding Component Set!")
 		containers[i].setHoldingComponent(holdComponent)
 
+# Dispense single or double
+func buttonPress(shapeIndex):
+	if !heldFilter:
+		print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Espresso Slot] Tried dispensing but no filter! [/color]")
+		return
+	
+	if shapeIndex == 0:
+		startDispense(singleAmount)
+	elif shapeIndex == 1:
+		startDispense(doubleAmount)
 
 
+# On button press
+func _on_buttons_input_event(_viewport, event, shape_idx):
+	if !GameGlobals.eventIsInteractCheck(event):
+		return
+	buttonPress(shape_idx)
 
+
+# Receive item and remove item
 func _on_container_component_received_item(item):
 	receiveFilter(item)
-
 func _on_container_component_item_removed(_item):
 	clearFilter()
 
-
-
 func _on_container_component_2_received_item(item):
 	heldMug = item
-
 func _on_container_component_2_item_removed():
 	heldMug = null
 
-
-
 func _on_container_component_3_received_item(item):
 	heldMug2 = item
-
 func _on_container_component_3_item_removed():
 	heldMug2 = null
+
+
+func _on_timer_timeout():
+	dispense(amountToDispense, heldFilter.getOzAmount())
+	stopDispense()

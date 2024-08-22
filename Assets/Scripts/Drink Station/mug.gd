@@ -16,6 +16,8 @@ func addEspresso(amount:int, ozGrams:float):
 	var inputAverageTotal:float = amount * ozGrams
 	espressoAmount += amount
 	ozAverage = currentAverageTotal / inputAverageTotal
+	if ozAverage == 0:
+		ozAverage = ozGrams
 	print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Mug] Espresso added! Espresso amount: ", espressoAmount, "   ozAverage: ", ozAverage, " [/color]")
 
 func addIngredient(ingredient:ingredient_resource):

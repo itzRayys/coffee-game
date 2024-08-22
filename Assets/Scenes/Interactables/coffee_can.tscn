@@ -10,10 +10,13 @@ size = Vector2(154, 121)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxvq6"]
 size = Vector2(153, 121)
 
-[node name="coffeeCan" type="Sprite2D"]
+[node name="coffeeCan" type="Sprite2D" node_paths=PackedStringArray("glow", "marker", "recycleTimer")]
 position = Vector2(1796, 928)
 texture = ExtResource("1_hasrs")
 script = ExtResource("2_3p8pc")
+glow = NodePath("glow")
+marker = NodePath("marker2d")
+recycleTimer = NodePath("recycleTime")
 
 [node name="glow" type="Sprite2D" parent="."]
 visible = false
@@ -39,4 +42,8 @@ position = Vector2(-1.5, -1.5)
 shape = SubResource("RectangleShape2D_bxvq6")
 debug_color = Color(0.701961, 0, 0.0117647, 0.0235294)
 
+[node name="recycleTime" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="input_event" from="area2d" to="." method="_on_area_2d_input_event"]
+[connection signal="timeout" from="recycleTime" to="." method="_on_recycle_time_timeout"]

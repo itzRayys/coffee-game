@@ -35,14 +35,14 @@ collision_mask = 4353
 [node name="collisionShape2d" type="CollisionShape2D" parent="hitbox_area"]
 position = Vector2(0, 48.2585)
 shape = SubResource("RectangleShape2D_fsxpk")
-debug_color = Color(0, 0.701961, 0.278431, 0)
+debug_color = Color(0, 0.596078, 0.701961, 0)
 
 [node name="interact_area" type="Area2D" parent="."]
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="interact_area"]
 position = Vector2(0.893677, -7.14954)
 shape = SubResource("RectangleShape2D_qpa8l")
-debug_color = Color(0, 0.596078, 0.701961, 0.0235294)
+debug_color = Color(0.701961, 0, 0.654902, 0.0235294)
 
 [node name="interactableComponent" parent="." node_paths=PackedStringArray("hitbox_area", "saveLocation", "interactable", "interact_area") instance=ExtResource("4_10pvl")]
 hitbox_area = NodePath("../hitbox_area")

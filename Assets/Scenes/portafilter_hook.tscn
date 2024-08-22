@@ -17,7 +17,7 @@ containerComponent = NodePath("containerComponent")
 [node name="collisionShape2d" type="CollisionShape2D" parent="interact"]
 position = Vector2(-0.5, 26.5)
 shape = SubResource("RectangleShape2D_kxkrb")
-debug_color = Color(0, 0.596078, 0.701961, 0.00784314)
+debug_color = Color(0.701961, 0, 0.631373, 0.00784314)
 
 [node name="marker2d" type="Marker2D" parent="."]
 

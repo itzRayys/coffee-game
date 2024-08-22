@@ -19,7 +19,7 @@ var ozAmount:float = 0
 
 var canPickup:bool = false
 var isOverfilled:bool = false
-
+var isUsed:bool = false
 
 # Adds inputted oz
 func addOz(amount:float):
@@ -47,6 +47,12 @@ func removeOz(amount:float):
 	ozAmount -= amount
 	updateLabel()
 
+# Clears oz and sets isUsed(false)
+func clearOz():
+	ozAmount = 0
+	updateLabel()
+	setIsUsed(false)
+
 # Returns current oz amount
 func getOzAmount() -> float:
 	return ozAmount
@@ -62,6 +68,14 @@ func overfillCheck() -> bool:
 		return true
 	isOverfilled = false
 	return false
+
+# Sets if grinds are used
+func setIsUsed(toggle:bool):
+	isUsed = toggle
+
+# Gets if grinds are used
+func getIsUsed() -> bool:
+	return isUsed
 
 func spoonInteraction():
 	pass

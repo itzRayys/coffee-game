@@ -3,14 +3,16 @@ class_name coffee_can
 
 var holdingComponent:holding_component
 
-@onready var glow = $glow
-@onready var marker = $marker2d
+@export var recycleTime:float = 3
 
+@export var glow:Sprite2D
+@export var marker:Marker2D
+
+@export var recycleTimer:Timer
 var isEnabled:bool = false
-var heldFilter:pfilter
 
 func setState(isActive:bool):
-	if !isActive or heldFilter:
+	if !isActive:
 		isEnabled = false
 		glow.hide()
 		return
@@ -21,28 +23,27 @@ func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 
 func receiveFilter(filter:pfilter):
-	heldFilter = filter
-	filter.move(marker, clearPortafilter)
-	recycle()
+	holdingComponent.setItemFollow(false)
+	holdingComponent.setCanDrop(false)
+	holdingComponent.setCanPlace(false)
+	recycleTimer.start(recycleTime)
 
-func recycle():
-	if !heldFilter:
+func recycle(filter:pfilter):
+	if !filter:
 		return
-	heldFilter.setOz(0)
-
-func clearPortafilter():
-	heldFilter = null
-
+	filter.clearOz()
 
 func _on_area_2d_input_event(_viewport, event, _shape_idx):
-	if !GameGlobals.eventIsInteractCheck(event):
+	if !GameGlobals.eventIsInteractCheck(event) or !holdingComponent:
 		return
-	if !holdingComponent:
-		return
-	if heldFilter and !holdingComponent.heldItem:
-		holdingComponent.pickup(heldFilter)
-		return
-	elif !heldFilter and isEnabled and holdingComponent.heldItem:
+	if isEnabled and holdingComponent.heldItem and holdingComponent.heldItem is pfilter:
 		receiveFilter(holdingComponent.heldItem)
 		holdingComponent.place()
 		return
+
+
+func _on_recycle_time_timeout():
+	recycle(holdingComponent.heldItem)
+	holdingComponent.setItemFollow(true)
+	holdingComponent.setCanDrop(true)
+	holdingComponent.setCanPlace(true)

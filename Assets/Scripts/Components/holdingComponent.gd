@@ -24,6 +24,9 @@ var isPickingUp:bool = false
 var startPosition:Vector2
 var previewPosition:Vector2
 
+var canPlace:bool = true
+var canPickup:bool = true
+var canDrop:bool = true
 
 @export_group("Internals")
 @export var infoContainer:Control
@@ -101,7 +104,7 @@ func pickup(item):
 
 # Places item
 func place():
-	if heldItem == null:
+	if heldItem == null or !canPlace:
 		return
 	setItemFollow(false)
 	heldItem = null
@@ -111,7 +114,7 @@ func place():
 
 # Drops item
 func drop():
-	if heldItem == null:
+	if heldItem == null or !canDrop:
 		return
 	setItemFollow(false)
 	heldItem = null
@@ -132,6 +135,8 @@ func selectItem(interactable):
 
 # Starts pickup visual
 func startPickup(_location):
+	if !canPickup:
+		return
 	texture_progress_bar.show()
 	timer.start(pickupTime)
 	isPickingUp = true
@@ -146,3 +151,11 @@ func stopPickUp():
 func _resetPickupThings():
 	texture_progress_bar.value = -pickupTime
 	texture_progress_bar.hide()
+
+
+func setCanPickup(toggle:bool):
+	canPickup = toggle
+func setCanPlace(toggle:bool):
+	canPlace = toggle
+func setCanDrop(toggle:bool):
+	canDrop = toggle

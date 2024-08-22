@@ -45,7 +45,7 @@ scale = Vector2(0.718231, 0.594061)
 position = Vector2(-2.5, -0.5)
 scale = Vector2(1.195, 1.755)
 shape = SubResource("RectangleShape2D_jihod")
-debug_color = Color(0, 0.596078, 0.701961, 0.0117647)
+debug_color = Color(0.701961, 0, 0.654902, 0.0117647)
 
 [node name="hitbox_area" type="Area2D" parent="."]
 modulate = Color(0.509804, 1, 0.737255, 1)
