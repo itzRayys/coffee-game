@@ -8,6 +8,7 @@ signal itemRemoved()
 @export var interactArea:Area2D
 @export var acceptsPortafilters:bool = false
 @export var acceptsCups:bool = false
+@export var acceptsSpoons:bool = false
 
 var interactable:Node2D
 var canPickup:bool = true

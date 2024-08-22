@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2vblcdhbl1e2"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/spoon.gd" id="1_fk55t"]
+[ext_resource type="Texture2D" uid="uid://b3vaof2fh6yk2" path="res://Assets/Sprites/spoon_empty_temp.png" id="3_kqw6q"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/saveLocationComponent.gd" id="4_46jsf"]
+[ext_resource type="PackedScene" uid="uid://ccc0dpjqtb71s" path="res://Assets/Scenes/Interactables/interactable_component.tscn" id="4_ti583"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mlmpt"]
+radius = 9.37041
+height = 46.4519
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_20hk1"]
+radius = 27.0
+height = 70.0
+
+[node name="spoon" type="Node2D" node_paths=PackedStringArray("interactableComponent")]
+script = ExtResource("1_fk55t")
+interactableComponent = NodePath("interactableComponent")
+
+[node name="sprite2d" type="Sprite2D" parent="."]
+scale = Vector2(0.47, 0.47)
+texture = ExtResource("3_kqw6q")
+
+[node name="saveLocationComponent" type="Marker2D" parent="." node_paths=PackedStringArray("mainNode")]
+script = ExtResource("4_46jsf")
+mainNode = NodePath("..")
+
+[node name="hitbox_area" type="Area2D" parent="."]
+collision_mask = 4353
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="hitbox_area"]
+position = Vector2(1, 2)
+rotation = -0.469494
+shape = SubResource("CapsuleShape2D_mlmpt")
+debug_color = Color(0, 0.596078, 0.701961, 0.0784314)
+
+[node name="interact_area" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="interact_area"]
+shape = SubResource("CapsuleShape2D_20hk1")
+debug_color = Color(0.701961, 0, 0.631373, 0.0352941)
+
+[node name="interactableComponent" parent="." node_paths=PackedStringArray("hitbox_area", "saveLocation", "interactable", "interact_area") instance=ExtResource("4_ti583")]
+hitbox_area = NodePath("../hitbox_area")
+saveLocation = NodePath("../saveLocationComponent")
+interactable = NodePath("..")
+interact_area = NodePath("../interact_area")
+
+[connection signal="area_entered" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_entered"]
+[connection signal="area_exited" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_exited"]
+[connection signal="mouse_entered" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_entered"]
+[connection signal="mouse_exited" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_exited"]
+[connection signal="ableToPlace" from="interactableComponent" to="." method="_on_interactable_component_able_to_place"]
+[connection signal="dropped" from="interactableComponent" to="." method="_on_interactable_component_dropped"]
+[connection signal="placed" from="interactableComponent" to="." method="_on_interactable_component_placed"]
