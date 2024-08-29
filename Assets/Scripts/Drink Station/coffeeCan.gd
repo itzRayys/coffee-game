@@ -9,6 +9,9 @@ var holdingComponent:holding_component
 @export var marker:Marker2D
 
 @export var recycleTimer:Timer
+
+
+@export var spoonInteractable:spoon_interactable
 var isEnabled:bool = false
 
 func setState(isActive:bool):
@@ -21,6 +24,7 @@ func setState(isActive:bool):
 
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
+	spoonInteractable.setHoldingComponent(holdComponent)
 
 func receiveFilter(filter:pfilter):
 	holdingComponent.setItemFollow(false)

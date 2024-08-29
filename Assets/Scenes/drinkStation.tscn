@@ -58,13 +58,14 @@ colors = PackedColorArray(0.252533, 0.32, 0.2464, 1, 0.4928, 0.679947, 0.88, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_fefls"]
 gradient = SubResource("Gradient_el257")
 
-[node name="drinkStation" type="Node2D" node_paths=PackedStringArray("_holdingComponent_connections", "filterContainers", "mugContainers")]
+[node name="drinkStation" type="Node2D" node_paths=PackedStringArray("_holdingComponent_connections", "filterContainers", "mugContainers", "spoonBlockers")]
 process_mode = 1
 script = ExtResource("1_s7vgl")
 _printContainerStates = false
 _holdingComponent_connections = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("rinse"), NodePath("refrigerator"), NodePath("portafilters/portafilter"), NodePath("portafilters/portafilter2"), NodePath("spoonHolder"), NodePath("drinkSubmit"), NodePath("mugs/mug3"), NodePath("portafilters/portafilterHook"), NodePath("portafilters/portafilterHook2"), NodePath("espressoMachine"), NodePath("mugs/mug2"), NodePath("mugs/mug"), NodePath("mugs/mug4")]
 filterContainers = [NodePath("grinder"), NodePath("coffeeCan"), NodePath("scale"), NodePath("portafilters/portafilterHook"), NodePath("portafilters/portafilterHook2"), NodePath("espressoMachine")]
 mugContainers = [NodePath("drinkSubmit"), NodePath("espressoMachine")]
+spoonBlockers = [NodePath("portafilters/portafilter"), NodePath("portafilters/portafilter2")]
 
 [node name="bg" type="Sprite2D" parent="."]
 texture = ExtResource("2_w42l3")

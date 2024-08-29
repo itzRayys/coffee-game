@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dajj1bi6f3nm"]
+[gd_scene load_steps=12 format=3 uid="uid://dajj1bi6f3nm"]
 
 [ext_resource type="Texture2D" uid="uid://cnmift010ifu4" path="res://Assets/Sprites/grinder_temp.png" id="1_ndvs5"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/grinder.gd" id="2_bga84"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/containerComponent.gd" id="3_18ld3"]
 [ext_resource type="Texture2D" uid="uid://dpewleyar1q15" path="res://Assets/Sprites/temp_glow.png" id="3_ehx0j"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/spoon_interactable.gd" id="5_emw8n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rvnwg"]
 size = Vector2(223, 132)
@@ -21,7 +22,10 @@ gradient = SubResource("Gradient_30noy")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f4lmi"]
 size = Vector2(216.5, 109.5)
 
-[node name="grinder" type="Sprite2D" node_paths=PackedStringArray("filterMarker", "glow", "label", "timer", "dispenseDEBUG", "repeat_wait_timer", "containerComponent")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8em0"]
+size = Vector2(215, 106)
+
+[node name="grinder" type="Sprite2D" node_paths=PackedStringArray("filterMarker", "glow", "label", "timer", "dispenseDEBUG", "repeat_wait_timer", "containerComponent", "spoonInteractable")]
 position = Vector2(770, 404)
 texture = ExtResource("1_ndvs5")
 script = ExtResource("2_bga84")
@@ -32,6 +36,7 @@ timer = NodePath("timer")
 dispenseDEBUG = NodePath("debug")
 repeat_wait_timer = NodePath("repeatWaitTimer")
 containerComponent = NodePath("containerComponent")
+spoonInteractable = NodePath("spoonInteractable")
 
 [node name="containerComponent" type="Node2D" parent="." node_paths=PackedStringArray("marker", "interactArea")]
 script = ExtResource("3_18ld3")
@@ -97,9 +102,23 @@ position = Vector2(-1.75, 167.75)
 shape = SubResource("RectangleShape2D_f4lmi")
 debug_color = Color(0.701961, 0, 0.0117647, 0)
 
+[node name="spoonInteractable" type="Node2D" parent="."]
+script = ExtResource("5_emw8n")
+isDispenser = true
+
+[node name="area2d" type="Area2D" parent="spoonInteractable"]
+scale = Vector2(1, 1)
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="spoonInteractable/area2d"]
+position = Vector2(-0.5, 168)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_s8em0")
+debug_color = Color(0.701961, 0.290196, 0, 0)
+
 [connection signal="itemRemoved" from="containerComponent" to="." method="_on_container_component_item_removed"]
 [connection signal="receivedItem" from="containerComponent" to="." method="_on_container_component_received_item"]
 [connection signal="input_event" from="interact" to="containerComponent" method="_on_interact_input_event"]
 [connection signal="input_event" from="refill" to="." method="_on_refill_input_event"]
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="repeatWaitTimer" to="." method="_on_repeat_wait_timer_timeout"]
+[connection signal="input_event" from="spoonInteractable/area2d" to="spoonInteractable" method="_on_area_2d_input_event"]

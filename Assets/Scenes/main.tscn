@@ -276,6 +276,7 @@ globalMovePosition = Vector2(0, 3000)
 [connection signal="pickedUpDispenser" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_dispenser"]
 [connection signal="pickedUpFilter" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_filter"]
 [connection signal="pickedUpMug" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_mug"]
+[connection signal="pickedUpSpoon" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_spoon"]
 [connection signal="placed" from="holdingComponent" to="drinkStation" method="_on_holding_component_placed"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GUI" method="_on_area_switch_area_switched"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GameManager" method="_on_area_switch_area_switched"]

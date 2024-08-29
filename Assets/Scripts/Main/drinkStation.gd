@@ -15,11 +15,13 @@ class_name main_drink_station
 @export var ingredientContainers:Array[Node2D]
 @export var filterContainers:Array[Node2D]
 @export var mugContainers:Array[Node2D]
+@export var spoonBlockers:Array[Node2D]
 
 var isActive:bool = false
 var iContainersEnabled:bool = false
 var filterContainersEnabled:bool = false
 var mugContainersEnabled:bool = false
+var spoonBlockersEnabled:bool = false
 
 #OROROROR it could be an array that accepts type:ingredients
 #each ingredient is a resource (no node) that has the name
@@ -70,11 +72,21 @@ func setMugContainers(toggle:bool):
 	mugContainersEnabled = toggle
 	for i in mugContainers.size():
 		if !mugContainers[i].has_method("setState"):
-			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE METHOD 'ENABLE/DISABLE'**[/color]")
+			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", mugContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE METHOD 'ENABLE/DISABLE'**[/color]")
 			return
-		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", filterContainers[i].name, ": SET![/color]")
+		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", mugContainers[i].name, ": SET![/color]")
 		mugContainers[i].setState(toggle)
 
+func setSpoonBlockers(toggle:bool):
+	print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] Setting spoon blocker active states to {0}...[/color]".format([toggle]))
+	spoonBlockersEnabled = toggle
+	for i in spoonBlockers.size():
+		if !spoonBlockers[i].has_method("setSpoonBlock"):
+			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", spoonBlockers[i].name, ": IS IN GROUP BUT DOESNT HAVE METHOD 'ENABLE/DISABLE'**[/color]")
+			return
+		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", spoonBlockers[i].name, ": SET![/color]")
+		spoonBlockers[i].setSpoonBlock(toggle)
+	
 
 func _set_holdingComponent_connections(holdingComponent:holding_component):
 	for i in _holdingComponent_connections.size():
@@ -102,6 +114,8 @@ func _on_holding_component_dropped():
 		setFilterContainers(false)
 	if mugContainersEnabled:
 		setMugContainers(false)
+	if spoonBlockersEnabled:
+		setSpoonBlockers(false)
 
 func _on_holding_component_placed():
 	if iContainersEnabled:
@@ -110,6 +124,8 @@ func _on_holding_component_placed():
 		setFilterContainers(false)
 	if mugContainersEnabled:
 		setMugContainers(false)
+	if spoonBlockersEnabled:
+		setSpoonBlockers(false)
 
 
 
@@ -124,3 +140,7 @@ func itemCheck():
 	if !external_holding_component or !external_holding_component.heldItem:
 		return
 	pass
+
+
+func _on_holding_component_picked_up_spoon(spoon):
+	setSpoonBlockers(true)

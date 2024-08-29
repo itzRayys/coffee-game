@@ -22,7 +22,7 @@ var holdingComponent:holding_component
 @export var dispenseDEBUG:Sprite2D
 @export var repeat_wait_timer:Timer
 @export var containerComponent:container_component
-
+@export var spoonInteractable:spoon_interactable
 
 var isEnabled:bool = false
 var isDispensing:bool = false
@@ -57,6 +57,7 @@ func disable():
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 	containerComponent.setHoldingComponent(holdComponent)
+	spoonInteractable.setHoldingComponent(holdComponent)
 
 # Calls getOz() to dispense to null or heldFilter
 func _startDispense():

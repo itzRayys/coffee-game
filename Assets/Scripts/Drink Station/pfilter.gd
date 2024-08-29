@@ -13,6 +13,9 @@ var holdingComponent:holding_component
 @export var placed:Sprite2D
 @export var interactShape:CollisionShape2D
 
+@export_group("Internals")
+@export var spoonInteractable:spoon_interactable
+@export var spoonBlock:Area2D
 
 var maxOzAmount:float = 20
 var ozAmount:float = 0
@@ -57,6 +60,10 @@ func clearOz():
 func getOzAmount() -> float:
 	return ozAmount
 
+# Returns max oz
+func getMaxOz() -> float:
+	return maxOzAmount
+
 # Updates oz label
 func updateLabel():
 	label.text = str(ozAmount)
@@ -76,9 +83,6 @@ func setIsUsed(toggle:bool):
 # Gets if grinds are used
 func getIsUsed() -> bool:
 	return isUsed
-
-func spoonInteraction():
-	pass
 
 #on pressed if spoon then pickup/placeOZ elif none then normal pickup/place hc
 
@@ -110,6 +114,11 @@ func toggleHang(toggle:bool):
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 	interactableComponent.setHoldingComponent(holdComponent)
+	spoonInteractable.setHoldingComponent(holdComponent)
+
+
+func setSpoonBlock(toggle:bool):
+	spoonBlock.set_collision_layer_value(13, toggle)
 
 # Visual
 func _toggleModulate(toggle:bool):

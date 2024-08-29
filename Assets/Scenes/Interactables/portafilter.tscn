@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://codnda2lxchgh"]
+[gd_scene load_steps=10 format=3 uid="uid://codnda2lxchgh"]
 
 [ext_resource type="Texture2D" uid="uid://c76thvdq272c4" path="res://Assets/Sprites/portafilter_temp.png" id="1_8x5py"]
 [ext_resource type="Script" path="res://Assets/Scripts/Drink Station/pfilter.gd" id="2_8jyyl"]
 [ext_resource type="Script" path="res://Assets/Scripts/Components/saveLocationComponent.gd" id="3_n7xr0"]
 [ext_resource type="PackedScene" uid="uid://ccc0dpjqtb71s" path="res://Assets/Scenes/Interactables/interactable_component.tscn" id="4_tabx1"]
 [ext_resource type="Texture2D" uid="uid://gnpb4q0tmab5" path="res://Assets/Sprites/portafilter_hanging_temp.png" id="5_m6u0h"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/spoon_interactable.gd" id="6_jw6m3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jihod"]
 size = Vector2(83, 98.9999)
@@ -12,7 +13,10 @@ size = Vector2(83, 98.9999)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iu2xb"]
 size = Vector2(58.1767, 10.099)
 
-[node name="portafilter" type="Sprite2D" node_paths=PackedStringArray("saveLocationComponent", "interactableComponent", "hanging", "placed", "interactShape")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_snyp2"]
+size = Vector2(71.1049, 51.6833)
+
+[node name="portafilter" type="Sprite2D" node_paths=PackedStringArray("saveLocationComponent", "interactableComponent", "hanging", "placed", "interactShape", "spoonInteractable", "spoonBlock")]
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(569, 268)
 scale = Vector2(1.39231, 1.68333)
@@ -23,6 +27,8 @@ interactableComponent = NodePath("interactableComponent")
 hanging = NodePath("hanging")
 placed = NodePath("placed")
 interactShape = NodePath("interact_area/interact")
+spoonInteractable = NodePath("spoonInteractable")
+spoonBlock = NodePath("spoonInteractable/area2d")
 
 [node name="saveLocationComponent" type="Marker2D" parent="." node_paths=PackedStringArray("mainNode")]
 script = ExtResource("3_n7xr0")
@@ -71,6 +77,19 @@ texture = ExtResource("5_m6u0h")
 visible = false
 texture = ExtResource("1_8x5py")
 
+[node name="spoonInteractable" type="Node2D" parent="." node_paths=PackedStringArray("portafilter")]
+script = ExtResource("6_jw6m3")
+portafilter = NodePath("..")
+
+[node name="area2d" type="Area2D" parent="spoonInteractable"]
+scale = Vector2(1, 1)
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="spoonInteractable/area2d"]
+position = Vector2(-1.07733, -15.1485)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_snyp2")
+debug_color = Color(0.701961, 0.290196, 0, 0)
+
 [connection signal="mouse_entered" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_entered"]
 [connection signal="mouse_exited" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_exited"]
 [connection signal="area_entered" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_entered"]
@@ -80,3 +99,4 @@ texture = ExtResource("1_8x5py")
 [connection signal="interacted" from="interactableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="pickedUp" from="interactableComponent" to="." method="_on_interactable_component_picked_up"]
 [connection signal="placed" from="interactableComponent" to="." method="_on_interactable_component_placed"]
+[connection signal="input_event" from="spoonInteractable/area2d" to="spoonInteractable" method="_on_area_2d_input_event"]
