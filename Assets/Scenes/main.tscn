@@ -29,8 +29,8 @@ position = Vector2(0, 3000)
 drinkStation = NodePath("../drinkStation")
 
 [node name="holdingComponent" parent="." instance=ExtResource("5_1e4tp")]
-pickupDelay = 0.775
-pickupTime = 0.525
+pickupDelay = 0.375
+pickupTime = 0.375
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
@@ -277,6 +277,7 @@ globalMovePosition = Vector2(0, 3000)
 [connection signal="pickedUpFilter" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_filter"]
 [connection signal="pickedUpMug" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_mug"]
 [connection signal="pickedUpSpoon" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_spoon"]
+[connection signal="pickedUpTamper" from="holdingComponent" to="drinkStation" method="_on_holding_component_picked_up_tamper"]
 [connection signal="placed" from="holdingComponent" to="drinkStation" method="_on_holding_component_placed"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GUI" method="_on_area_switch_area_switched"]
 [connection signal="areaSwitched" from="GUI/areaSwitch" to="GameManager" method="_on_area_switch_area_switched"]

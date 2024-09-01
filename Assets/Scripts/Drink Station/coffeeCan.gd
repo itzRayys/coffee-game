@@ -36,6 +36,7 @@ func recycle(filter:pfilter):
 	if !filter:
 		return
 	filter.clearOz()
+	filter.isTamped = false
 
 func _on_area_2d_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event) or !holdingComponent:

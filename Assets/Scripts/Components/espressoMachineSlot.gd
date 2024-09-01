@@ -33,6 +33,9 @@ func startDispense(amount:int):
 	if heldFilter.getIsUsed():
 		print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Espresso Slot] Grinds already used! [/color]")
 		return
+	if !heldFilter.isTamped:
+		print_rich("[color=brown]", Time.get_datetime_string_from_system(true, true), " [Espresso Slot] Grinds not tamped down! [/color]")
+		return
 	amountToDispense = amount
 	dispensing.show()
 	for i in containers.size():
@@ -76,12 +79,14 @@ func receiveFilter(filter:pfilter):
 	if heldFilter:
 		return
 	heldFilter = filter
+	filter.isInSlot = true
 	containers[0].connectOnPlaced(clearFilter, CONNECT_ONE_SHOT)
 	containers[0].connectOnPickedUp(setCannotDispense, CONNECT_DEFERRED)
 	containers[0].connectOnDropped(setCanDispense, CONNECT_DEFERRED)
 
 # Disconnects connections and calls setCannotDispense()
 func clearFilter():
+	heldFilter.isInSlot = false
 	heldFilter = null
 	setCannotDispense()
 	containers[0].disconnectOnPickedUp(setCannotDispense)

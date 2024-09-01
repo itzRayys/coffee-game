@@ -107,11 +107,9 @@ script = ExtResource("5_emw8n")
 isDispenser = true
 
 [node name="area2d" type="Area2D" parent="spoonInteractable"]
-scale = Vector2(1, 1)
 
 [node name="collisionShape2d" type="CollisionShape2D" parent="spoonInteractable/area2d"]
 position = Vector2(-0.5, 168)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_s8em0")
 debug_color = Color(0.701961, 0.290196, 0, 0)
 

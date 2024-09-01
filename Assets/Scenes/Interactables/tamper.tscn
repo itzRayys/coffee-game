@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6kvvfnpnf77q"]
+
+[ext_resource type="Texture2D" uid="uid://vjxqdt8c7xnt" path="res://Assets/Sprites/tamper.png" id="1_id0os"]
+[ext_resource type="Script" path="res://Assets/Scripts/Drink Station/tamper.gd" id="1_qhbgp"]
+[ext_resource type="Script" path="res://Assets/Scripts/Components/saveLocationComponent.gd" id="2_j1yio"]
+[ext_resource type="PackedScene" uid="uid://ccc0dpjqtb71s" path="res://Assets/Scenes/Interactables/interactable_component.tscn" id="3_gkan2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uf4be"]
+size = Vector2(75, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dju06"]
+size = Vector2(69, 28)
+
+[node name="tamper" type="Node2D" node_paths=PackedStringArray("interactableComponent")]
+script = ExtResource("1_qhbgp")
+interactableComponent = NodePath("interactableComponent")
+
+[node name="sprite2d" type="Sprite2D" parent="."]
+texture = ExtResource("1_id0os")
+
+[node name="saveLocationComponent" type="Marker2D" parent="." node_paths=PackedStringArray("mainNode")]
+script = ExtResource("2_j1yio")
+mainNode = NodePath("..")
+
+[node name="interact_area" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="interact_area"]
+position = Vector2(-0.5, -4.5)
+shape = SubResource("RectangleShape2D_uf4be")
+debug_color = Color(0.701961, 0, 0.560784, 0.0392157)
+
+[node name="hitbox_area" type="Area2D" parent="."]
+
+[node name="collisionShape2d" type="CollisionShape2D" parent="hitbox_area"]
+position = Vector2(-0.5, 43)
+shape = SubResource("RectangleShape2D_dju06")
+debug_color = Color(0, 0.596078, 0.701961, 0.00392157)
+
+[node name="interactableComponent" parent="." node_paths=PackedStringArray("hitbox_area", "saveLocation", "interactable", "interact_area") instance=ExtResource("3_gkan2")]
+hitbox_area = NodePath("../hitbox_area")
+saveLocation = NodePath("../saveLocationComponent")
+interactable = NodePath("..")
+interact_area = NodePath("../interact_area")
+
+[connection signal="mouse_entered" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_entered"]
+[connection signal="mouse_exited" from="interact_area" to="interactableComponent" method="_on_interact_area_mouse_exited"]
+[connection signal="area_entered" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_entered"]
+[connection signal="area_exited" from="hitbox_area" to="interactableComponent" method="_on_hitbox_area_area_exited"]
+[connection signal="ableToPlace" from="interactableComponent" to="." method="_on_interactable_component_able_to_place"]
+[connection signal="placed" from="interactableComponent" to="." method="_on_interactable_component_placed"]

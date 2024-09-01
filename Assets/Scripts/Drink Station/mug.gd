@@ -36,7 +36,7 @@ func setHoldingComponent(holdComponent:holding_component):
 
 # Modulates red when can't place
 func _toggleModulate(toggle:bool):
-	if !holdingComponent.heldItem:
+	if !holdingComponent or !holdingComponent.heldItem:
 		return
 	if !toggle:
 		holdingComponent.heldItem.modulate = Color(1, 1, 1, 1)

@@ -5,6 +5,7 @@ signal pickedUpDispenser(ingredient:ingredient_resource)
 signal pickedUpFilter(filter:pfilter)
 signal pickedUpMug(mug:mug_mug)
 signal pickedUpSpoon(spoon:spoon_spoon)
+signal pickedUpTamper(tamper:tamper_tamper)
 signal placed()
 signal dropped()
 
@@ -100,6 +101,8 @@ func pickup(item):
 		pickedUpMug.emit(item)
 	elif item is spoon_spoon:
 		pickedUpSpoon.emit(item)
+	elif item is tamper_tamper:
+		pickedUpTamper.emit(item)
 	else:
 		print_rich("[color=magenta]", Time.get_datetime_string_from_system(true, true), " [Holding Component] Item is other, check pls[/color]")
 	updateInfoLabel(item.name, ingredientName)

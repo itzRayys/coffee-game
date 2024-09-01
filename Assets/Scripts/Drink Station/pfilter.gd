@@ -16,13 +16,16 @@ var holdingComponent:holding_component
 @export_group("Internals")
 @export var spoonInteractable:spoon_interactable
 @export var spoonBlock:Area2D
+@export var tamperInteractable:tamper_interactable
+@export var tamperBlock:Area2D
 
 var maxOzAmount:float = 20
 var ozAmount:float = 0
 
 var canPickup:bool = false
-var isOverfilled:bool = false
 var isUsed:bool = false
+var isInSlot:bool = false
+var isTamped:bool = false
 
 # Adds inputted oz
 func addOz(amount:float):
@@ -68,14 +71,6 @@ func getMaxOz() -> float:
 func updateLabel():
 	label.text = str(ozAmount)
 
-# Checks if overfilled oz
-func overfillCheck() -> bool:
-	if ozAmount > maxOzAmount:
-		isOverfilled = true
-		return true
-	isOverfilled = false
-	return false
-
 # Sets if grinds are used
 func setIsUsed(toggle:bool):
 	isUsed = toggle
@@ -109,16 +104,23 @@ func toggleHang(toggle:bool):
 		hanging.hide()
 		interactShape.scale = Vector2(1, 1)
 
+# Set isTamped
+func setTamped(toggle:bool):
+	isTamped = toggle
 
 # Sets holding component
 func setHoldingComponent(holdComponent:holding_component):
 	holdingComponent = holdComponent
 	interactableComponent.setHoldingComponent(holdComponent)
 	spoonInteractable.setHoldingComponent(holdComponent)
+	tamperInteractable.setHoldingComponent(holdComponent)
 
 
 func setSpoonBlock(toggle:bool):
 	spoonBlock.set_collision_layer_value(13, toggle)
+
+func setTamperBlock(toggle:bool):
+	tamperBlock.set_collision_layer_value(13, toggle)
 
 # Visual
 func _toggleModulate(toggle:bool):

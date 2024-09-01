@@ -192,3 +192,4 @@ func _on_auto_pickup_timeout():
 
 func _on_interact_cooldown_timeout():
 	isOnCooldown = false
+

@@ -1,6 +1,7 @@
 extends Node2D
 class_name visual_component
 
+@export var sprite:Sprite2D
 @export var glowSprite:Sprite2D
 
 func dispensePreview(_previewValues:Dictionary):
@@ -27,3 +28,4 @@ func setSpriteVisibility(sprite:Sprite2D, isVisible:bool):
 	if !sprite:
 		return
 	sprite.visible = isVisible
+

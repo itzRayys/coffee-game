@@ -70,8 +70,8 @@ func _startDispense():
 func _dispense():
 	var ozAmount = getOz()
 	if heldFilter:
-#	var ozAmount = randf_range(dispenseAmount - 0.3, dispenseAmount + 0.3)
 		heldFilter.addOz(ozAmount)
+		heldFilter.setTamped(false)
 		timer.start(dispenseWaitTime)
 	isDispensing = false
 	dispenseDEBUG.hide()

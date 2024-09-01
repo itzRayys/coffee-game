@@ -16,12 +16,14 @@ class_name main_drink_station
 @export var filterContainers:Array[Node2D]
 @export var mugContainers:Array[Node2D]
 @export var spoonBlockers:Array[Node2D]
+@export var tamperBlockers:Array[Node2D]
 
 var isActive:bool = false
 var iContainersEnabled:bool = false
 var filterContainersEnabled:bool = false
 var mugContainersEnabled:bool = false
 var spoonBlockersEnabled:bool = false
+var tamperBlockersEnabled:bool = false
 
 #OROROROR it could be an array that accepts type:ingredients
 #each ingredient is a resource (no node) that has the name
@@ -86,7 +88,17 @@ func setSpoonBlockers(toggle:bool):
 			return
 		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", spoonBlockers[i].name, ": SET![/color]")
 		spoonBlockers[i].setSpoonBlock(toggle)
-	
+
+func setTamperBlockers(toggle:bool):
+	print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] Setting spoon blocker active states to {0}...[/color]".format([toggle]))
+	tamperBlockersEnabled = toggle
+	for i in tamperBlockers.size():
+		if !tamperBlockers[i].has_method("setSpoonBlock"):
+			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", tamperBlockers[i].name, ": IS IN GROUP BUT DOESNT HAVE METHOD 'ENABLE/DISABLE'**[/color]")
+			return
+		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", tamperBlockers[i].name, ": SET![/color]")
+		tamperBlockers[i].setSpoonBlock(toggle)
+
 
 func _set_holdingComponent_connections(holdingComponent:holding_component):
 	for i in _holdingComponent_connections.size():
@@ -116,6 +128,8 @@ func _on_holding_component_dropped():
 		setMugContainers(false)
 	if spoonBlockersEnabled:
 		setSpoonBlockers(false)
+	if tamperBlockersEnabled:
+		setTamperBlockers(false)
 
 func _on_holding_component_placed():
 	if iContainersEnabled:
@@ -126,6 +140,8 @@ func _on_holding_component_placed():
 		setMugContainers(false)
 	if spoonBlockersEnabled:
 		setSpoonBlockers(false)
+	if tamperBlockersEnabled:
+		setTamperBlockers(false)
 
 
 
@@ -144,3 +160,7 @@ func itemCheck():
 
 func _on_holding_component_picked_up_spoon(spoon):
 	setSpoonBlockers(true)
+
+
+func _on_holding_component_picked_up_tamper(tamper):
+	setTamperBlockers(true)
