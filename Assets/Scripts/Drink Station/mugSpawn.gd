@@ -19,4 +19,6 @@ func setHoldingComponent(holdComponent:holding_component):
 func _on_area_2d_input_event(_viewport, event, _shape_idx):
 	if !GameGlobals.eventIsInteractCheck(event):
 		return
+	if !holdingComponent or holdingComponent.heldItem:
+		return
 	spawnMug()

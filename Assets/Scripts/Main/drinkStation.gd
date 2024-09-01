@@ -12,14 +12,12 @@ class_name main_drink_station
 
 @export var _holdingComponent_connections:Array[Node2D]
 
-@export var ingredientContainers:Array[Node2D]
 @export var filterContainers:Array[Node2D]
 @export var mugContainers:Array[Node2D]
 @export var spoonBlockers:Array[Node2D]
 @export var tamperBlockers:Array[Node2D]
 
 var isActive:bool = false
-var iContainersEnabled:bool = false
 var filterContainersEnabled:bool = false
 var mugContainersEnabled:bool = false
 var spoonBlockersEnabled:bool = false
@@ -35,7 +33,6 @@ var tamperBlockersEnabled:bool = false
 #	currently is!!!!!!!
 
 func _ready():
-	setIngredientContainers(false)
 	if !external_holding_component:
 		print("[Drink Station] Holding Component NOTTTTTT Set!")
 		return
@@ -45,19 +42,8 @@ func _ready():
 
 # Sets xContainers to inputted active/inactive
 func setAllContainers(toggle:bool):
-	setIngredientContainers(toggle)
 	setFilterContainers(toggle)
 	setMugContainers(toggle)
-
-func setIngredientContainers(toggle:bool):
-	print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] Setting iContainers active state to {0}...[/color]".format([isActive]))
-	iContainersEnabled = toggle
-	for i in ingredientContainers.size():
-		if !ingredientContainers[i].has_method("setIngredientContainer"):
-			print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", ingredientContainers[i].name, ": IS IN GROUP BUT DOESNT HAVE AN ICONTAINER**[/color]")
-			return
-		print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station]          - ", ingredientContainers[i].name, ": SET![/color]")
-		ingredientContainers[i].setIngredientContainer(toggle)
 
 func setFilterContainers(toggle:bool):
 	print_rich("[color=cyan]", Time.get_datetime_string_from_system(true, true), " [Drink Station] Setting filter container active states to {0}...[/color]".format([isActive]))
@@ -120,8 +106,6 @@ func _on_holding_component_picked_up_mug(_mug):
 	setMugContainers(true)
 
 func _on_holding_component_dropped():
-	if iContainersEnabled:
-		setIngredientContainers(false)
 	if filterContainersEnabled:
 		setFilterContainers(false)
 	if mugContainersEnabled:
@@ -132,8 +116,6 @@ func _on_holding_component_dropped():
 		setTamperBlockers(false)
 
 func _on_holding_component_placed():
-	if iContainersEnabled:
-		setIngredientContainers(false)
 	if filterContainersEnabled:
 		setFilterContainers(false)
 	if mugContainersEnabled:
